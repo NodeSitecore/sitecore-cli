@@ -1,0 +1,49 @@
+{
+  "name": "node-sitecore-cli",
+  "version": "1.0.0",
+  "description": "A node Sitecore cli",
+  "main": "src/index.js",
+  "author": "Romain Lenzotti",
+  "license": "MIT",
+  "dependencies": {
+    "any-observable": "^0.2.0",
+    "chalk": "^2.3.0",
+    "commander": "^2.11.0",
+    "execa": "^0.8.0",
+    "figures": "^2.0.0",
+    "fs-extra": "^4.0.2",
+    "gulp": "^3.9.1",
+    "gulp-debug": "^3.2.0",
+    "gulp-foreach": "^0.1.0",
+    "gulp-msbuild": "^0.5.4",
+    "gulp-newer": "^1.4.0",
+    "gulp-nuget-restore": "^0.6.0",
+    "gulp-rename": "^1.2.2",
+    "has-yarn": "^1.0.0",
+    "inquirer": "^3.3.0",
+    "listr": "^0.13.0",
+    "split": "^1.0.1",
+    "update-notifier": "^2.3.0"
+  },
+  "files": [
+    "bin/nsc.js",
+    "bin",
+    "src"
+  ],
+  "directories": {
+    "src": "./src",
+    "bin": "./bin"
+  },
+  "gflow": {
+    "master": "master",
+    "production": "production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Romakita/sitecore-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Romakita/sitecore-cli/issues"
+  },
+  "homepage": "https://github.com/Romakita/sitecore-cli"
+}
