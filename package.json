@@ -1,6 +1,6 @@
 {
   "name": "node-sitecore-cli",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "A node Sitecore cli",
   "main": "src/index.js",
   "author": "Romain Lenzotti",
@@ -45,5 +45,16 @@
   "bugs": {
     "url": "https://github.com/Romakita/sitecore-cli/issues"
   },
-  "homepage": "https://github.com/Romakita/sitecore-cli"
+  "homepage": "https://github.com/Romakita/sitecore-cli",
+  "devDependencies": {
+    "semantic-release": "^12.4.1",
+    "travis-deploy-once": "^4.3.4"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
+  },
+  "release": {
+    "branch": "production"
+  }
 }
