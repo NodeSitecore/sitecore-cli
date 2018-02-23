@@ -1,6 +1,6 @@
 {
   "name": "node-sitecore-cli",
-  "version": "0.0.0-development",
+  "version": "1.0.1",
   "description": "A node Sitecore cli",
   "main": "src/index.js",
   "author": "Romain Lenzotti",
