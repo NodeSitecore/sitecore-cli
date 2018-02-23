@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const formatPath = require('./format-path');
 
 class Config {
 
@@ -7,24 +8,6 @@ class Config {
     this.load();
   }
 
-  load() {
-    this._config = new Map();
-    this._config.set('instanceRoot', '.\\build');
-    this._config.set('websiteRoot', '.\\Website');
-    this._config.set('sitecoreLibraries', '.\\Website\\bin');
-    this._config.set('licensePath', '.\\Data\\license.xml');
-    this._config.set('solutionName', 'ScProject');
-    this._config.set('buildConfiguration', 'Debug');
-    this._config.set('buildToolsVersion', 15.0);
-    this._config.set('buildMaxCpuCount', 0);
-    this._config.set('buildVerbosity', 'minimal');
-    this._config.set('buildPlatform', 'Any CPU');
-    this._config.set('publishPlatform', 'AnyCpu');
-    this._config.set('runCleanBuilds', 'false');
-
-    this.readConfiguration();
-    this.readDevConfiguration();
-  }
 
   get(key) {
     return this._config.get(key);
@@ -38,12 +21,24 @@ class Config {
     return this._config.has(key);
   }
 
+  get siteUrl() {
+    return this.get('siteUrl');
+  }
+
+  /**
+   *
+   * @returns {*|string}
+   */
+  get authConfigFile() {
+    return formatPath(path.join(this.websiteRoot, 'App_config', 'Include', 'Unicorn', 'Unicorn.UI.config'));
+  }
+
   /**
    *
    * @returns {string | void | *}
    */
   get instanceRoot() {
-    return this.get('instanceRoot').replace(/^\.\//, process.cwd());
+    return formatPath(this.get('instanceRoot').replace(/^\.(\/|\\)/, process.cwd()));
   }
 
   /**
@@ -51,7 +46,7 @@ class Config {
    * @returns {*|string}
    */
   get websiteRoot() {
-    return path.join(this.instanceRoot, this.get('websiteRoot'));
+    return formatPath(path.join(this.instanceRoot, this.get('websiteRoot')));
   }
 
   /**
@@ -59,7 +54,7 @@ class Config {
    * @returns {*|string}
    */
   get sitecoreLibraries() {
-    return path.join(this.instanceRoot, this.get('sitecoreLibraries'));
+    return formatPath(path.join(this.instanceRoot, this.get('sitecoreLibraries')));
   }
 
   /**
@@ -67,7 +62,7 @@ class Config {
    * @returns {*|string}
    */
   get licensePath() {
-    return path.join(this.instanceRoot, this.get('licensePath'));
+    return formatPath(path.join(this.instanceRoot, this.get('licensePath')));
   }
 
   /**
@@ -75,7 +70,7 @@ class Config {
    * @returns {string}
    */
   get solutionPath() {
-    return './' + `${this.get('solutionName')}.sln`;
+    return formatPath('./' + `${this.get('solutionName')}.sln`);
   }
 
   /**
@@ -83,7 +78,7 @@ class Config {
    * @returns {string}
    */
   get projectRoot() {
-    return './src';
+    return formatPath('./src');
   }
 
   /**
@@ -91,7 +86,7 @@ class Config {
    * @returns {*|string}
    */
   get websiteViewsPath() {
-    return path.join(this.websiteRoot, 'Views');
+    return formatPath(path.join(this.websiteRoot, 'Views'));
   }
 
   /**
@@ -99,7 +94,28 @@ class Config {
    * @returns {*|string}
    */
   get websiteConfigPath() {
-    return path.join(this.websiteRoot, 'App_Config');
+    return formatPath(path.join(this.websiteRoot, 'App_Config'));
+  }
+
+  load() {
+    this._config = new Map();
+    this.set('instanceRoot', formatPath('./build'));
+    this.set('siteUrl', 'http://base.dev.local');
+    this.set('websiteRoot', formatPath('./Website'));
+    this.set('sitecoreLibraries', formatPath('./Website/bin'));
+    this.set('licensePath', formatPath('./Data/license.xml'));
+    this.set('solutionName', 'ScProject');
+    this.set('buildConfiguration', 'Debug');
+    this.set('buildToolsVersion', 15.0);
+    this.set('buildMaxCpuCount', 0);
+    this.set('buildVerbosity', 'minimal');
+    this.set('buildPlatform', 'Any CPU');
+    this.set('publishPlatform', 'AnyCpu');
+    this.set('runCleanBuilds', 'false');
+    this.set('excludeFilesFromDeployment', [ 'packages.config' ]);
+
+    this.readConfiguration();
+    this.readDevConfiguration();
   }
 
   /**
@@ -110,7 +126,7 @@ class Config {
       const conf = JSON.parse(fs.readFileSync(path.join(process.cwd(), '.nscrc'), 'utf8'));
 
       Object.keys(conf).forEach((key) => {
-        this._config.set(key, conf[ key ]);
+        this.set(key, conf[ key ]);
       });
     }
   }

@@ -7,6 +7,13 @@ const config = require('../src/config');
 const questions = [
   {
     type: 'input',
+    name: 'siteUrl',
+    message: 'What is the website url ?',
+    default: config.siteUrl,
+    required: true
+  },
+  {
+    type: 'input',
     name: 'instanceRoot',
     message: 'What is the path of your instance ?',
     default: config.instanceRoot,
