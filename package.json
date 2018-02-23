@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "A node Sitecore cli",
   "main": "src/index.js",
+  "bin": "bin/nsc.js",
   "author": "Romain Lenzotti",
   "license": "MIT",
   "dependencies": {
@@ -49,6 +50,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
+    "gflow": "^1.6.0",
     "mocha": "^5.0.1",
     "nyc": "^11.4.1",
     "semantic-release": "^12.4.1",
@@ -59,7 +61,8 @@
   "scripts": {
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
-    "test": "nyc --reporter=html --reporter=text _mocha --recursive"
+    "test": "nyc --reporter=html --reporter=text _mocha --recursive",
+    "prepublishOnly": "gflow release"
   },
   "release": {
     "branch": "production"
