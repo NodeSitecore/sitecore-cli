@@ -53,5 +53,8 @@
   "scripts": {
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
+  },
+  "release": {
+    "branch": "production"
   }
 }
