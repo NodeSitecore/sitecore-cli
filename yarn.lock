@@ -1874,9 +1874,9 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gflow@^1.7.4:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/gflow/-/gflow-1.7.4.tgz#1e49eff3720f4199ff6021c6bbe3936f013e8b48"
+gflow@^1.7.5:
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/gflow/-/gflow-1.7.5.tgz#5342726e21bf2a6338c062ff332f02359e5cb451"
   dependencies:
     any-observable "^0.2.0"
     chalk "^2.3.0"
