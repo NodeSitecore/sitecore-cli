@@ -50,7 +50,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "gflow": "^1.6.0",
+    "gflow": "^1.7.1",
     "mocha": "^5.0.1",
     "nyc": "^11.4.1",
     "semantic-release": "^12.4.1",
@@ -59,7 +59,8 @@
     "travis-deploy-once": "^4.3.4"
   },
   "scripts": {
-    "semantic-release": "semantic-release",
+    "gflow-release-pre": "",
+    "semantic-release": "gflow release pre && semantic-release",
     "travis-deploy-once": "travis-deploy-once",
     "test": "nyc --reporter=html --reporter=text _mocha --recursive",
     "prepublishOnly": "gflow release post"
