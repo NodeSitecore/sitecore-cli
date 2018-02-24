@@ -62,7 +62,7 @@
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
     "test": "nyc --reporter=html --reporter=text _mocha --recursive",
-    "prepublishOnly": "gflow release"
+    "prepublishOnly": "gflow release post"
   },
   "release": {
     "branch": "production"
