@@ -38,7 +38,7 @@ class Config {
    * @returns {string | void | *}
    */
   get instanceRoot() {
-    return formatPath(this.get('instanceRoot').replace(/^\.(\/|\\)/, process.cwd()));
+    return formatPath(this.get('instanceRoot').replace(/^\.(\/|\\)/, process.cwd() + '/'));
   }
 
   /**
