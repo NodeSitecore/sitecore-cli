@@ -1,8 +1,9 @@
 const gulp = require('gulp');
-const gutil = require('gulp-util');
+const log = require('fancy-log');
+const tap = require('gulp-tap');
 const config = require('./config');
 const path = require('path');
-
+const formatPath = require('./format-path');
 module.exports = {
   /**
    *
@@ -11,26 +12,31 @@ module.exports = {
   watch(options) {
     const { src, dest, files, exclude } = options;
 
-    const root = config.projectRoot;
-    const roots = [ root + '/' + src ];
-    const destination = path.join(config.websiteRoot, dest);
+    const base = config.projectRoot;
+    const baseGlob = base.replace(/\\/g, '/');
+    const srcGlob = src.replace(/\\/g, '/');
+    const roots = [ baseGlob + '/' + srcGlob ];
+    const destination = formatPath(path.join(config.websiteRoot, dest));
 
     if (exclude) {
-      roots.push('!' + root + '/**/obj/' + src);
+      roots.push('!' + baseGlob + '/**/obj/' + srcGlob);
     }
 
-    gulp.src(roots, { base: root }).pipe(
-      foreach((stream, rootFolder) => {
-        gulp.watch(rootFolder.path + files, (event) => {
-          if (event.type === 'changed') {
-            gutil.log('publish this file ' + event.path);
-            gulp.src(event.path, { base: rootFolder.path }).pipe(gulp.dest(destination));
-          }
-          gutil.log('published ' + event.path);
-        });
-        return stream;
-      })
-    );
+    gulp
+      .src(roots, { base })
+      .pipe(
+        tap((stream, rootFolder) => {
+          gulp.watch(rootFolder.path + files, (event) => {
+            /* istanbul ignore next */
+            if (event.type === 'changed') {
+              log.info('publish this file ' + event.path);
+              gulp.src(event.path, { base: rootFolder.path }).pipe(gulp.dest(destination));
+            }
+            log.info('published ' + event.path);
+          });
+          return stream;
+        })
+      );
   },
   /**
    *
