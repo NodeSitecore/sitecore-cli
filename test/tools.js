@@ -7,8 +7,7 @@ Chai.should();
 Chai.use(SinonChai);
 Chai.use(ChaiAsPromised);
 
-const expect = Chai.expect;
-const assert = Chai.assert;
+const { expect, assert } = Chai;
 
 module.exports = {
   expect,

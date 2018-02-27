@@ -10,7 +10,6 @@ const watch = require('proxyquire')('../../src/watch', {
 const formatPath = require('../../src/format-path');
 
 describe('watch', () => {
-
   describe('watch', () => {
     describe('when some files are excluded', () => {
       before(() => {
@@ -71,7 +70,6 @@ describe('watch', () => {
       it('should call gulp.dest()', () => {
         this.destStub.should.have.been.calledWithExactly(Sinon.match(formatPath('build/Website/dest')));
       });
-
     });
 
     describe('when some files are not excluded', () => {
@@ -133,7 +131,6 @@ describe('watch', () => {
       it('should call gulp.dest()', () => {
         this.destStub.should.have.been.calledWithExactly(Sinon.match(formatPath('build/Website/dest')));
       });
-
     });
   });
 

@@ -1,9 +1,10 @@
 const path = require('path');
 const fs = require('fs');
+const log = require('fancy-log');
+const chalk = require('chalk');
 const formatPath = require('./format-path');
 
 class Config {
-
   constructor() {
     this.load();
   }
@@ -38,7 +39,7 @@ class Config {
    * @returns {string | void | *}
    */
   get instanceRoot() {
-    return formatPath(this.get('instanceRoot').replace(/^\.(\/|\\)/, process.cwd() + '/'));
+    return formatPath(this.get('instanceRoot').replace(/^\.(\/|\\)/, `${process.cwd()}/`));
   }
 
   /**
@@ -70,7 +71,7 @@ class Config {
    * @returns {string}
    */
   get solutionPath() {
-    return formatPath('./' + `${this.get('solutionName')}.sln`);
+    return formatPath(`./${this.get('solutionName')}.sln`);
   }
 
   /**
@@ -104,7 +105,7 @@ class Config {
     this.set('websiteRoot', formatPath('./Website'));
     this.set('sitecoreLibraries', formatPath('./Website/bin'));
     this.set('licensePath', formatPath('./Data/license.xml'));
-    this.set('solutionName', 'ScProject');
+    this.set('solutionName', 'Base');
     this.set('buildConfiguration', 'Debug');
     this.set('buildToolsVersion', 15.0);
     this.set('buildMaxCpuCount', 0);
@@ -128,6 +129,8 @@ class Config {
       Object.keys(conf).forEach((key) => {
         this.set(key, conf[ key ]);
       });
+
+      this.set('loaded', true);
     }
   }
 
@@ -141,6 +144,20 @@ class Config {
       Object.keys(conf).forEach((key) => {
         this._config.set(key, conf[ key ]);
       });
+
+      this.set('loaded', true);
+    }
+  }
+
+  isLoaded() {
+    return !!this.get('loaded');
+  }
+
+  /* istanbul ignore next */
+  checkPreconditions() {
+    if (!this.isLoaded()) {
+      log.error(chalk.red('`ncs` tool is not executed under a Sitecore project or the `.nscrc` is not initialized for your project. Run `nsc init` before to configure you `.nscrc`.'));
+      process.exit();
     }
   }
 

@@ -4,39 +4,40 @@ const tap = require('gulp-tap');
 const config = require('./config');
 const path = require('path');
 const formatPath = require('./format-path');
+
 module.exports = {
   /**
    *
    * @param options
    */
   watch(options) {
-    const { src, dest, files, exclude } = options;
+    const {
+      src, dest, files, exclude
+    } = options;
 
     const base = config.projectRoot;
     const baseGlob = base.replace(/\\/g, '/');
     const srcGlob = src.replace(/\\/g, '/');
-    const roots = [ baseGlob + '/' + srcGlob ];
+    const roots = [ `${baseGlob}/${srcGlob}` ];
     const destination = formatPath(path.join(config.websiteRoot, dest));
 
     if (exclude) {
-      roots.push('!' + baseGlob + '/**/obj/' + srcGlob);
+      roots.push(`!${baseGlob}/**/obj/${srcGlob}`);
     }
 
     gulp
       .src(roots, { base })
-      .pipe(
-        tap((stream, rootFolder) => {
-          gulp.watch(rootFolder.path + files, (event) => {
-            /* istanbul ignore next */
-            if (event.type === 'changed') {
-              log.info('publish this file ' + event.path);
-              gulp.src(event.path, { base: rootFolder.path }).pipe(gulp.dest(destination));
-            }
-            log.info('published ' + event.path);
-          });
-          return stream;
-        })
-      );
+      .pipe(tap((stream, rootFolder) => {
+        gulp.watch(rootFolder.path + files, (event) => {
+          /* istanbul ignore next */
+          if (event.type === 'changed') {
+            log.info(`publish this file ${event.path}`);
+            gulp.src(event.path, { base: rootFolder.path }).pipe(gulp.dest(destination));
+          }
+          log.info(`published ${event.path}`);
+        });
+        return stream;
+      }));
   },
   /**
    *

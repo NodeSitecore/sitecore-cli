@@ -36,5 +36,4 @@ describe('nugetRestore', () => {
   it('should call gulp.dest()', () => {
     gulpNugetRestoreStub.should.have.been.calledWithExactly();
   });
-
 });

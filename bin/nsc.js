@@ -12,7 +12,7 @@ commander
   .command('restore', 'Restore all NuGet Packages')
   .command('install', 'Install a sitecore package')
   .command('build', 'Build project solution')
-  .command('unicorn [options]', 'Perform a Unicorn synchronisation')
+  .command('unicorn [action] [configs ...]', 'Perform a Unicorn synchronisation')
   .command('publish', 'Publish content (Foundation, Feature, Project)')
   .parse(process.argv);
 

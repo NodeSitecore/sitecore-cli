@@ -1,9 +1,17 @@
+const configuration = require('./config');
+const buildSolution = require('./build-solution');
+const nugetRestore = require('./nuget-restore');
+const unicorn = require('./unicorn');
+const copyLicense = require('./copy-license');
+const copyAssemblies = require('./copy-assemblies');
+const publish = require('./publish');
+
 module.exports = {
-  configuration: require('./config'),
-  buildSolution: require('./build-solution'),
-  nugetRestore: require('./nuget-restore'),
-  unicorn: require('./unicorn'),
-  copyLicense: require('./copy-license'),
-  copyAssemblies: require('./copy-assemblies'),
-  publish: require('./publish')
+  configuration,
+  buildSolution,
+  nugetRestore,
+  unicorn,
+  copyLicense,
+  copyAssemblies,
+  publish
 };

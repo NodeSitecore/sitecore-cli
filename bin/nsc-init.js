@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-'use strict';
+/* eslint-disable no-param-reassign */
+
 const inquirer = require('inquirer');
 const config = require('../src/config');
 
@@ -10,50 +11,50 @@ const questions = [
     name: 'siteUrl',
     message: 'What is the website url ?',
     default: config.siteUrl,
-    required: true
+    required: true,
   },
   {
     type: 'input',
     name: 'instanceRoot',
     message: 'What is the path of your instance ?',
     default: config.instanceRoot,
-    required: true
+    required: true,
   },
   {
     type: 'input',
     name: 'websiteRoot',
     message: 'What is the relative path of your Website (from instanceRoot) ?',
     default: config.get('websiteRoot'),
-    required: true
+    required: true,
   },
   {
     type: 'input',
     name: 'websiteRoot',
     message: 'What is the relative path of license.xml (from instanceRoot) ?',
     default: config.get('licensePath'),
-    required: true
+    required: true,
   },
   {
     type: 'input',
     name: 'sitecoreLibraries',
     message: 'What is the relative path of the Sitecore librairies  (from instanceRoot) ?',
     default: config.get('sitecoreLibraries'),
-    required: true
+    required: true,
   },
   {
     type: 'input',
     name: 'solutionName',
     message: 'What is the name of your Solution.sln (MySitecore.sln) ?',
     default: config.get('solutionName'),
-    required: true
+    required: true,
   },
   {
     type: 'input',
     name: 'buildToolsVersion',
     message: 'What is the version of your Microsoft Build Tools (MsBuildTools) ?',
     default: config.get('buildToolsVersion'),
-    required: true
-  }
+    required: true,
+  },
 ];
 
 function runInteractive() {
