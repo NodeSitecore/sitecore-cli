@@ -1,8 +1,14 @@
 const fs = require('fs');
 const execa = require('execa');
+const request = require('request-promise-native');
 const { expect, Sinon } = require('../tools');
 const unicorn = require('../../src/unicorn');
-const { writeSharedSecretKey, getUnicornSharedSecretKey, sync, formatUrl } = unicorn;
+const config = require('../../src/config');
+const formatPath = require('../../src/format-path');
+
+const {
+  writeSharedSecretKey, getUnicornSharedSecretKey, sync, formatUrl
+} = unicorn;
 
 describe('Unicorn', () => {
   describe('writeSharedSecretKey()', () => {
@@ -43,11 +49,8 @@ describe('Unicorn', () => {
         this.readFileSyncStub.should.have.been.calledWithExactly(Sinon.match('/dest/file.config'), { encoding: 'utf8' });
       });
 
-      it('should not call writeFileSync method', () => {
-        return this.writeFileSyncStub.should.not.have.been.called;
-      });
+      it('should not call writeFileSync method', () => this.writeFileSyncStub.should.not.have.been.called);
     });
-
   });
 
   describe('getUnicornSecret()', () => {
@@ -146,18 +149,12 @@ describe('Unicorn', () => {
         this.existsSyncStub.restore();
       });
 
-      it('should call existsSync with the right parameters', () => {
-        return this.existsSyncStub.should.not.have.been.called;
-      });
+      it('should call existsSync with the right parameters', () => this.existsSyncStub.should.not.have.been.called);
 
 
-      it('should call writeSharedSecretKey with the right parameters', () => {
-        return this.writeSharedSecretKeyStub.should.not.have.been.called;
-      });
+      it('should call writeSharedSecretKey with the right parameters', () => this.writeSharedSecretKeyStub.should.not.have.been.called);
 
-      it('should call readFileSync with the right parameters', () => {
-        return this.readFileSyncStub.should.not.have.been.called;
-      });
+      it('should call readFileSync with the right parameters', () => this.readFileSyncStub.should.not.have.been.called);
 
       it('should return the secret key', () => {
         expect(this.result).to.eq('secretKey');
@@ -188,12 +185,10 @@ describe('Unicorn', () => {
       });
 
       it('should call sellSync with the right parameters', () => {
-        this.shellSyncStub.should.have.been.calledWithExactly(Sinon.match((cmd) => {
-          return typeof cmd === 'string'
-            && cmd.match(/^powershell -executionpolicy unrestricted/)
-            && cmd.match(/(\\|\/)unicorn(\\|\/)SyncAll\.ps1 -secret secretKey -url http:\/\/base.dev.local\/unicorn\.aspx/);
-        }), {
-          cwd: Sinon.match('\/unicorn\/'),
+        this.shellSyncStub.should.have.been.calledWithExactly(Sinon.match((cmd) => typeof cmd === 'string'
+          && cmd.match(/^powershell -executionpolicy unrestricted/)
+          && cmd.match(/(\\|\/)unicorn(\\|\/)SyncAll\.ps1 -secret secretKey -url http:\/\/base.dev.local\/unicorn\.aspx/)), {
+          cwd: Sinon.match('/unicorn/'),
           maxBuffer: 1024 * 500,
           stdio: [ 'inherit', 'inherit', 'inherit' ]
         });
@@ -230,18 +225,15 @@ describe('Unicorn', () => {
       });
 
       it('should call sellSync with the right parameters', () => {
-        this.shellSyncStub.should.have.been.calledWithExactly(Sinon.match((cmd) => {
-          return typeof cmd === 'string'
-            && cmd.match(/^powershell -executionpolicy unrestricted/)
-            && cmd.match(/(\\|\/)unicorn(\\|\/)Sync\.ps1 -secret secretKey -url http:\/\/base.dev.local\/unicorn\.aspx -configs Config1,Config2/);
-        }), {
+        this.shellSyncStub.should.have.been.calledWithExactly(Sinon.match((cmd) => typeof cmd === 'string'
+          && cmd.match(/^powershell -executionpolicy unrestricted/)
+          && cmd.match(/(\\|\/)unicorn(\\|\/)Sync\.ps1 -secret secretKey -url http:\/\/base.dev.local\/unicorn\.aspx -configs Config1,Config2/)), {
           cwd: Sinon.match(/(\\|\/)unicorn(\\|\/)/),
           maxBuffer: 1024 * 500,
           stdio: [ 'inherit', 'inherit', 'inherit' ]
         });
       });
     });
-
   });
 
   describe('formatUrl()', () => {
@@ -250,6 +242,78 @@ describe('Unicorn', () => {
     });
     it('should return the url without the ending slash (2)', () => {
       expect(formatUrl('http://base.dev.local')).to.equal('http://base.dev.local');
+    });
+  });
+
+  describe('getConfigurations()', () => {
+    before(() => {
+      this.requestGetStub = Sinon.stub(request, 'get').returns(Promise.resolve({ response: 'response' }));
+      this.writeUnicornConfigurationsFileStub = Sinon.stub(unicorn, 'writeUnicornConfigurationsFile');
+
+      this.result = unicorn.getConfigurations();
+      return this.result;
+    });
+    after(() => {
+      this.requestGetStub.restore();
+      this.writeUnicornConfigurationsFileStub.restore();
+    });
+
+    it('should write unicorn-configurations.ashx', () => {
+      this.writeUnicornConfigurationsFileStub.should.have.been.calledWithExactly();
+    });
+
+    it('should call the unicorn-configuration.ashx web service', () =>
+      this.requestGetStub.should.have.been.calledWithExactly({
+        uri: `${config.siteUrl}/unicorn-configurations.ashx`,
+        json: true
+      })
+    );
+
+    it('should return a promise', () => this.result.should.eventually.deep.equal({ response: 'response' }));
+  });
+
+  describe('writeUnicornConfigurationsFile()', () => {
+    describe('when the configuration file doesn\'t exists', () => {
+      before(() => {
+        this.copyFileSyncStub = Sinon.stub(fs, 'copyFileSync');
+        this.existsSyncStub = Sinon.stub(fs, 'existsSync').returns(false);
+
+        unicorn.writeUnicornConfigurationsFile();
+      });
+      after(() => {
+        this.copyFileSyncStub.restore();
+        this.existsSyncStub.restore();
+      });
+
+      it('should call existsSync', () => {
+        this.existsSyncStub.should.have.been.calledWithExactly(Sinon.match(formatPath('Website/unicorn-configurations.ashx')));
+      });
+
+      it('should call copyFileSync', () => {
+        this.copyFileSyncStub.should.have.been.calledWithExactly(
+          Sinon.match(formatPath('unicorn/unicorn-configurations.ashx')),
+          Sinon.match(formatPath('Website/unicorn-configurations.ashx'))
+        );
+      });
+    });
+
+    describe('when the configuration file exists', () => {
+      before(() => {
+        this.copyFileSyncStub = Sinon.stub(fs, 'copyFileSync');
+        this.existsSyncStub = Sinon.stub(fs, 'existsSync').returns(true);
+
+        unicorn.writeUnicornConfigurationsFile();
+      });
+      after(() => {
+        this.copyFileSyncStub.restore();
+        this.existsSyncStub.restore();
+      });
+
+      it('should call existsSync', () => {
+        this.existsSyncStub.should.have.been.calledWithExactly(Sinon.match(formatPath('Website/unicorn-configurations.ashx')));
+      });
+
+      it('should call copyFileSync', () => this.copyFileSyncStub.should.not.have.been.called);
     });
   });
 });

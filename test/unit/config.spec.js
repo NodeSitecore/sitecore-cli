@@ -5,13 +5,9 @@ const formatPath = require('../../src/format-path');
 
 describe('Config', () => {
   describe('has()', () => {
-    it('should return true', () => {
-      return expect(config.has('siteUrl')).to.be.true;
-    });
+    it('should return true', () => expect(config.has('siteUrl')).to.be.true);
 
-    it('should return false', () => {
-      return expect(config.has('siteUrl2')).to.be.false;
-    });
+    it('should return false', () => expect(config.has('siteUrl2')).to.be.false);
   });
 
   describe('readConfiguration()', () => {
@@ -29,9 +25,7 @@ describe('Config', () => {
       this.setStub.restore();
     });
 
-    it('should verify if the file exists', () => {
-      return this.hasConfigurationStub.should.have.been.called;
-    });
+    it('should verify if the file exists', () => this.hasConfigurationStub.should.have.been.called);
     it('should read the .nscrc file', () => {
       this.readFileSyncStub.should.have.been.calledWithExactly(Sinon.match(formatPath('.nscrc')), 'utf8');
     });
@@ -56,9 +50,7 @@ describe('Config', () => {
       this.setStub.restore();
     });
 
-    it('should verify if the file exists', () => {
-      return this.hasDevConfigurationStub.should.have.been.called;
-    });
+    it('should verify if the file exists', () => this.hasDevConfigurationStub.should.have.been.called);
     it('should read the .nscrc file', () => {
       this.readFileSyncStub.should.have.been.calledWithExactly(Sinon.match(formatPath('.development.nscrc')), 'utf8');
     });
@@ -115,7 +107,7 @@ describe('Config', () => {
     });
 
     it('should return solutionPath', () => {
-      expect(config.solutionPath).to.contains(formatPath('./ScProject.sln'));
+      expect(config.solutionPath).to.contains(formatPath('./Base.sln'));
     });
 
     it('should return projectRoot', () => {
@@ -128,6 +120,10 @@ describe('Config', () => {
 
     it('should return websiteConfigPath', () => {
       expect(config.websiteConfigPath).to.contains(formatPath('build/Website/App_Config'));
+    });
+
+    it('should return isLoaded', () => {
+      expect(config.isLoaded()).to.eq(false);
     });
   });
 });

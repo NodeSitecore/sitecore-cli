@@ -5,7 +5,7 @@ const buildSolution = require('../src/build-solution');
 const targets = config.runCleanBuilds ? [ 'Clean', 'Build' ] : [ 'Build' ];
 
 buildSolution(config.solutionPath, {
-  targets: targets,
+  targets,
   configuration: config.get('buildConfiguration'),
   logCommand: false,
   verbosity: config.get('buildVerbosity'),
