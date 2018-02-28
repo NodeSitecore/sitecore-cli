@@ -22,7 +22,7 @@
     "figures": "^2.0.0",
     "fs-extra": "^4.0.2",
     "glob": "^7.1.2",
-    "gulp": "^3.9.1",
+    "gulp": "4.0.0",
     "gulp-debug": "^3.2.0",
     "gulp-foreach": "^0.1.0",
     "gulp-msbuild": "^0.5.4",
