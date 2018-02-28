@@ -1,12 +1,17 @@
 {
-  "name": "node-sitecore-cli",
+  "name": "@node-sitecore/cli",
   "version": "1.2.1",
   "description": "A node Sitecore cli",
   "main": "src/index.js",
+  "private": false,
   "bin": {
     "nsc": "bin/nsc.js"
   },
   "author": "Romain Lenzotti",
+  "contributors": [
+    "Tim Benniks",
+    "Nicolas Martin"
+  ],
   "license": "MIT",
   "dependencies": {
     "any-observable": "^0.2.0",
@@ -48,12 +53,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Romakita/sitecore-cli.git"
+    "url": "https://github.com/NodeSitecore/sitecore-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/Romakita/sitecore-cli/issues"
+    "url": "https://github.com/NodeSitecore/sitecore-cli/issues"
   },
-  "homepage": "https://github.com/Romakita/sitecore-cli",
+  "homepage": "https://github.com/NodeSitecore/sitecore-cli",
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
