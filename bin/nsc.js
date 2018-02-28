@@ -14,5 +14,6 @@ commander
   .command('build', 'Build project solution')
   .command('unicorn [action] [configs ...]', 'Perform a Unicorn synchronisation')
   .command('publish', 'Publish content (Foundation, Feature, Project)')
+  .command('proxy-server', 'Run a proxy server')
   .parse(process.argv);
 
