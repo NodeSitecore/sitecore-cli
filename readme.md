@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/NodeSitecore/sitecore-cli.svg?branch=master)](https://travis-ci.org/NodeSitecore/sitecore-cli)
 [![Coverage Status](https://coveralls.io/repos/github/NodeSitecore/sitecore-cli/badge.svg?branch=master)](https://coveralls.io/github/NodeSitecore/sitecore-cli?branch=master)
-[![Package Quality](http://npm.packagequality.com/shield/node-sitecore-cli.png)](http://packagequality.com/#?package=node-sitecore-cli)
-[![npm version](https://badge.fury.io/js/node-sitecore-cli.svg)](https://badge.fury.io/js/node-sitecore-cli)
+[![Package Quality](http://npm.packagequality.com/badge/@node-sitecore/cli.png)](http://packagequality.com/#?package=@node-sitecore/cli)
+[![npm version](https://badge.fury.io/js/%40node-sitecore%2Fcli.svg)](https://badge.fury.io/js/node-sitecore-cli)
 [![Dependencies](https://david-dm.org/NodeSitecore/sitecore-cli.svg)](https://david-dm.org/NodeSitecore/sitecore-cli#info=dependencies)
 [![img](https://david-dm.org/NodeSitecore/sitecore-cli/dev-status.svg)](https://david-dm.org/NodeSitecore/sitecore-cli/#info=devDependencies)
 [![img](https://david-dm.org/NodeSitecore/sitecore-cli/peer-status.svg)](https://david-dm.org/NodeSitecore/sitecore-cli/#info=peerDependenciess)
