@@ -84,6 +84,14 @@ describe('Config', () => {
     });
   });
 
+  describe('proxyUrls', () => {
+    before(() => {
+      config.set('proxyUrls', [ 'test' ]);
+    });
+    it('should return proxyUrls', () => {
+      expect(config.proxyUrls).to.deep.eq([ 'test' ]);
+    });
+  });
 
   describe('property', () => {
     it('should return siteUrl', () => {

@@ -98,6 +98,21 @@ class Config {
     return formatPath(path.join(this.websiteRoot, 'App_Config'));
   }
 
+  get proxyUrls() {
+    return this.get('proxyUrls') || [];
+  }
+
+  pushProxyUrl(url) {
+    const { proxyUrls } = this;
+
+    if (proxyUrls.indexOf(url) === -1) {
+      proxyUrls.push(url);
+    }
+
+    this.set('proxyUrls', proxyUrls);
+    this.writeConfiguration();
+  }
+
   load() {
     this._config = new Map();
     this.set('instanceRoot', formatPath('./build'));
