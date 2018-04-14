@@ -8,8 +8,8 @@ module.exports = {
   rules: {
     'function-paren-newline': 'off',
     'no-underscore-dangle': 'off',
-    'array-bracket-spacing': [ 'error', 'always' ],
-    'computed-property-spacing': [ 'error', 'always' ],
+    'array-bracket-spacing': 'off',
+    'computed-property-spacing': 'off',
     'linebreak-style': 'off',
     'import/no-extraneous-dependencies': 'off',
     'no-restricted-syntax': 'off',
