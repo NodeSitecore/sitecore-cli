@@ -122,13 +122,14 @@ class Config {
     this.set('licensePath', formatPath('./Data/license.xml'));
     this.set('solutionName', 'Base');
     this.set('buildConfiguration', 'Debug');
-    this.set('buildToolsVersion', 15.0);
+    this.set('buildToolsVersion', '15.0');
     this.set('buildMaxCpuCount', 0);
     this.set('buildVerbosity', 'minimal');
-    this.set('buildPlatform', 'Any CPU');
-    this.set('publishPlatform', 'AnyCpu');
-    this.set('runCleanBuilds', 'false');
-    this.set('excludeFilesFromDeployment', [ 'packages.config' ]);
+    this.set('buildPlatform', 'AnyCPU');
+    this.set('buildNodeReuse', false);
+    this.set('buildLogCommand', false);
+    this.set('buildTargets', ['Build']);
+    this.set('excludeFilesFromDeployment', ['packages.config']);
 
     this.readConfiguration();
     this.readDevConfiguration();
@@ -142,7 +143,7 @@ class Config {
       const conf = JSON.parse(fs.readFileSync(path.join(process.cwd(), '.nscrc'), 'utf8'));
 
       Object.keys(conf).forEach((key) => {
-        this.set(key, conf[ key ]);
+        this.set(key, conf[key]);
       });
 
       this.set('loaded', true);
@@ -157,7 +158,7 @@ class Config {
       const conf = JSON.parse(fs.readFileSync(path.join(process.cwd(), '.development.nscrc'), 'utf8'));
 
       Object.keys(conf).forEach((key) => {
-        this._config.set(key, conf[ key ]);
+        this._config.set(key, conf[key]);
       });
 
       this.set('loaded', true);
@@ -196,7 +197,7 @@ class Config {
     const conf = {};
 
     this._config.forEach((value, key) => {
-      conf[ key ] = value;
+      conf[key] = value;
     });
 
     fs.writeFileSync(path.join(process.cwd(), '.nscrc'), JSON.stringify(conf, null, 2), { encoding: 'utf8' });
