@@ -1,0 +1,9 @@
+{
+  "production": "production",
+  "develop": "master",
+  "charBranchNameSeparator": "_",
+  "remote": "origin",
+  "ignores": [],
+  "syncAfterFinish": false,
+  "postFinish": ""
+}
