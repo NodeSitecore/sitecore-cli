@@ -29,7 +29,7 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'websiteRoot',
+    name: 'licensePath',
     message: 'What is the relative path of license.xml (from instanceRoot) ?',
     default: config.get('licensePath'),
     required: true,

@@ -49,10 +49,6 @@
     "src": "./src",
     "bin": "./bin"
   },
-  "gflow": {
-    "master": "master",
-    "production": "production"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/NodeSitecore/sitecore-cli.git"
