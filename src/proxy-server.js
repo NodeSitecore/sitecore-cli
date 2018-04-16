@@ -4,6 +4,7 @@ const log = require('fancy-log');
 const browserSync = require('browser-sync');
 const config = require('./config');
 const formatPath = require('./format-path');
+const execa = require('execa');
 
 module.exports = (options) => {
   options = Object.assign({
@@ -14,14 +15,20 @@ module.exports = (options) => {
   }, options);
 
   const {
-    url, port, logLevel, local
+    url, port, logLevel
   } = options;
 
   const staticPath = formatPath(path.join(config.get('instanceRoot'), config.get('websiteRoot')));
 
+  if (options.concurrently) {
+    execa.shell(options.concurrently, {
+      stdio: ['inherit', 'inherit', 'inherit']
+    });
+  }
+
   return browserSync.create().init({
     open: false,
-    files: [ `${staticPath}/**/*.{js,css}` ],
+    files: [`${staticPath}/**/*.{js,css}`],
     proxy: {
       target: url
     },
@@ -31,15 +38,15 @@ module.exports = (options) => {
       staticPath
     ],
     serveStaticOptions: {
-      extensions: [ 'html' ] // pretty urls
+      extensions: ['html'] // pretty urls
     },
     snippetOptions: {
       // Provide a custom Regex for inserting the snippet.
       rule: {
         match: /<\/body>/i,
         fn: (snippet, match) => {
-          if (local) {
-            snippet += snippetLocalization(options);
+          if (options.package) {
+            snippet += snippetPackage(options);
           }
 
           return snippet + match;
@@ -49,10 +56,10 @@ module.exports = (options) => {
   });
 };
 
-function snippetLocalization(options) {
-  log.info(chalk.green('[info] Load snippet localization =>'), options.local);
+function snippetPackage(options) {
+  log.info(chalk.green('[info] Load snippet localization =>'), options.package);
   return `
-    <link rel="stylesheet" type="text/css" href="/themes/${options.local}/bundle.css">
-    <script type="text/javascript" src="/themes/${options.local}/bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="/themes/${options.package}/bundle.css">
+    <script type="text/javascript" src="/themes/${options.package}/bundle.js"></script>
     `;
 }
