@@ -9,7 +9,8 @@ const config = require('../src/config');
 
 commander
   .alias('nsc proxy-server')
-  .option('--local <locale>', 'Load a snippet for a given localization')
+  .option('-p, --package <package>', 'Load a snippet for a given localization')
+  .option('-c, --concurrently <npm task>', 'Load a snippet for a given localization')
   .parse(process.argv);
 
 runInteractive(commander);
@@ -18,30 +19,31 @@ function runInteractive(options) {
   let questions;
 
   if (config.proxyUrls.length) {
-    questions = [ {
-      type: 'list',
-      name: 'proxyUrl',
-      message: 'Which url do you want to proxify ? ',
-      choices: config.proxyUrls.concat([ new inquirer.Separator(), 'Enter new url' ]),
-      required: true
-    },
-    {
-      type: 'input',
-      name: 'proxyUrl',
-      when: (answers) => answers.proxyUrl === 'Enter new url',
-      message: 'Which url do you want to proxify ? ',
-      default: config.siteUrl,
-      required: true
-    }
+    questions = [
+      {
+        type: 'list',
+        name: 'proxyUrl',
+        message: 'Which url do you want to proxify ? ',
+        choices: config.proxyUrls.concat([new inquirer.Separator(), 'Enter new url']),
+        required: true
+      },
+      {
+        type: 'input',
+        name: 'proxyUrl',
+        when: (answers) => answers.proxyUrl === 'Enter new url',
+        message: 'Which url do you want to proxify ? ',
+        default: config.siteUrl,
+        required: true
+      }
     ];
   } else {
-    questions = [ {
+    questions = [{
       type: 'input',
       name: 'proxyUrl',
       message: 'Which url do you want to proxify ? ',
       default: config.siteUrl,
       required: true
-    } ];
+    }];
   }
 
 
@@ -52,7 +54,8 @@ function runInteractive(options) {
 
       proxyServer({
         url: answers.proxyUrl,
-        local: options.local
+        package: options.package,
+        concurrently: options.concurrently
       });
     })
     .catch(er => log.error(er));

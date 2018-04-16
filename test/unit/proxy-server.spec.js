@@ -4,6 +4,7 @@ const {
 } = require('../tools');
 const config = require('../../src/config');
 const path = require('path');
+const execa = require('execa');
 const formatPath = require('../../src/format-path');
 const proxyServer = require('../../src/proxy-server');
 
@@ -16,25 +17,31 @@ describe('proxyServer', () => {
     };
 
     this.browserSyncCreateStub = Sinon.stub(browserSync, 'create').returns(this.browserSyncStub);
+    this.shellStub = Sinon.stub(execa, 'shell');
 
     proxyServer({
       url: 'http://host',
       port: 8080,
-      local: 'FR'
+      package: 'FR',
+      concurrently: 'npm run test'
     });
 
-    this.result = this.browserSyncStub.init.getCall(0).args[ 0 ].snippetOptions.rule.fn('</body>', '</html>');
+    this.result = this.browserSyncStub.init.getCall(0).args[0].snippetOptions.rule.fn('</body>', '</html>');
   });
   after(() => {
     this.browserSyncCreateStub.restore();
+    this.shellStub.restore();
   });
-  it('should have been called', () => {
+  it('should call browserSync', () => {
     this.browserSyncCreateStub.should.have.been.calledWithExactly();
+  });
+  it('should call execa.shell', () => {
+    this.shellStub.should.have.been.calledWithExactly('npm run test', { stdio: ['inherit', 'inherit', 'inherit'] });
   });
   it('should have the correct params', () => {
     this.browserSyncStub.init.should.have.been.calledWithExactly(Sinon.match({
       open: false,
-      files: [ `${staticPath}/**/*.{js,css}` ],
+      files: [`${staticPath}/**/*.{js,css}`],
       proxy: {
         target: 'http://host'
       },
@@ -44,7 +51,7 @@ describe('proxyServer', () => {
         staticPath
       ],
       serveStaticOptions: {
-        extensions: [ 'html' ] // pretty urls
+        extensions: ['html'] // pretty urls
       },
       snippetOptions: Sinon.match.any
     }));
