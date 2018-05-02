@@ -14,9 +14,9 @@
     ".ts"
   ],
   "check-coverage": true,
-  "lines": 96.35,
-  "statements": 96.84,
+  "lines": 96.23,
+  "statements": 96.25,
   "functions": 97.06,
-  "branches": 80.77,
+  "branches": 78.57,
   "all": true
 }
