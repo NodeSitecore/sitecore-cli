@@ -39,7 +39,9 @@ class Config {
    * @returns {string | void | *}
    */
   get instanceRoot() {
-    return formatPath(this.get('instanceRoot').replace(/^\.(\/|\\)/, `${process.cwd()}/`));
+    return formatPath(this.get('instanceRoot')
+      .replace(/^\.(\/|\\)/, `${process.cwd()}/`))
+      .replace('<rootDir>', `${process.cwd()}`);
   }
 
   /**
@@ -197,6 +199,10 @@ class Config {
     const conf = {};
 
     this._config.forEach((value, key) => {
+      if (key === 'instanceRoot') {
+        value = value.replace(process.cwd(), '<rootDir>');
+      }
+
       conf[key] = value;
     });
 
