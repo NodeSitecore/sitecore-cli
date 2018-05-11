@@ -10,7 +10,7 @@ commander
   .version(pkg.version)
   .command('init', 'Init a Sitecore Project')
   .command('restore', 'Restore all NuGet Packages')
-  .command('install', 'Install a sitecore package')
+//  .command('install', 'Install a sitecore package')
   .command('build', 'Build project solution')
   .command('unicorn [action] [configs ...]', 'Perform a Unicorn synchronisation')
   .command('publish', 'Publish content (Foundation, Feature, Project)')

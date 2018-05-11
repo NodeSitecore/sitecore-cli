@@ -27,7 +27,7 @@ commander
   )
   .option(
     '-p, --solution-platform <plateform>',
-    'Specify the Solution Platform (e.g. x86, x64, AnyCPU)'
+    'Specify the Solution Platform (e.g. x86, x64, Any CPU)'
   )
   .option(
     '-v, --verbosity <level>',
@@ -65,6 +65,7 @@ const {
   nodeReuse = config.get('buildNodeReuse'),
   toolsVersion = config.get('buildToolsVersion'),
   solutionPlatform = config.get('buildPlatform'),
+  solutionProperties = config.get('buildProperties'),
   nologo
 } = commander;
 
@@ -77,10 +78,11 @@ const options = {
   errorOnFail: true,
   maxcpucount,
   nodeReuse,
-  toolsVersion,
+  toolsVersion: (+toolsVersion),
   nologo,
   properties: {
-    Platform: solutionPlatform
+    Platform: solutionPlatform,
+    ...solutionProperties
   },
   customArgs: commander.args
 };
