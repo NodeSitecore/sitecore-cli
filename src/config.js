@@ -124,10 +124,11 @@ class Config {
     this.set('licensePath', formatPath('./Data/license.xml'));
     this.set('solutionName', 'Base');
     this.set('buildConfiguration', 'Debug');
-    this.set('buildToolsVersion', '15.0');
+    this.set('buildToolsVersion', 15.0);
     this.set('buildMaxCpuCount', 0);
     this.set('buildVerbosity', 'minimal');
-    this.set('buildPlatform', 'AnyCPU');
+    this.set('buildPlatform', 'Any CPU');
+    this.set('buildProperties', {});
     this.set('buildNodeReuse', false);
     this.set('buildLogCommand', false);
     this.set('buildTargets', ['Build']);
