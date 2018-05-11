@@ -127,12 +127,29 @@ class Config {
     this.set('buildToolsVersion', 15.0);
     this.set('buildMaxCpuCount', 0);
     this.set('buildVerbosity', 'minimal');
-    this.set('buildPlatform', 'Any CPU');
-    this.set('buildProperties', {});
     this.set('buildNodeReuse', false);
     this.set('buildLogCommand', false);
-    this.set('buildTargets', ['Build']);
     this.set('excludeFilesFromDeployment', ['packages.config']);
+
+    // build
+    this.set('buildTargets', [ 'Build' ]);
+    this.set('buildPlatform', 'Any CPU');
+    this.set('buildProperties', {});
+
+    // publish
+    this.set('publishTargets', [ 'Build' ]);
+    this.set('publishPlatform', 'AnyCpu');
+    this.set('publishProperties', {
+      DeployOnBuild: 'true',
+      DeployDefaultTarget: 'WebPublish',
+      WebPublishMethod: 'FileSystem',
+      DeleteExistingFiles: 'false',
+      _FindDependencies: 'false'
+    });
+
+    this.set('foundationPath', './src/Foundation');
+    this.set('featurePath', './src/Feature');
+    this.set('projectPath', './src/Project');
 
     this.readConfiguration();
     this.readDevConfiguration();

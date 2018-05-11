@@ -12,6 +12,7 @@ commander
   .command('restore', 'Restore all NuGet Packages')
 //  .command('install', 'Install a sitecore package')
   .command('build', 'Build project solution')
+  .command('publish', 'Publish project solution')
   .command('unicorn [action] [configs ...]', 'Perform a Unicorn synchronisation')
   .command('publish', 'Publish content (Foundation, Feature, Project)')
   .command('proxy-server', 'Run a proxy server')

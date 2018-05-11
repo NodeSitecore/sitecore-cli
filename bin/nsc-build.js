@@ -8,7 +8,7 @@ commander
   .alias('nsc build')
   .usage('[options]')
   .option(
-    ' -a, --architecture <arch>',
+    '-a, --architecture <arch>',
     'Specify the Architecture (Auto-detected, x86, x84)'
   )
   .option(
@@ -84,7 +84,7 @@ const options = {
     Platform: solutionPlatform,
     ...solutionProperties
   },
-  customArgs: commander.args
+  customArgs: commander.args.slice(0, commander.args.length - 1)
 };
 
 buildSolution(config.solutionPath, options);
