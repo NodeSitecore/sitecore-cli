@@ -5,5 +5,13 @@
   "remote": "origin",
   "ignores": [],
   "syncAfterFinish": false,
-  "postFinish": ""
+  "postFinish": "",
+  "skipTest": false,
+  "branchTypes": {
+    "feat": "feat",
+    "fix": "fix",
+    "chore": "chore",
+    "docs": "docs"
+  },
+  "refs": {}
 }
