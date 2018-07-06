@@ -1,7 +1,7 @@
 const gulp = require('gulp');
+const config = require('@node-sitecore/config');
 const { Sinon } = require('../tools');
 const copyLicense = require('../../src/copy-license');
-const config = require('../../src/config');
 
 describe('copyLicense', () => {
   describe('when some files are not excluded', () => {

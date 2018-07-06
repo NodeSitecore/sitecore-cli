@@ -1,9 +1,8 @@
-const configuration = require('./config');
+const configuration = require('@node-sitecore/config');
 const buildSolution = require('./build-solution');
 const nugetRestore = require('./nuget-restore');
 const unicorn = require('./unicorn');
 const copyLicense = require('./copy-license');
-const copyAssemblies = require('./copy-assemblies');
 const publish = require('./publish');
 
 module.exports = {
@@ -12,6 +11,5 @@ module.exports = {
   nugetRestore,
   unicorn,
   copyLicense,
-  copyAssemblies,
   publish
 };

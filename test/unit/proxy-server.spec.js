@@ -1,15 +1,15 @@
 const browserSync = require('browser-sync');
+const config = require('@node-sitecore/config');
 const {
   Sinon
 } = require('../tools');
-const config = require('../../src/config');
 const path = require('path');
 const execa = require('execa');
-const formatPath = require('../../src/format-path');
+const formatPath = require('../../src/utils/format-path');
 const proxyServer = require('../../src/proxy-server');
 
 describe('proxyServer', () => {
-  const staticPath = formatPath(path.join(config.get('instanceRoot'), config.get('websiteRoot')));
+  const staticPath = formatPath(path.join(config.buildRoot, config.get('websiteRoot')));
 
   before(() => {
     this.browserSyncStub = {

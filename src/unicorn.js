@@ -7,7 +7,7 @@ const uuidv4 = require('uuid/v4');
 const request = require('request-promise-native');
 const chalk = require('chalk');
 const log = require('fancy-log');
-const config = require('./config');
+const config = require('@node-sitecore/config');
 
 const UNICORN_CONF = 'unicorn-configurations.ashx';
 
@@ -39,7 +39,7 @@ module.exports = {
       execa.shellSync(`powershell -executionpolicy unrestricted "${syncScript}"`, {
         cwd: `${__dirname}/unicorn/`,
         maxBuffer: 1024 * 500,
-        stdio: [ 'inherit', 'inherit', 'inherit' ]
+        stdio: ['inherit', 'inherit', 'inherit']
       });
     } catch (er) {
       // / console.error(er);
@@ -66,7 +66,7 @@ module.exports = {
         /* istanbul ignore next */
         if (err !== null) throw err;
 
-        secret = result.configuration.sitecore[ 0 ].unicorn[ 0 ].authenticationProvider[ 0 ].SharedSecret[ 0 ];
+        secret = result.configuration.sitecore[0].unicorn[0].authenticationProvider[0].SharedSecret[0];
       });
 
       return secret;

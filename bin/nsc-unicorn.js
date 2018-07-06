@@ -7,7 +7,7 @@ const inquirer = require('inquirer');
 const log = require('fancy-log');
 const chalk = require('chalk');
 const unicorn = require('../src/unicorn');
-const config = require('../src/config');
+const config = require('@node-sitecore/config');
 
 const options = {
   action: 'wizard',
@@ -38,7 +38,7 @@ commander.on('--help', () => {
 switch (options.action) {
   default:
 
-    config.checkPreconditions();
+    // config.checkPreconditions();
 
     unicorn
       .getConfigurations()
@@ -67,7 +67,7 @@ switch (options.action) {
     break;
 
   case 'sync':
-    config.checkPreconditions();
+    // config.checkPreconditions();
 
     unicorn.sync({
       siteUrl: config.siteUrl,

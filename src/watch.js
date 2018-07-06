@@ -1,9 +1,9 @@
 const gulp = require('gulp');
 const log = require('fancy-log');
 const tap = require('gulp-tap');
-const config = require('./config');
+const config = require('@node-sitecore/config');
 const path = require('path');
-const formatPath = require('./format-path');
+const formatPath = require('./utils/format-path');
 
 module.exports = {
   /**
@@ -15,7 +15,7 @@ module.exports = {
       src, dest, files, exclude
     } = options;
 
-    const base = config.projectRoot;
+    const base = config.srcRoot;
     const baseGlob = base.replace(/\\/g, '/');
     const srcGlob = src.replace(/\\/g, '/');
     const roots = [ `${baseGlob}/${srcGlob}` ];
