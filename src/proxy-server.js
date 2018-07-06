@@ -2,8 +2,8 @@ const chalk = require('chalk');
 const path = require('path');
 const log = require('fancy-log');
 const browserSync = require('browser-sync');
-const config = require('./config');
-const formatPath = require('./format-path');
+const config = require('@node-sitecore/config');
+const formatPath = require('./utils/format-path');
 const execa = require('execa');
 
 module.exports = (options) => {
@@ -18,7 +18,7 @@ module.exports = (options) => {
     url, port, logLevel
   } = options;
 
-  const staticPath = formatPath(path.join(config.get('instanceRoot'), config.get('websiteRoot')));
+  const staticPath = formatPath(path.join(config.buildRoot, config.get('websiteRoot')));
 
   if (options.concurrently) {
     execa.shell(options.concurrently, {

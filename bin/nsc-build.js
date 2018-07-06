@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const commander = require('commander');
-
-const config = require('../src/config');
+const config = require('@node-sitecore/config');
 const buildSolution = require('../src/build-solution');
 
 commander

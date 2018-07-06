@@ -3,8 +3,8 @@ const execa = require('execa');
 const request = require('request-promise-native');
 const { expect, Sinon } = require('../tools');
 const unicorn = require('../../src/unicorn');
-const config = require('../../src/config');
-const formatPath = require('../../src/format-path');
+const config = require('@node-sitecore/config');
+const formatPath = require('../../src/utils/format-path');
 
 const {
   writeSharedSecretKey, getUnicornSharedSecretKey, sync, formatUrl

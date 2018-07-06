@@ -2,7 +2,7 @@
 
 const commander = require('commander');
 
-const config = require('../src/config');
+const config = require('@node-sitecore/config');
 const publish = require('../src/publish');
 
 let publishType = 'all';
@@ -105,27 +105,27 @@ switch (publishType) {
   case 'all':
   default:
     paths = [
-      `${config.get('foundationPath')}/**/code/*.csproj`,
-      `${config.get('featurePath')}/**/code/*.csproj`,
-      `${config.get('projectPath')}/**/code/*.csproj`
+      `${config.get('foundationRoot')}/**/code/*.csproj`,
+      `${config.get('featureRoot')}/**/code/*.csproj`,
+      `${config.get('projectRoot')}/**/code/*.csproj`
     ];
 
     break;
   case 'Foundation':
     paths = [
-      `${config.get('foundationPath')}/**/code/*.csproj`
+      `${config.get('foundationRoot')}/**/code/*.csproj`
     ];
     break;
 
   case 'Feature':
     paths = [
-      `${config.get('featurePath')}/**/code/*.csproj`
+      `${config.get('featureRoot')}/**/code/*.csproj`
     ];
     break;
 
   case 'Project':
     paths = [
-      `${config.get('featurePath')}/**/code/*.csproj`
+      `${config.get('featureRoot')}/**/code/*.csproj`
     ];
     break;
 }

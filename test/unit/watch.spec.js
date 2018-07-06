@@ -7,7 +7,7 @@ const watch = require('proxyquire')('../../src/watch', {
   'gulp-tap': tapStub
 });
 
-const formatPath = require('../../src/format-path');
+const formatPath = require('../../src/utils/format-path');
 
 describe('watch', () => {
   describe('watch', () => {
