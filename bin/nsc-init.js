@@ -43,9 +43,9 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'sitecoreLibrairiesRoot',
+    name: 'sitecoreLibrariesRoot',
     message: 'What is the relative path of the Sitecore librairies  (from instanceRoot) ?',
-    default: config.get('sitecoreLibrairiesRoot'),
+    default: config.get('sitecoreLibrariesRoot'),
     required: true
   },
   {
