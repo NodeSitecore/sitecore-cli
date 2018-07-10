@@ -1,10 +1,10 @@
 const browserSync = require('browser-sync');
 const config = require('@node-sitecore/config');
+const path = require('path');
+const execa = require('execa');
 const {
   Sinon
 } = require('../tools');
-const path = require('path');
-const execa = require('execa');
 const formatPath = require('../../src/utils/format-path');
 const proxyServer = require('../../src/proxy-server');
 

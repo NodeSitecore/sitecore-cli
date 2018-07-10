@@ -3,8 +3,8 @@ const path = require('path');
 const log = require('fancy-log');
 const browserSync = require('browser-sync');
 const config = require('@node-sitecore/config');
-const formatPath = require('./utils/format-path');
 const execa = require('execa');
+const formatPath = require('./utils/format-path');
 
 module.exports = (options) => {
   options = Object.assign({

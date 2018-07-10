@@ -5,22 +5,20 @@ const debug = require('gulp-debug');
 const log = require('fancy-log');
 
 
-const publishStream = (stream, dest, options) =>
-  stream
-    .pipe(debug({ title: 'Building project:' }))
-    .pipe(msbuild({
-      ...options,
-      properties: {
-        ...options.properties,
-        publishUrl: dest,
-      }
-    }));
+const publishStream = (stream, dest, options) => stream
+  .pipe(debug({ title: 'Building project:' }))
+  .pipe(msbuild({
+    ...options,
+    properties: {
+      ...options.properties,
+      publishUrl: dest,
+    }
+  }));
 
 module.exports = (src, dest, options) => {
   log(`Publish to ${dest} folder`);
   gulp
     .src([].concat(src))
-    .pipe(foreach((stream) =>
-      publishStream(stream, dest, options)
+    .pipe(foreach((stream) => publishStream(stream, dest, options)
     ));
 };

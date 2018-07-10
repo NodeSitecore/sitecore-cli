@@ -16,4 +16,3 @@ commander
   .command('publish', 'Publish content (Foundation, Feature, Project)')
   .command('proxy-server', 'Run a proxy server')
   .parse(process.argv);
-

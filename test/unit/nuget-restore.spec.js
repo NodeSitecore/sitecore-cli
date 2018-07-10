@@ -1,11 +1,12 @@
 const gulp = require('gulp');
-const { Sinon } = require('../tools');
 
 const gulpNugetRestoreStub = Sinon.stub();
 
 const nugetRestore = require('proxyquire')('../../src/nuget-restore', {
   'gulp-nuget-restore': gulpNugetRestoreStub
 });
+
+const { Sinon } = require('../tools');
 
 describe('nugetRestore', () => {
   before(() => {

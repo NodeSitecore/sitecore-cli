@@ -1,11 +1,12 @@
 const gulp = require('gulp');
-const { Sinon } = require('../tools');
 
 const gulpMsBuild = Sinon.stub();
 
 const buildSolution = require('proxyquire')('../../src/build-solution', {
   'gulp-msbuild': gulpMsBuild,
 });
+
+const { Sinon } = require('../tools');
 
 describe('buildSolution', () => {
   before(() => {

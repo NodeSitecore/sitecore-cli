@@ -1,9 +1,9 @@
 const fs = require('fs');
 const execa = require('execa');
 const request = require('request-promise-native');
+const config = require('@node-sitecore/config');
 const { expect, Sinon } = require('../tools');
 const unicorn = require('../../src/unicorn');
-const config = require('@node-sitecore/config');
 const formatPath = require('../../src/utils/format-path');
 
 const {
@@ -262,11 +262,10 @@ describe('Unicorn', () => {
       this.writeUnicornConfigurationsFileStub.should.have.been.calledWithExactly();
     });
 
-    it('should call the unicorn-configuration.ashx web service', () =>
-      this.requestGetStub.should.have.been.calledWithExactly({
-        uri: `${config.siteUrl}/unicorn-configurations.ashx`,
-        json: true
-      })
+    it('should call the unicorn-configuration.ashx web service', () => this.requestGetStub.should.have.been.calledWithExactly({
+      uri: `${config.siteUrl}/unicorn-configurations.ashx`,
+      json: true
+    })
     );
 
     it('should return a promise', () => this.result.should.eventually.deep.equal({ response: 'response' }));

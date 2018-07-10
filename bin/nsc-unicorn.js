@@ -6,8 +6,8 @@ const Table = require('cli-table');
 const inquirer = require('inquirer');
 const log = require('fancy-log');
 const chalk = require('chalk');
-const unicorn = require('../src/unicorn');
 const config = require('@node-sitecore/config');
+const unicorn = require('../src/unicorn');
 
 const options = {
   action: 'wizard',

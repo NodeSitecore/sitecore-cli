@@ -4,8 +4,8 @@
 const inquirer = require('inquirer');
 const commander = require('commander');
 const log = require('fancy-log');
-const proxyServer = require('../src/proxy-server');
 const config = require('@node-sitecore/config');
+const proxyServer = require('../src/proxy-server');
 
 commander
   .alias('nsc proxy-server')

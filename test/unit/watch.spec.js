@@ -1,11 +1,12 @@
-const gulp = require('gulp');
-const { Sinon } = require('../tools');
-
 const tapStub = Sinon.stub();
 
 const watch = require('proxyquire')('../../src/watch', {
   'gulp-tap': tapStub
 });
+
+const gulp = require('gulp');
+const { Sinon } = require('../tools');
+
 
 const formatPath = require('../../src/utils/format-path');
 
