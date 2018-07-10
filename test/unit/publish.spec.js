@@ -1,4 +1,6 @@
+/* eslint-disable import/order */
 const gulp = require('gulp');
+const { Sinon } = require('../tools');
 
 const msBuild = Sinon.stub();
 const foreach = Sinon.stub();
@@ -7,9 +9,6 @@ const publish = require('proxyquire')('../../src/publish', {
   'gulp-msbuild': msBuild,
   'gulp-foreach': foreach
 });
-
-const { Sinon } = require('../tools');
-
 
 describe('publish', () => {
   before(() => {

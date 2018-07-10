@@ -1,3 +1,6 @@
+/* eslint-disable import/order */
+const { Sinon } = require('../tools');
+
 const tapStub = Sinon.stub();
 
 const watch = require('proxyquire')('../../src/watch', {
@@ -5,8 +8,6 @@ const watch = require('proxyquire')('../../src/watch', {
 });
 
 const gulp = require('gulp');
-const { Sinon } = require('../tools');
-
 
 const formatPath = require('../../src/utils/format-path');
 
@@ -31,8 +32,8 @@ describe('watch', () => {
           exclude: true
         });
 
-        tapStub.getCall(0).args[ 0 ]('stream', { path: '/path' });
-        this.watchStub.getCall(0).args[ 1 ]({ type: 'changed', path: '/other' });
+        tapStub.getCall(0).args[0]('stream', { path: '/path' });
+        this.watchStub.getCall(0).args[1]({ type: 'changed', path: '/other' });
       });
 
       after(() => {
@@ -44,7 +45,7 @@ describe('watch', () => {
 
       it('should call gulp.src() (1)', () => {
         this.srcStub.getCall(0).should.have.been.calledWithExactly(
-          [ './src/src', '!./src/**/obj/src' ],
+          ['./src/src', '!./src/**/obj/src'],
           { base: formatPath('.\\src') }
         );
       });
@@ -92,8 +93,8 @@ describe('watch', () => {
           exclude: false
         });
 
-        tapStub.getCall(0).args[ 0 ]('stream', { path: '/path' });
-        this.watchStub.getCall(0).args[ 1 ]({ type: 'changed', path: '/other' });
+        tapStub.getCall(0).args[0]('stream', { path: '/path' });
+        this.watchStub.getCall(0).args[1]({ type: 'changed', path: '/other' });
       });
 
       after(() => {
@@ -105,7 +106,7 @@ describe('watch', () => {
 
       it('should call gulp.src() (1)', () => {
         this.srcStub.getCall(0).should.have.been.calledWithExactly(
-          [ './src/src' ],
+          ['./src/src'],
           { base: formatPath('.\\src') }
         );
       });
