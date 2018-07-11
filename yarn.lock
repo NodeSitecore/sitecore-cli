@@ -89,9 +89,9 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@node-sitecore/config@^1.3.1":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@node-sitecore/config/-/config-1.3.2.tgz#fcd0aabc6acfd48ccc55bd638e0d896f366c5b54"
+"@node-sitecore/config@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@node-sitecore/config/-/config-1.4.2.tgz#8f582c572f5b93c1d79603c0642fbb771b67893a"
   dependencies:
     nconf "^0.10.0"
 
