@@ -45,8 +45,8 @@ describe('watch', () => {
 
       it('should call gulp.src() (1)', () => {
         this.srcStub.getCall(0).should.have.been.calledWithExactly(
-          ['./src/src', '!./src/**/obj/src'],
-          { base: formatPath('.\\src') }
+          [`${process.cwd()}/src/src`, `!${process.cwd()}/src/**/obj/src`],
+          { base: `${process.cwd()}/src` }
         );
       });
 
@@ -106,8 +106,8 @@ describe('watch', () => {
 
       it('should call gulp.src() (1)', () => {
         this.srcStub.getCall(0).should.have.been.calledWithExactly(
-          ['./src/src'],
-          { base: formatPath('.\\src') }
+          [`${process.cwd()}/src/src`],
+          { base: `${process.cwd()}/src` }
         );
       });
 

@@ -17,49 +17,49 @@ const questions = [
     type: 'input',
     name: 'siteUrl',
     message: 'What is the website url ?',
-    default: config.siteUrl,
+    default: config.nconf.get('siteUrl'),
     required: true
   },
   {
     type: 'input',
     name: 'instanceRoot',
     message: 'What is the path of your instance ?',
-    default: config.instanceRoot,
+    default: config.nconf.get('instanceRoot'),
     required: true
   },
   {
     type: 'input',
     name: 'websiteRoot',
-    message: 'What is the relative path of your Website (from instanceRoot) ?',
-    default: config.get('websiteRoot'),
+    message: 'What is the relative path of your Website (from instanceDir) ?',
+    default: config.nconf.get('websiteRoot'),
     required: true
   },
   {
     type: 'input',
     name: 'licensePath',
-    message: 'What is the relative path of license.xml (from instanceRoot) ?',
-    default: config.get('licensePath'),
+    message: 'What is the relative path of license.xml (from instanceDir) ?',
+    default: config.nconf.get('licensePath'),
     required: true
   },
   {
     type: 'input',
     name: 'sitecoreLibrariesRoot',
-    message: 'What is the relative path of the Sitecore librairies  (from instanceRoot) ?',
-    default: config.get('sitecoreLibrariesRoot'),
+    message: 'What is the relative path of the Sitecore librairies  (from instanceDir) ?',
+    default: config.nconf.get('sitecoreLibrariesRoot'),
     required: true
   },
   {
     type: 'input',
     name: 'solutionName',
     message: 'What is the name of your Solution.sln (MySitecore.sln) ?',
-    default: config.get('solutionName'),
+    default: config.nconf.get('solutionName'),
     required: true
   },
   {
     type: 'input',
     name: 'buildToolsVersion',
     message: 'What is the version of your Microsoft Build Tools (MsBuildTools) ?',
-    default: config.get('buildToolsVersion'),
+    default: String(config.nconf.get('buildToolsVersion')),
     required: true
   }
 ];
@@ -73,6 +73,7 @@ function runInteractive() {
         }
         config.set(key, answers[key] || config.get(key));
       });
+      config.set('masterWebsite', config.get('currentWebsite'));
       config.create();
     });
 }
