@@ -4,12 +4,18 @@ const commander = require('commander');
 
 const config = require('@node-sitecore/config');
 const publish = require('../src/publish');
+const msBuildPaths = require('../src/utils/ms-build-paths');
 
-let publishType = 'all';
+let publishType = 'solution';
 
 commander
   .alias('nsc publish')
-  .usage('<Feature|Foundation|Project|all> [options]')
+  .usage('[Feature|Foundation|Project|solution] [options]')
+  .option(
+    '--paths <arch>',
+    'Specify solution or project you want to publish',
+    (v) => v.split(',')
+  )
   .option(
     '-a, --architecture <arch>',
     'Specify the Architecture (Auto-detected, x86, x84)'
@@ -99,35 +105,8 @@ const options = {
   customArgs: commander.args.slice(0, commander.args.length - 1).filter((item) => item !== publishType)
 };
 
-let paths;
-
-switch (publishType) {
-  case 'all':
-  default:
-    paths = [
-      `${config.get('foundationRoot')}/**/code/*.csproj`,
-      `${config.get('featureRoot')}/**/code/*.csproj`,
-      `${config.get('projectRoot')}/**/code/*.csproj`
-    ];
-
-    break;
-  case 'Foundation':
-    paths = [
-      `${config.get('foundationRoot')}/**/code/*.csproj`
-    ];
-    break;
-
-  case 'Feature':
-    paths = [
-      `${config.get('featureRoot')}/**/code/*.csproj`
-    ];
-    break;
-
-  case 'Project':
-    paths = [
-      `${config.get('featureRoot')}/**/code/*.csproj`
-    ];
-    break;
-}
-
-publish(paths, dest, options);
+publish(
+  msBuildPaths({ process: 'publish', type: publishType, paths: commander.paths }),
+  dest,
+  options
+);

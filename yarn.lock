@@ -89,9 +89,9 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@node-sitecore/config@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@node-sitecore/config/-/config-1.4.2.tgz#8f582c572f5b93c1d79603c0642fbb771b67893a"
+"@node-sitecore/config@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@node-sitecore/config/-/config-1.5.0.tgz#7d6868353b1498b23692f38bef00e1bed2464bb0"
   dependencies:
     nconf "^0.10.0"
 
@@ -1594,14 +1594,14 @@ collection-visit@^1.0.0:
     object-visit "^1.0.0"
 
 color-convert@^1.9.0:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.1.tgz#c1261107aeb2f294ebffec9ed9ecad529a6097ed"
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.2.tgz#49881b8fba67df12a96bdf3f56c0aab9e7913147"
   dependencies:
-    color-name "^1.1.1"
+    color-name "1.1.1"
 
-color-name@^1.1.1:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
+color-name@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
 
 color-support@^1.1.3:
   version "1.1.3"
@@ -1617,11 +1617,11 @@ combined-stream@1.0.6, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.15.1, commander@^2.11.0, commander@^2.2.0:
+commander@2.15.1, commander@^2.2.0:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
-commander@^2.16.0:
+commander@^2.11.0, commander@^2.16.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.16.0.tgz#f16390593996ceb4f3eeb020b31d78528f7f8a50"
 
@@ -2191,9 +2191,15 @@ env-ci@^2.0.0:
     execa "^0.10.0"
     java-properties "^0.2.9"
 
-error-ex@^1.2.0, error-ex@^1.3.1:
+error-ex@^1.2.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/error-ex/-/error-ex-1.3.1.tgz#f855a86ce61adc4e8621c3cda21e7a7612c3a8dc"
+  dependencies:
+    is-arrayish "^0.2.1"
+
+error-ex@^1.3.1:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/error-ex/-/error-ex-1.3.2.tgz#b4ac40648107fdcdcfae242f428bea8a14d4f1bf"
   dependencies:
     is-arrayish "^0.2.1"
 
@@ -2867,8 +2873,8 @@ getpass@^0.1.1:
     assert-plus "^1.0.0"
 
 gflow@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/gflow/-/gflow-2.1.5.tgz#13b5763ffe713dc5111e6cce151ca3bae3fee3ef"
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/gflow/-/gflow-2.1.6.tgz#e539813a07e369fa27f8aa7bb9e0262b541c7365"
   dependencies:
     any-observable "^0.2.0"
     chalk "^2.3.0"
@@ -3338,7 +3344,11 @@ hook-std@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hook-std/-/hook-std-1.0.1.tgz#fc91e6836c5b174f405dc4b57aa2228e4c599981"
 
-hosted-git-info@^2.1.4, hosted-git-info@^2.6.0:
+hosted-git-info@^2.1.4:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
+
+hosted-git-info@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.6.0.tgz#23235b29ab230c576aab0d4f13fc046b0b038222"
 
@@ -3397,17 +3407,17 @@ iconv-lite@0.4.19:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
-iconv-lite@^0.4.17, iconv-lite@^0.4.4:
-  version "0.4.21"
-  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.21.tgz#c47f8733d02171189ebc4a400f3218d348094798"
-  dependencies:
-    safer-buffer "^2.1.0"
-
-iconv-lite@^0.4.22:
+iconv-lite@^0.4.17, iconv-lite@^0.4.22:
   version "0.4.23"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.23.tgz#297871f63be507adcfbfca715d0cd0eed84e9a63"
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
+
+iconv-lite@^0.4.4:
+  version "0.4.21"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.21.tgz#c47f8733d02171189ebc4a400f3218d348094798"
+  dependencies:
+    safer-buffer "^2.1.0"
 
 ignore-walk@^3.0.1:
   version "3.0.1"
@@ -4517,8 +4527,8 @@ lowercase-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.1.tgz#6f9e30b47084d971a7c820ff15a6c5167b74c26f"
 
 lru-cache@^4.0.1:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.2.tgz#45234b2e6e2f2b33da125624c4664929a0224c3f"
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.3.tgz#a1175cf3496dfc8436c156c334b4955992bce69c"
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
@@ -5203,8 +5213,8 @@ p-is-promise@^1.1.0:
   resolved "https://registry.yarnpkg.com/p-is-promise/-/p-is-promise-1.1.0.tgz#9c9456989e9f6588017b0434d56097675c3da05e"
 
 p-limit@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-1.2.0.tgz#0e92b6bedcb59f022c13d0f1949dc82d15909f1c"
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-1.3.0.tgz#b86bd5f0c25690911c7590fcbfc2010d54b3ccb8"
   dependencies:
     p-try "^1.0.0"
 
@@ -5990,8 +6000,8 @@ rx@4.1.0:
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
 
 rxjs@^5.4.2:
-  version "5.5.10"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.10.tgz#fde02d7a614f6c8683d0d1957827f492e09db045"
+  version "5.5.11"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.11.tgz#f733027ca43e3bec6b994473be4ab98ad43ced87"
   dependencies:
     symbol-observable "1.0.1"
 
@@ -6893,8 +6903,8 @@ unique-string@^1.0.0:
     crypto-random-string "^1.0.0"
 
 universalify@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.1.tgz#fa71badd4437af4c148841e3b3b165f9e9e590b7"
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
