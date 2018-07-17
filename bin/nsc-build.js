@@ -1,11 +1,19 @@
 #!/usr/bin/env node
 const commander = require('commander');
 const config = require('@node-sitecore/config');
-const buildSolution = require('../src/build-solution');
+const buildSolution = require('../src/build');
+const msBuildPaths = require('../src/utils/ms-build-paths');
+
+let publishType = 'solution';
 
 commander
   .alias('nsc build')
-  .usage('[options]')
+  .usage('[Feature|Foundation|Project|solution] [options]')
+  .option(
+    '--paths <arch>',
+    'Specify solution or project you want to build',
+    (v) => v.split(',')
+  )
   .option(
     '-a, --architecture <arch>',
     'Specify the Architecture (Auto-detected, x86, x84)'
@@ -53,6 +61,9 @@ commander
     'Logs the msbuild command that will be executed.',
     (v) => v + 1
   )
+  .action((_publishType_) => {
+    publishType = _publishType_;
+  })
   .parse(process.argv);
 
 const {
@@ -86,4 +97,7 @@ const options = {
   customArgs: commander.args.slice(0, commander.args.length - 1)
 };
 
-buildSolution(config.solutionPath, options);
+buildSolution(
+  msBuildPaths({ procces: 'build', type: publishType, paths: commander.paths }),
+  options
+);
