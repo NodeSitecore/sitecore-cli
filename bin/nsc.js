@@ -10,6 +10,7 @@ commander
   .version(pkg.version)
   .command('init', 'Init a Sitecore Project')
   .command('restore', 'Restore all NuGet Packages')
+  .command('nuget <action> [options]', 'Nuget commands')
   .command('build', 'Build project solution')
   .command('publish', 'Publish project solution')
   .command('unicorn [action] [configs ...]', 'Perform a Unicorn synchronisation')

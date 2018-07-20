@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 const config = require('@node-sitecore/config');
-const nugetRestore = require('../src/nuget-restore');
+const nuget = require('../src/nuget');
 
-nugetRestore(config.solutionPath);
+nuget.exec('restore', config.solutionPath);
