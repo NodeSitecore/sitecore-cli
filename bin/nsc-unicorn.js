@@ -41,7 +41,7 @@ switch (options.action) {
     // config.checkPreconditions();
 
     unicorn
-      .getConfigurations()
+      .getConfigurations(config)
       .then((configs) => {
         runInteractive(configs);
       });
@@ -49,14 +49,14 @@ switch (options.action) {
 
   case 'list':
     unicorn
-      .getConfigurations()
+      .getConfigurations(config)
       .then((configs) => {
         const table = new Table({
           head: [ 'Name', 'Descriptions', 'Dependencies' ],
           colWidths: [ 40, 50, 50 ]
         });
 
-        configs = configs.map((conf) => [ conf.name, conf.description || '', conf.dependencies.join(' > ') ]);
+        configs = configs.map((conf) => [ conf.name, conf.description || '', conf.dependencies.join('\n  > ') ]);
 
         table.push(...configs);
 
@@ -68,7 +68,6 @@ switch (options.action) {
 
   case 'sync':
     // config.checkPreconditions();
-
     unicorn.sync({
       siteUrl: config.siteUrl,
       authConfigFile: config.authConfigFile,

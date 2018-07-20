@@ -72,6 +72,70 @@ Function Sync-Unicorn {
 	# $result
 }
 
+Function GetConfig-Unicorn {
+	Param(
+		[Parameter(Mandatory=$True)]
+		[string]$ControlPanelUrl,
+
+		[Parameter(Mandatory=$True)]
+		[string]$GetConfigUrl,
+
+		[Parameter(Mandatory=$True)]
+		[string]$SharedSecret,
+
+		[switch]$DebugSecurity
+	)
+
+	# PARSE THE URL TO REQUEST
+	$url = $GetConfigUrl
+
+	echo "Run $url";
+
+	if($DebugSecurity) {
+		Write-Host "GetConfig-Unicorn: Preparing authorization for $url"
+	}
+
+	# GET AN AUTH CHALLENGE
+	$challenge = Get-Challenge -ControlPanelUrl $ControlPanelUrl
+
+	if($DebugSecurity) {
+		Write-Host "GetConfig-Unicorn: Received challenge from remote server: $challenge"
+	}
+
+	# CREATE A SIGNATURE WITH THE SHARED SECRET AND CHALLENGE
+	$signatureService = New-Object MicroCHAP.SignatureService -ArgumentList $SharedSecret
+	$signature = $signatureService.CreateSignature($challenge, $url, $null)
+
+	if($DebugSecurity) {
+		Write-Host "GetConfig-Unicorn: MAC '$($signature.SignatureSource)'"
+		Write-Host "GetConfig-Unicorn: HMAC '$($signature.SignatureHash)'"
+		Write-Host "GetConfig-Unicorn: If you get authorization failures compare the values above to the Sitecore logs."
+	}
+
+	$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+	$headers.Add("Accept", 'application/json')
+	$headers.Add("X-MC-MAC", $signature.SignatureHash)
+	$headers.Add("X-MC-Nonce", $challenge)
+
+	# USING THE SIGNATURE, EXECUTE UNICORN
+	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+	$result = Invoke-RestMethod -Uri $url -Headers $headers
+
+
+	# if($result.TrimEnd().EndsWith('****ERROR OCCURRED****')) {
+	#	throw "Unicorn $Verb to $url returned an error. See the preceding log for details."
+	# }
+
+	# Uncomment this if you want the console results to be returned by the function
+	# $result
+	Write-Host "----- JSON RESPONSE";
+	Write-Host "$(ConvertTo-Json $result -Compress)";
+	Write-Host "----- JSON RESPONSE";
+
+	$result.Content
+}
+
+
 Function Get-Challenge {
 	Param(
 		[Parameter(Mandatory=$True)]
@@ -101,22 +165,6 @@ Function Invoke-StreamingWebRequest($Uri, $MAC, $Nonce) {
 	while(-not $responseStreamReader.EndOfStream) {
 		$line = $responseStreamReader.ReadLine()
 
-		if($line.StartsWith('Error:')) {
-			Write-Host $line.Substring(7) -ForegroundColor Red
-		}
-		elseif($line.StartsWith('Warning:')) {
-			Write-Host $line.Substring(9) -ForegroundColor Yellow
-		}
-		elseif($line.StartsWith('Debug:')) {
-			Write-Host $line.Substring(7) -ForegroundColor Gray
-		}
-		elseif($line.StartsWith('Info:')) {
-			Write-Host $line.Substring(6) -ForegroundColor White
-		}
-		else {
-			Write-Host $line -ForegroundColor White
-		}
-
 		[void]$responseText.AppendLine($line)
 	}
 
@@ -124,3 +172,4 @@ Function Invoke-StreamingWebRequest($Uri, $MAC, $Nonce) {
 }
 
 Export-ModuleMember -Function Sync-Unicorn
+Export-ModuleMember -Function GetConfig-Unicorn

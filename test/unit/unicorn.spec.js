@@ -1,9 +1,7 @@
 const fs = require('fs');
 const execa = require('execa');
-const request = require('request-promise-native');
-const config = require('@node-sitecore/config');
 const { expect, Sinon } = require('../tools');
-const unicorn = require('../../src/unicorn');
+const unicorn = require('../../src/unicorn/index');
 const formatPath = require('../../src/utils/format-path');
 
 const {
@@ -165,7 +163,16 @@ describe('Unicorn', () => {
   describe('sync()', () => {
     describe('when we want to synchronize all unicorn configuration', () => {
       before(() => {
-        this.shellSyncStub = Sinon.stub(execa, 'shellSync');
+        this.shellSyncStub = Sinon.stub(execa, 'shell');
+        this.shellSyncStub.returns({
+          stdout: {
+            on: Sinon.stub()
+          },
+          stderr: {
+            on: Sinon.stub()
+          },
+          catch: Sinon.stub()
+        });
         this.getUnicornSharedSecretKeyStub = Sinon.stub(unicorn, 'getUnicornSharedSecretKey').returns('secretKey');
 
         sync({
@@ -188,16 +195,24 @@ describe('Unicorn', () => {
         this.shellSyncStub.should.have.been.calledWithExactly(Sinon.match((cmd) => typeof cmd === 'string'
           && cmd.match(/^powershell -executionpolicy unrestricted/)
           && cmd.match(/(\\|\/)unicorn(\\|\/)SyncAll\.ps1 -secret secretKey -url http:\/\/base.dev.local\/unicorn\.aspx/)), {
-          cwd: Sinon.match('/unicorn/'),
-          maxBuffer: 1024 * 500,
-          stdio: [ 'inherit', 'inherit', 'inherit' ]
+          cwd: Sinon.match.any,
+          maxBuffer: 1024 * 500
         });
       });
     });
 
     describe('when we want to synchronize a list of unicorn configuration', () => {
       before(() => {
-        this.shellSyncStub = Sinon.stub(execa, 'shellSync');
+        this.shellSyncStub = Sinon.stub(execa, 'shell');
+        this.shellSyncStub.returns({
+          stdout: {
+            on: Sinon.stub()
+          },
+          stderr: {
+            on: Sinon.stub()
+          },
+          catch: Sinon.stub()
+        });
         this.getUnicornSharedSecretKeyStub = Sinon.stub(unicorn, 'getUnicornSharedSecretKey').returns('secretKey');
 
         sync({
@@ -228,9 +243,8 @@ describe('Unicorn', () => {
         this.shellSyncStub.should.have.been.calledWithExactly(Sinon.match((cmd) => typeof cmd === 'string'
           && cmd.match(/^powershell -executionpolicy unrestricted/)
           && cmd.match(/(\\|\/)unicorn(\\|\/)Sync\.ps1 -secret secretKey -url http:\/\/base.dev.local\/unicorn\.aspx -configs Config1,Config2/)), {
-          cwd: Sinon.match(/(\\|\/)unicorn(\\|\/)/),
-          maxBuffer: 1024 * 500,
-          stdio: [ 'inherit', 'inherit', 'inherit' ]
+          cwd: Sinon.match.any,
+          maxBuffer: 1024 * 500
         });
       });
     });
@@ -247,28 +261,40 @@ describe('Unicorn', () => {
 
   describe('getConfigurations()', () => {
     before(() => {
-      this.requestGetStub = Sinon.stub(request, 'get').returns(Promise.resolve({ response: 'response' }));
-      this.writeUnicornConfigurationsFileStub = Sinon.stub(unicorn, 'writeUnicornConfigurationsFile');
+      this.execaStub = Sinon.stub(execa, 'shell');
+      this.execaStub.returns(Promise.resolve({
+        stdout: '----- JSON RESPONSE{"value": "value"}----- JSON RESPONSE'
+      }));
 
-      this.result = unicorn.getConfigurations();
+      this.writeUnicornConfigurationsFileStub = Sinon.stub(unicorn, 'writeUnicornConfigurationsFile');
+      this.getUnicornSharedSecretKey = Sinon.stub(unicorn, 'getUnicornSharedSecretKey').returns('secret');
+
+      this.result = unicorn.getConfigurations({
+        siteUrl: 'siteUrl'
+      });
+
       return this.result;
     });
     after(() => {
-      this.requestGetStub.restore();
+      this.execaStub.restore();
       this.writeUnicornConfigurationsFileStub.restore();
+      this.getUnicornSharedSecretKey.restore();
     });
 
     it('should write unicorn-configurations.ashx', () => {
       this.writeUnicornConfigurationsFileStub.should.have.been.calledWithExactly();
     });
 
-    it('should call the unicorn-configuration.ashx web service', () => this.requestGetStub.should.have.been.calledWithExactly({
-      uri: `${config.siteUrl}/unicorn-configurations.ashx`,
-      json: true
-    })
-    );
+    it('should call getUnicornSharedSecretKey', () => {
+      this.getUnicornSharedSecretKey.should.have.been.calledWithExactly({ siteUrl: 'siteUrl' });
+    });
 
-    it('should return a promise', () => this.result.should.eventually.deep.equal({ response: 'response' }));
+    it('should call execa and run script', () => {
+      this.execaStub.should.have.been.calledWithExactly(
+        Sinon.match('GetConfig.ps1 -secret secret -url siteUrl/unicorn.aspx -configUrl siteUrl/unicorn-configurations.ashx'),
+        Sinon.match.any
+      );
+    });
   });
 
   describe('writeUnicornConfigurationsFile()', () => {

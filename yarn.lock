@@ -89,9 +89,9 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@node-sitecore/config@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@node-sitecore/config/-/config-1.5.0.tgz#7d6868353b1498b23692f38bef00e1bed2464bb0"
+"@node-sitecore/config@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@node-sitecore/config/-/config-1.6.0.tgz#0b799b4fd6761499181b56b96b48ac6ab466ea74"
   dependencies:
     nconf "^0.10.0"
 
@@ -3143,13 +3143,6 @@ gulp-newer@^1.4.0:
     kew "^0.7.0"
     plugin-error "^0.1.2"
 
-gulp-nuget-restore@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/gulp-nuget-restore/-/gulp-nuget-restore-0.6.0.tgz#6d01786ca0f6890b1f338429f2a3dca24edef012"
-  dependencies:
-    gulp-util "^3.0.1"
-    through2 "^0.6.3"
-
 gulp-rename@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.3.0.tgz#2e789d8f563ab0c924eeb62967576f37ff4cb826"
@@ -3160,7 +3153,7 @@ gulp-tap@^1.0.1:
   dependencies:
     through2 "^2.0.3"
 
-gulp-util@>=3.0.0, gulp-util@^3.0.1:
+gulp-util@>=3.0.0:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -4728,10 +4721,6 @@ minimist-options@^3.0.1:
     arrify "^1.0.1"
     is-plain-obj "^1.1.0"
 
-minimist@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
-
 minimist@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.2.0.tgz#4dffe525dae2b864c66c2e23c6271d7afdecefce"
@@ -4767,8 +4756,6 @@ mixin-deep@^1.2.0:
 mkdirp@0.5.1, mkdirp@^0.5.0, mkdirp@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
-  dependencies:
-    minimist "0.0.8"
 
 mocha@^5.2.0:
   version "5.2.0"
@@ -6682,19 +6669,19 @@ through2@^0.5.0:
     readable-stream "~1.0.17"
     xtend "~3.0.0"
 
-through2@^0.6.3, through2@~0.6.3:
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
-  dependencies:
-    readable-stream ">=1.0.33-1 <1.1.0-0"
-    xtend ">=4.0.0 <4.1.0-0"
-
 through2@^2.0.0, through2@^2.0.2, through2@^2.0.3, through2@~2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
   dependencies:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
+
+through2@~0.6.3:
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
+  dependencies:
+    readable-stream ">=1.0.33-1 <1.1.0-0"
+    xtend ">=4.0.0 <4.1.0-0"
 
 through@2, "through@>=2.2.7 <3", through@^2.3.6:
   version "2.3.8"
