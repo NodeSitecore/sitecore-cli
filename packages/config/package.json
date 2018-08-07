@@ -1,0 +1,17 @@
+{
+  "name": "@node-sitecore/config",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Shared configuration for a sitecore project",
+  "main": "src/index.js",
+  "private": false,
+  "dependencies": {
+    "nconf": "^0.10.0",
+    "fs-extra": "^7.0.0"
+  },
+  "files": [
+    "src"
+  ],
+  "directories": {
+    "src": "./src"
+  }
+}

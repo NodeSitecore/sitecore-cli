@@ -1,0 +1,21 @@
+{
+  "name": "@node-sitecore/cli-plugin-fractal",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Plugin for NodeSiteCore CLI. Add support of fractal.",
+  "main": "index.js",
+  "private": false,
+  "peerDependencies": {
+    "@node-sitecore/config": "0.0.0-PLACEHOLDER"
+  },
+  "dependencies": {
+    "@frctl/fractal": "^1.1.7",
+    "globby": "^8.0.1"
+  },
+  "files": [
+    "src"
+  ],
+  "directories": {
+    "src": "./src",
+    "bin": "./bin"
+  }
+}

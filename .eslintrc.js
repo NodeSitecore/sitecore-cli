@@ -1,11 +1,26 @@
 module.exports = {
-  'extends': 'airbnb-base',
-  'env': {
-    'es6': true,
-    'node': true,
-    'mocha': true
+  plugins: ['prettier'],
+  extends: [
+    require.resolve('eslint-config-airbnb-base/rules/best-practices'),
+    require.resolve('eslint-config-airbnb-base/rules/errors'),
+    require.resolve('eslint-config-airbnb-base/rules/node'),
+    // require.resolve('eslint-config-airbnb-base/rules/style'),
+    require.resolve('eslint-config-airbnb-base/rules/variables'),
+    require.resolve('eslint-config-airbnb-base/rules/es6'),
+    require.resolve('eslint-config-airbnb-base/rules/imports')
+  ],
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module'
+  },
+  env: {
+    es6: true,
+    node: true,
+    mocha: true
   },
   rules: {
+    strict: 'error',
+    'prettier/prettier': 'error',
     'function-paren-newline': 'off',
     'no-underscore-dangle': 'off',
     'array-bracket-spacing': 'off',
