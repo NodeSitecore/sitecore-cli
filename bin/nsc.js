@@ -8,9 +8,14 @@ updateNotifier({ pkg, updateCheckInterval: 0 }).notify();
 
 commander
   .version(pkg.version)
+  .option(
+    '--configPath <path>',
+    'Path to .nscrc file'
+  )
   .command('init', 'Init a Sitecore Project')
   .command('restore', 'Restore all NuGet Packages')
   .command('nuget <action> [options]', 'Nuget commands')
+  .command('run', 'Run a powershell script')
   .command('build', 'Build project solution')
   .command('publish', 'Publish project solution')
   .command('unicorn [action] [configs ...]', 'Perform a Unicorn synchronisation')
