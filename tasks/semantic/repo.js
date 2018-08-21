@@ -71,14 +71,43 @@ module.exports = {
     return gulpRepo.publish();
   },
 
-  async success() {
+  async success(pluginConfig, context) {
+    const {
+      nextRelease: { version }
+    } = context;
+
+    const pkg = JSON.parse(fs.readFileSync('./package.json', { encoding: 'utf8' }));
     const { git, config } = gflow;
+    const {
+      repository: { url }
+    } = pkg;
+    const { GH_TOKEN } = process.env;
+    const repository = url.replace('https://', '');
 
     console.log('[Gflow release]', `Push to ${config.production}`);
+    const vuePressPath = './docs/.vuepress/dist';
 
     git.pushSync('--quiet', '--set-upstream', CI.ORIGIN, config.production);
     git.pushSync('-f', CI.ORIGIN, `${config.production}:refs/heads/${config.develop}`);
 
-    execa.sync('npm', ['run', 'docs:deploy']);
+    console.log('[Gflow release]', `Build documentation`);
+
+    await execa('npm', ['run', 'docs:build']);
+
+    await execa.shell('git init', {
+      cwd: vuePressPath
+    });
+
+    await execa.shell('git add -A', {
+      cwd: vuePressPath
+    });
+
+    await execa.shell(`git commit -m 'Deploy documentation v${version}'`, {
+      cwd: vuePressPath
+    });
+
+    await execa.shell(`git push -f https://${GH_TOKEN}@${repository} master:gh-pages'`, {
+      cwd: vuePressPath
+    });
   }
 };
