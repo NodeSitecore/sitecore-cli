@@ -5,8 +5,8 @@ module.exports = {
   verifyRelease: [],
   generateNotes: ['@semantic-release/release-notes-generator'],
   prepare: ['@semantic-release/npm', './tasks/semantic/repo.js'],
-  publish: ['@semantic-release/github', './tasks/semantic/repo.js'], // '@semantic-release/npm', ,
-  success: ['./tasks/semantic/repo.js', '@semantic-release/github'], // ,
+  publish: ['./tasks/semantic/repo.js', '@semantic-release/github'],
+  success: ['@semantic-release/github', './tasks/semantic/repo.js'], // ,
   fail: ['@semantic-release/github'],
   npmPublish: false
 };
