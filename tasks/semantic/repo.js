@@ -106,7 +106,7 @@ module.exports = {
       cwd: vuePressPath
     });
 
-    await execa.shell(`git push -f https://${GH_TOKEN}@${repository} master:gh-pages'`, {
+    await execa.shell(`git push -f https://${GH_TOKEN}@${repository} master:gh-pages`, {
       cwd: vuePressPath
     });
   }
