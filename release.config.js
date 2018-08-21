@@ -1,6 +1,6 @@
 module.exports = {
   branch: 'production',
-  verifyConditions: ['@semantic-release/npm', '@semantic-release/github'],
+  verifyConditions: ['@semantic-release/github', '@semantic-release/npm'],
   analyzeCommits: ['@semantic-release/commit-analyzer'],
   verifyRelease: [],
   generateNotes: ['@semantic-release/release-notes-generator'],

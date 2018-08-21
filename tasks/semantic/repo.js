@@ -3,15 +3,15 @@ const fs = require('fs');
 const logger = require('fancy-log');
 const gulpRepo = require('../gulp/repo');
 
-process.env.GH_TOKEN = '5e3ccfa78331b015885858c2d9c1058d29f640ba';
-
 module.exports = {
   /**
    *
    * @returns {Promise<T | never>}
    */
   async prepare(pluginConfig, context) {
-    const { nextRelease: { version } } = context;
+    const {
+      nextRelease: { version }
+    } = context;
 
     gflow.release.pre();
 
