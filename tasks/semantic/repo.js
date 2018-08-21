@@ -1,5 +1,5 @@
 const gflow = require('gflow');
-const fs = require('fs');
+const execa = require('execa');
 const logger = require('fancy-log');
 const gulpRepo = require('../gulp/repo');
 
@@ -24,6 +24,10 @@ module.exports = {
 
     await gulpRepo.clean();
     await gulpRepo.copy();
+
+    if (!pluginConfig.dryRun) {
+      await gflow.release.post();
+    }
   },
   /**
    *
@@ -31,14 +35,9 @@ module.exports = {
    */
   async publish(pluginConfig) {
     if (pluginConfig.dryRun) {
-      return gulpRepo.dryRun();
+      return gulpRepo.dryRun().then(() => execa.sync('npm', ['run', 'docs:deploy']));
     }
-    return gulpRepo.publish();
-  },
 
-  async success(pluginConfig) {
-    if (!pluginConfig.dryRun) {
-      gflow.release.post();
-    }
+    return gulpRepo.publish().then(() => execa.sync('npm', ['run', 'docs:deploy']));
   }
 };

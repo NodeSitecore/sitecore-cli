@@ -61,7 +61,6 @@
     "gflow-release-pre": "",
     "semantic-release": "semantic-release",
     "semantic-release:dry-run": "semantic-release --dry-run",
-    "prepublishOnly": "gflow release post && npm run docs:deploy",
     "travis-deploy-once": "travis-deploy-once",
     "travis-coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "npm run lint && nyc --reporter=html --reporter=text _mocha packages/**/*.spec.js --recursive",
