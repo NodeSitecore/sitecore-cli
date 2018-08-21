@@ -8,7 +8,7 @@ We welcome any type of contribution, not only code. You can help with
 - QA: file bug reports, the more details you can give the better (e.g. screenshots with the console open)
 - Marketing: writing blog posts, howto's, printing stickers, ...
 - Community: presenting the project at meetups, organizing a dedicated meetup for the local community, ...
-- Code: take a look at the [open issues](https://github.com/Romakita/tsed/blob/master/issues). Even if you can't write code, commenting on them, showing that you care about a given issue matters. It helps us triage them.
+- Code: take a look at the [open issues](https://github.com/node-sitecore/sitecore-cli/blob/master/issues). Even if you can't write code, commenting on them, showing that you care about a given issue matters. It helps us triage them.
 - Money: we welcome financial contributions in full transparency on our [open collective](https://opencollective.com/tsed).
 
 ## Your First Contribution
@@ -28,7 +28,7 @@ We also welcome financial contributions in full transparency on our open collect
 
 ## Questions
 
-If you have any questions, create an [issue](https://github.com/Romakita/tsed/blob/master/issue) (protip: do a quick search first to see if someone else didn't ask the same question before!). You can also reach us at hello@tsed.opencollective.com.
+If you have any questions, create an [issue](https://github.com/node-sitecore/sitecore-cli/blob/master/issue) (protip: do a quick search first to see if someone else didn't ask the same question before!). You can also reach us at hello@tsed.opencollective.com.
 
 ## How to work on NodeSitecore
 ### Setup
@@ -73,6 +73,8 @@ npm install -g gflow
 gflow new feat name_of_feat
 ```
 
+> Then choose to start your branch from production.
+
 #### Commit & Push a feature
 
 This command rebase your branch feature from the production branch, run the test and push your branch.
@@ -106,22 +108,5 @@ gflow finish
 - Please keep the test coverage at 100%. Write additional unit tests if necessary
 - Please create an issue before sending a PR if it is going to change the public interface of Ts.ED or includes significant architecture changes,
 - Feel free to ask for help from other members of the Ts.ED team
-
-## Credits
-### Contributors
-
-<a href="https://github.com/romakita/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
-
-
-### Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/tsed#backer)]
-
-<a href="https://opencollective.com/tsed#backers" target="_blank"><img src="https://opencollective.com/tsed/backers.svg?width=890"></a>
-
-
-### Sponsors
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/tsed#sponsor)]
 
 <!-- This `CONTRIBUTING.md` is based on @nayafia's template https://github.com/nayafia/contributing-template -->

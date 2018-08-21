@@ -1,0 +1,9 @@
+{
+  "concurrent": true,
+  "linters": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@node-sitecore/cli-plugin-browsersync",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Plugin for NodeSiteCore CLI. Mount BrowserSync server, load your local files (bundles) and display the Sitecore website (remote).",
+  "main": "index.js",
+  "private": false,
+  "peerDependencies": {
+    "@node-sitecore/config": "0.0.0-PLACEHOLDER"
+  },
+  "dependencies": {
+    "browser-sync": "^2.24.6"
+  },
+  "files": [
+    "src"
+  ],
+  "directories": {
+    "src": "./src"
+  }
+}

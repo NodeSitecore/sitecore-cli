@@ -1,22 +1,28 @@
 {
   "include": [
-    "src/**/*.js"
+    "packages/**/*.js"
   ],
   "exclude": [
     "**/index.js",
-    "**/interfaces/*.js"
+    "packages/**/*.spec.js",
+    "packages/**/bin",
+    "packages/**/src/commands",
+    "packages/cli/loader.js",
+    "packages/cli-plugin-fractal",
+    "packages/cli-plugin-browsersync",
+    "packages/cli-plugin-vue"
   ],
   "reporter": [
     "lcov",
     "text-summary"
   ],
   "extension": [
-    ".ts"
+    ".js"
   ],
   "check-coverage": true,
-  "lines": 90.4,
-  "statements": 90.45,
-  "functions": 89.47,
-  "branches": 78.57,
+  "lines": 99.3,
+  "functions": 96.4,
+  "branches": 84.48,
+  "statements": 98.03,
   "all": true
 }

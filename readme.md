@@ -1,4 +1,4 @@
-# node-sitecore-cli
+# NodeSitecore CLI
 
 [![Build Status](https://travis-ci.org/NodeSitecore/sitecore-cli.svg?branch=master)](https://travis-ci.org/NodeSitecore/sitecore-cli)
 [![Coverage Status](https://coveralls.io/repos/github/NodeSitecore/sitecore-cli/badge.svg?branch=master)](https://coveralls.io/github/NodeSitecore/sitecore-cli?branch=master)
@@ -9,155 +9,36 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/NodeSitecore/sitecore-cli/badge.svg)](https://snyk.io/test/github/NodeSitecore/sitecore-cli)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-> A Sitecore cli
+> Main repository of NodeSitecore CLI. See our documentation on https://node-sitecore.github.io/sitecore-cli/.
 
-## Installation
+Sitecore-cli is a usefull command line tool to automatize tasks for a Sitecore project. Theses tasks are following:
 
-```bash
-$ npm install -g @node-sitecore/cli
-```
+- Build your Visual Studio solution,
+- Publish your Visual Studio solution in Sitecore,
+- Restore nuget package,
+- Synchronise your project with [Unicorn](https://github.com/trustedsec/unicorn),
+- Run PowerShell script.
 
-## Usage
+The cli will be installed on a pre-installed Sitecore Project. This tool doens't generate a Sitecore project.
 
-```
- Usage: nsc [options] [command]
+## Packages
 
+This repository is base on mono-repo. That mean, we have multiple packages hosted in this repository. Theses packages are the following:
 
-  Options:
+- [@node-sitecore/config](/packages/config/readme.md), a shared configuration between all other packages,
+- [@node-sitecore/config-browserify](/packages/config-browserify/readme.md), specific configuration for browserify stack,
+- [@node-sitecore/cli](/packages/cli/readme.md), the cli to run command across Sitecore.
 
-    -V, --version  output the version number
-    -h, --help     output usage information
+## Unstable packages
 
+- [@node-sitecore/vue-cli](/packages/cli-plugin-fractal/readme.md),
+- [@node-sitecore/vue-cli](/packages/cli-plugin-browsersync/readme.md),
+- [@node-sitecore/vue-cli](/packages/cli-plugin-vue/readme.md),
 
-  Commands:
-
-    init        Create configuration file for a Sitecore Project
-    restore     Restore all NuGet Packages
-    install     Install a sitecore package
-    build       Build project solution
-    unicorn     Perform a Unicorn synchronisation
-    publish     Publish content (Foundation, Feature, Project)
-    help [cmd]  display help for [cmd]
-    
-```
-
-### Build command options
-
-Build your solution depending on your configuration or on the given options.
-
-Option | Default value | Description
----|---|---
-`--log-command, -l` | `false` | Logs the msbuild command that will be executed.
-`--targets, -t <list>` | `Build` | Specify Build Targets.
-`--configuration, -c <config>` | `Debug` | Specify Build Configuration (Release or Debug).
-`--solution-platform, -p <plateform>` | `AnyCPU` | Specify the Solution Platform (e.g. x86, x64, AnyCPU).
-`--tools-version, -n <version>` | `15.0` | Specify the .NET Tools-Version (1.0, 1.1, 2.0, 3.5, 4.0, 12.0, 14.0, 15.0, auto).
-`--architecture, -a <arch>` | `Auto-detected` | Specify the Architecture (x86, x64).
-`--verbosity, -v <level>` | `minimal` | Specify the amount of information to display in the build output (quiet, minimal, normal, detailed, diagnostic).
-`--maxcpucount, -m <cpunb>` | `0` | Specify Maximal CPU-Count to use. (`-1`: MSBuild Default, `0`: Automatic selection, `> 0`: Concrete value).
-`--node-reuse, -r <boolean>` | `true` | Specify whether to enable or disable the re-use of MSBuild nodes (true or false).
-`--nologo` |  | Suppress Startup Banner and Copyright Message of MSBuild.
-
-> It also possible to give additional arguments to the msBuild command directly. Just use `--` after the command line.
-
-```bash
-nsc build --targets Clean,Build -- /noautoresponse
-```
-
-#### With specific paths
-##### From `.nscrc`
-
-```bash
-nsc build
-```
-
-> Note: `buildPaths` support glob pattern !
-
-
-Configuration example:
-```json
-{
-  "buildPaths": [
-    "<solutionPath>",  // use default solution (Base.sln)
-    "<rootDir>/**/*.sln" // build all solution
-  ]
-}
-```
-
-##### From args
-
-```bash
-nsc build --paths Base.sln,Other.sln,src/**/code/*.csproj
-```
-
-> Note: `--paths` option support glob pattern !
-
-##### Publish Foundation/Feature/Project only
-
-```bash
-nsc build Foundation
-```
-
-### Publish command options
-
-By default build the solution (eg. `Base.sln`) and publish it depending on your configuration or on the given options.
-
-Option | Default value | Description
----|---|---
-`--log-command, -l` | `false` | Logs the msbuild command that will be executed.
-`--targets, -t <list>` | `Build` | Specify Publish Targets.
-`--paths <list>` | `Base.sln,Other.sln` | Specify the solutions or projects you want to publish.
-`--configuration, -c <config>` | `Debug` | Specify Build Configuration (Release or Debug).
-`--solution-platform, -p <plateform>` | `AnyCPU` | Specify the Solution Platform (e.g. x86, x64, AnyCPU).
-`--tools-version, -n <version>` | `15.0` | Specify the .NET Tools-Version (1.0, 1.1, 2.0, 3.5, 4.0, 12.0, 14.0, 15.0, auto).
-`--architecture, -a <arch>` | `Auto-detected` | Specify the Architecture (x86, x64).
-`--verbosity, -v <level>` | `minimal` | Specify the amount of information to display in the build output (quiet, minimal, normal, detailed, diagnostic).
-`--maxcpucount, -m <cpunb>` | `0` | Specify Maximal CPU-Count to use. (`-1`: MSBuild Default, `0`: Automatic selection, `> 0`: Concrete value).
-`--node-reuse, -r <boolean>` | `true` | Specify whether to enable or disable the re-use of MSBuild nodes (true or false).
-`--nologo` |  | Suppress Startup Banner and Copyright Message of MSBuild.
-
-> It also possible to give additional arguments to the msBuild command directly. Just use `--` after the command line.
-
-```bash
-nsc publish --targets Clean,Build -- /noautoresponse
-```
-
-#### With specific paths
-##### From `.nscrc`
-
-```bash
-nsc publish
-```
-> Note: `publishPaths` support glob pattern !
-
-Configuration example:
-```json
-{
-  "publishPaths": [
-    "<solutionPath>",  // use default solution (Base.sln)
-    "<rootDir>/**/*.sln" // publish all solution
-  ]
-}
-```
-
-##### From args
-
-```bash
-nsc publish --paths Base.sln,Other.sln,src/**/code/*.csproj
-```
-> Note: `--paths` option support glob pattern !
-
-##### Publish Foundation/Feature/Project only
-
-```bash
-nsc publish Foundation
-```
-> Available options: `Foundation`, `Feature` or `Project`
 
 ## Contributing
 
-Read our [contribution documentation](./CONTRIBUTING.md).
-
+Contributors and PR are welcome. Just berofe starting to contribute, please read our [contribution documentation](https://github.com/NodeSitecore/sitecore-cli/CONTRIBUTING.md).
 
 ## License
 
