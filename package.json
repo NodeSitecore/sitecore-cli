@@ -1,5 +1,5 @@
 {
-  "name": "@node-sitecore/global",
+  "name": "@node-sitecore/cli",
   "version": "2.2.0",
   "description": "A node Sitecore cli",
   "main": "src/index.js",
@@ -12,13 +12,10 @@
   "license": "MIT",
   "dependencies": {},
   "files": [
-    "bin/nsc.js",
-    "bin",
     "src"
   ],
   "directories": {
-    "src": "./src",
-    "bin": "./bin"
+    "packages": "./packages"
   },
   "repository": {
     "type": "git",
@@ -51,10 +48,10 @@
     "proxyquire": "^2.0.1",
     "read-package-json": "^2.0.13",
     "require-dir": "^1.0.0",
-    "semantic-release": "^15.6.3",
+    "semantic-release": "^15.9.9",
     "sinon": "^6.1.3",
     "sinon-chai": "^3.2.0",
-    "travis-deploy-once": "^5.0.1",
+    "travis-deploy-once": "^5.0.2",
     "vuepress": "^0.14.2"
   },
   "scripts": {
