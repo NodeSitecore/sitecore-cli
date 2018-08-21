@@ -1,4 +1,4 @@
 ---
 sidebar: auto
 ---
-# Package vue-cli
+# Package Vue CLI <Badge text="alpha" type="warning" />

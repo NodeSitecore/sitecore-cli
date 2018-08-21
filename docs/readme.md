@@ -21,16 +21,15 @@ The cli will be installed on a pre-installed Sitecore Project. This tool doens't
 
 This repository is base on mono-repo. That mean, we have multiple packages hosted in this repository. Theses packages are the following:
 
-- [@node-sitecore/config](/packages/config/readme.md), a shared configuration between all other packages,
-- [@node-sitecore/config](/packages/config-browserify/readme.md), specific configuration for browserify stack,
-- [@node-sitecore/cli](/packages/cli/readme.md), the cli to run command across Sitecore.
+- [@node-sitecore/config](/packages/config.md), a shared configuration between all other packages,
+- [@node-sitecore/config](/packages/browserify.md), specific configuration for browserify stack,
+- [@node-sitecore/cli](/packages/cli.md), the cli to run command across Sitecore.
 
 ## Unstable packages
 
-- [@node-sitecore/cli-plugin-fractal](/packages/cli-plugin-fractal/readme.md),
-- [@node-sitecore/cli-plugin-browsersync](/packages/cli-plugin-browsersync/readme.md),
-- [@node-sitecore/cli-plugin](/packages/cli-plugin-vue/readme.md),
-
+- [@node-sitecore/cli-plugin-fractal](/packages/fractal.md),
+- [@node-sitecore/cli-plugin-browsersync](/packages/browsersync.md),
+- [@node-sitecore/cli-plugin](/packages/vue-cli.md),
 
 ## Contributing
 
