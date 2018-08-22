@@ -24,7 +24,7 @@ module.exports = {
             {
               title: 'Plugin Development Guide',
               collapsable: false,
-              children: ['', 'config-plugins', 'cli-plugins']
+              children: ['', 'config-plugins', 'cli-plugins', 'multiple-projects']
             }
           ]
         },
@@ -42,7 +42,8 @@ module.exports = {
             items: [
               { link: '/dev-guide/', text: 'Introduction' },
               { link: '/dev-guide/config-plugins', text: 'Config plugins' },
-              { link: '/dev-guide/cli-plugins', text: 'CLI plugins' }
+              { link: '/dev-guide/cli-plugins', text: 'CLI plugins' },
+              { link: '/dev-guide/multiple-projects', text: 'Multiple projects' }
             ]
           },
           {

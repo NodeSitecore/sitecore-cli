@@ -8,9 +8,6 @@
     "@node-sitecore/config": "0.0.0-PLACEHOLDER"
   },
   "dependencies": {},
-  "files": [
-    "src"
-  ],
   "directories": {
     "src": "./src",
     "bin": "./bin"

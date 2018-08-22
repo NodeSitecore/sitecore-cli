@@ -10,9 +10,7 @@
   "dependencies": {
     "browser-sync": "^2.24.6"
   },
-  "files": [
-    "src"
-  ],
+
   "directories": {
     "src": "./src"
   }

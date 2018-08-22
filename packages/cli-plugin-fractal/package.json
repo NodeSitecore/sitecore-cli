@@ -11,9 +11,6 @@
     "@frctl/fractal": "^1.1.7",
     "globby": "^8.0.1"
   },
-  "files": [
-    "src"
-  ],
   "directories": {
     "src": "./src",
     "bin": "./bin"

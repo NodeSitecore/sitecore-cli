@@ -83,17 +83,17 @@ Here is an example of multiple project structure:
 
 ```
 .
-├─ ns-master-project
+├── ns-master-project (Master project)
 │   ├── package.json
 │   ├── master.sln
 │   └── .nscrc
-└── ns-child-project
+└── ns-child-project (Child project)
     ├── package.json
     ├── child.sln
     └── .nscrc
 ```
 
-We can considere the ns-master-project has the project reference. His `.nscrc` his look like that:
+We can considere the **Master** as the project reference. His `.nscrc` his look like that:
 
 ```json
   "currentWebsite": "Master",
