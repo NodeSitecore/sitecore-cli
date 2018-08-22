@@ -39,11 +39,7 @@
     "uuid": "^3.3.2",
     "xml2js": "^0.4.19"
   },
-  "files": [
-    "bin/nsc.js",
-    "bin",
-    "src"
-  ],
+
   "directories": {
     "src": "./src",
     "bin": "./bin"

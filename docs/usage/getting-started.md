@@ -112,3 +112,27 @@ It should look something like this:
   "type": "literal"
 }
 ```
+
+### Add NPM tasks for Visual Studio<Bagde text="recommanded" />
+
+To simlify your workflow with Visual Studio, it's recommanded to create npm tasks in your `package.json` to clean, build or publish your solution.
+
+```json
+{
+  "name": "my-sitecore-project",
+  "version": "1.0.0",
+  "scripts": {
+    "sc:build": "nsc build --targets Build",
+    "sc:rebuild": "nsc build --targets Rebuild",
+    "sc:clean": "nsc build --targets Clean",
+    "sc:publish": "nsc publish",
+    "sc:sync": "nsc unicorn sync",
+    "sc:inspect": "nsc inspect",
+  }
+}
+```
+
+Now with Visual Studio and [NPM Task Runner plugin](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner)
+you're able to run task from UI.
+
+![run-task](https://github.com/madskristensen/NpmTaskRunner/raw/master/art/verbose-output.png)
