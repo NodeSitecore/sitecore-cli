@@ -11,8 +11,7 @@ module.exports = api => {
     (commander, args, rawArgs) => {
       const [scriptPath] = args;
 
-      return powershell.exec(scriptPath, ...rawArgs);
-    },
-    options => powershell.exec(options.command, options.args)
+      return powershell.exec(scriptPath, rawArgs);
+    }
   );
 };
