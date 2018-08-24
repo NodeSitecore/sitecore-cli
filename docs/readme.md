@@ -5,17 +5,43 @@ actionText: Get Started →
 actionLink: /usage/getting-started.md
 footer: MIT Licensed | Copyright © 2018-present NodeSitecore
 ---
-# NodeSitecore CLI
 
-Sitecore-cli is a usefull command line tool to automatize tasks for a Sitecore project. Theses tasks are following:
+## Features
+
+NodeSitecore CLI is a useful command line tool to automatize tasks for a pre-installed Sitecore project. 
 
 - Build your Visual Studio solution,
 - Publish your Visual Studio solution in Sitecore,
-- Restore nuget package,
+- Restore [nuget package](/packages/cli.md),
 - Synchronise your project with [Unicorn](https://github.com/trustedsec/unicorn),
-- Run PowerShell script.
+- Run [PowerShell script](/dev-guide/powershell.md).
+- Build [multiple projects](/dev-guide/multiple-projects.md).
 
-The cli will be installed on a pre-installed Sitecore Project. This tool doens't generate a Sitecore project.
+## Usage
+
+```bash
+  Usage: nsc <command> [options]
+
+  Options:
+
+    -h, --help        output usage information
+    -h, --configPath  Load a configuration file from specific location path
+
+  Commands:
+
+    init      Init a Sitecore Project
+    build     Build project solution
+    nuget     Nuget commands
+    publish   Publish content (Foundation, Feature, Project)
+    restore   Restore all NuGet Packages
+    ps        Run a powershell script
+    run       Run npm script located on <rootDir> configured in your .nscrc file
+    unicorn   Perform a Unicorn synchronisation
+    inspect   Display values from resolved configuration
+
+  run nsc [command] --help for usage of a specific command.
+
+```
 
 ## Packages
 

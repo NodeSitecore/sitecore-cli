@@ -4,9 +4,14 @@ module.exports = api => {
   api.registerCommand(
     'nuget',
     {
-      type: 'raw',
-      description: 'Nuget commands'
+      description: 'Nuget commands',
+      usage: '<command> [options]',
+      options: {}
     },
-    options => nuget.exec(options.command, ...options.args)
+    (commander, args, rawArgs) => {
+      const [command] = args;
+      // console.log('options', options);
+      return nuget.exec(command, ...rawArgs);
+    }
   );
 };

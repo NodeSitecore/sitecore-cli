@@ -4,9 +4,14 @@ module.exports = api => {
   api.registerCommand(
     'ps',
     {
-      type: 'raw',
-      description: 'Run a powershell script'
+      description: 'Run a powershell script',
+      usage: '<scriptPath> [options]',
+      options: {}
     },
-    options => powershell.exec(options.command, options.args)
+    (commander, args, rawArgs) => {
+      const [scriptPath] = args;
+
+      return powershell.exec(scriptPath, rawArgs);
+    }
   );
 };

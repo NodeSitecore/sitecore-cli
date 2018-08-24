@@ -134,13 +134,17 @@ class CliService {
     } = command;
 
     if (type === 'raw') {
-      return fn(getArgs(command));
+      return fn(getArgs(name));
     }
 
     commander.version(require('../package').version);
 
     if (usage) {
       commander.usage(`${chalk.blue(name)} ${usage}`);
+    }
+
+    if (command.arguments) {
+      commander.arguments(command.arguments);
     }
 
     commander.option('--configPath <path>', 'Path to .nscrc file');
@@ -160,7 +164,7 @@ class CliService {
       return;
     }
 
-    return fn(commander, commander.args.slice(1, commander.args.length));
+    return fn(commander, commander.args.slice(1, commander.args.length), getArgs(name).args);
   }
 
   printMan() {
