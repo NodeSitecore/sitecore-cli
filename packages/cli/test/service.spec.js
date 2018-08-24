@@ -233,6 +233,7 @@ describe('Cli Service', () => {
             opts: {
               usage: 'usage',
               description: 'description',
+              arguments: 'arguments',
               options: {
                 '-o': {
                   type: String,
@@ -246,6 +247,7 @@ describe('Cli Service', () => {
         Sinon.stub(commander, 'option');
         Sinon.stub(commander, 'version');
         Sinon.stub(commander, 'usage');
+        Sinon.stub(commander, 'arguments');
         Sinon.stub(commander, 'parse');
 
         commander.args = ['test', 'other'];
@@ -255,6 +257,7 @@ describe('Cli Service', () => {
 
       after(() => {
         commander.option.restore();
+        commander.arguments.restore();
         commander.version.restore();
         commander.usage.restore();
         commander.parse.restore();
@@ -279,6 +282,7 @@ describe('Cli Service', () => {
 
         Sinon.stub(commander, 'option');
         Sinon.stub(commander, 'version');
+        Sinon.stub(commander, 'arguments');
         Sinon.stub(commander, 'usage');
         Sinon.stub(commander, 'parse');
         Sinon.stub(commander, 'outputHelp');
@@ -293,6 +297,7 @@ describe('Cli Service', () => {
         process.argv = this.argv;
         commander.option.restore();
         commander.version.restore();
+        commander.arguments.restore();
         commander.usage.restore();
         commander.parse.restore();
         commander.outputHelp.restore();

@@ -25,6 +25,9 @@ module.exports = {
    */
   exec(cmd, ...args) {
     const nugetPath = path.join(__dirname, 'nuget.exe');
+
+    args = args.map(v => v.replace(/^--/, '-'));
+
     const child = execa(nugetPath, [cmd].concat(args), {
       maxBuffer: 1024 * 500
     });

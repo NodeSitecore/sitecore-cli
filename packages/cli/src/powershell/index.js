@@ -4,6 +4,7 @@ const config = require('@node-sitecore/config');
 module.exports = {
   exec(script, args = [], options = {}) {
     const nscConfig = config.toObject();
+    args = args.map(v => v.replace(/^--/, '-'));
 
     const child = execa.shell(
       `powershell -executionpolicy unrestricted "${script} ${args.join(' ')} -nscConfig (ConvertFrom-Json -InputObject $Env:NSC_CONFIG)"`,

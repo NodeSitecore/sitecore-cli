@@ -4,9 +4,10 @@ module.exports = (api, config) => {
   api.registerCommand(
     'restore',
     {
-      type: 'raw',
-      description: 'Restore all NuGet Packages'
+      description: 'Restore all NuGet Packages',
+      usage: '<command> [options]',
+      options: {}
     },
-    () => nuget.exec('restore', config.solutionPath)
+    (commander, args, rawArgs) => nuget.exec('restore', config.solutionPath, ...rawArgs)
   );
 };
