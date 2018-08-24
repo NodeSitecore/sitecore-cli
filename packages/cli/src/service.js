@@ -143,8 +143,8 @@ class CliService {
       commander.usage(`${chalk.blue(name)} ${usage}`);
     }
 
-    if (command.arguments) {
-      commander.arguments(command.arguments);
+    if (command.opts.arguments) {
+      commander.arguments(command.opts.arguments);
     }
 
     commander.option('--configPath <path>', 'Path to .nscrc file');

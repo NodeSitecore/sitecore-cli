@@ -65,7 +65,7 @@
     "travis-coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "npm run lint && nyc --reporter=html --reporter=text _mocha packages/**/*.spec.js --recursive",
     "lint": "eslint \"{packages,test}/**/*.js\"",
-    "prettier": "prettier '{packages,test}/**/*.js' --write",
+    "prettier": "prettier \"{packages,test}/**/*.js\" --write",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "sh ./tasks/sh/deploy-doc.sh"

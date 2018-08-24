@@ -1,7 +1,6 @@
 const path = require('path');
 const { expect, Sinon } = require('../../test/tools');
 const Config = require('../src/config');
-const formatPath = require('../src/utils/format-path');
 
 const config = new Config();
 
@@ -160,59 +159,63 @@ describe('Config', () => {
     });
 
     it('should return authConfigFile', () => {
-      expect(config.authConfigFile).to.contains(formatPath('build/Website/App_config/Include/Unicorn/Unicorn.UI.config'));
+      expect(path.normalize(config.authConfigFile)).to.contains(
+        path.normalize('build/Website/App_config/Include/Unicorn/Unicorn.UI.config')
+      );
     });
 
     it('should return authConfigFile', () => {
-      expect(config.authConfigFilePath).to.contains(formatPath('build/Website/App_config/Include/Unicorn/Unicorn.UI.config'));
+      expect(path.normalize(config.authConfigFilePath)).to.contains(
+        path.normalize('build/Website/App_config/Include/Unicorn/Unicorn.UI.config')
+      );
     });
 
     it('should return rootDir', () => {
-      expect(config.rootDir).to.contains('');
+      expect(path.normalize(config.rootDir)).to.contains('');
     });
 
     it('should return instanceRoot', () => {
-      expect(config.instanceRoot).to.contains(formatPath('/build'));
+      expect(path.normalize(config.instanceRoot)).to.contains(path.normalize('/build'));
     });
 
     it('should return websiteRoot', () => {
-      expect(config.websiteRoot).to.contains(formatPath('build/Website'));
+      expect(path.normalize(config.websiteRoot)).to.contains(path.normalize('build/Website'));
     });
 
     it('should return themeWebsiteRoot', () => {
-      expect(config.themeWebsiteRoot).to.contains(formatPath('build/Website/themes'));
+      expect(path.normalize(config.themeWebsiteRoot)).to.contains(path.normalize('build/Website/themes'));
     });
 
     it('should return currentWebsiteRoot', () => {
-      expect(config.currentWebsiteRoot).to.contains(formatPath('build/Website/themes/Common'));
+      expect(path.normalize(config.currentWebsiteRoot)).to.contains(path.normalize('build/Website/themes/Common'));
     });
 
     it('should return sitecoreLibraries', () => {
-      expect(config.sitecoreLibrariesRoot).to.contains(formatPath('build/Website/bin'));
+      expect(path.normalize(config.sitecoreLibrariesRoot)).to.contains(path.normalize('build/Website/bin'));
     });
 
     it('should return licensePath', () => {
-      expect(config.licensePath).to.contains(formatPath('build/Data/license.xml'));
+      expect(path.normalize(config.licensePath)).to.contains(path.normalize('build/Data/license.xml'));
     });
 
     it('should return solutionPath', () => {
-      expect(config.solutionPath).to.contains(formatPath(path.join(process.cwd(), 'Base.sln')));
+      expect(path.normalize(config.solutionPath)).to.contains(path.normalize(path.join(process.cwd(), 'Base.sln')));
     });
 
     it('should return websiteViewsRoot', () => {
-      expect(config.websiteViewsRoot).to.contains(formatPath('build/Website/Views'));
+      expect(path.normalize(config.websiteViewsRoot)).to.contains(path.normalize('build/Website/Views'));
     });
 
     it('should return websiteConfigRoot', () => {
-      expect(config.websiteConfigRoot).to.equal(formatPath(path.join(process.cwd(), 'build/Website/App_Config')));
+      expect(path.normalize(config.websiteConfigRoot)).to.equal(path.normalize(path.join(process.cwd(), 'build/Website/App_Config')));
     });
 
     it('should return srcRoot', () => {
-      expect(config.srcRoot).to.equal(formatPath(path.join(process.cwd(), 'src')));
+      expect(path.normalize(config.srcRoot)).to.equal(path.normalize(path.join(process.cwd(), 'src')));
     });
 
     it('should return foundationRoot', () => {
-      expect(config.foundationRoot).to.equal(formatPath(path.join(process.cwd(), 'src/Foundation')));
+      expect(path.normalize(config.foundationRoot)).to.equal(path.normalize(path.join(process.cwd(), 'src/Foundation')));
     });
 
     it('should return foundationScriptsRoot', () => {

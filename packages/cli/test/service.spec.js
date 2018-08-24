@@ -264,7 +264,7 @@ describe('Cli Service', () => {
       });
 
       it('should call plugin function', () => {
-        this.fnStub.should.have.been.calledWithExactly(commander, ['other']);
+        this.fnStub.should.have.been.calledWithExactly(commander, ['other'], []);
       });
 
       it('should call commander.option', () => commander.option.should.have.been.calledTwice);
