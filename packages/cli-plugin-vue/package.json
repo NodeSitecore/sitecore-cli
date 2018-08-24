@@ -5,11 +5,16 @@
   "main": "index.js",
   "private": false,
   "peerDependencies": {
-    "@node-sitecore/config": "0.0.0-PLACEHOLDER"
+    "@node-sitecore/config": "0.0.0-PLACEHOLDER",
+    "@vue/cli-service": "^3.0.1",
+    "@vue/cli-shared-utils": "^3.0.1"
   },
   "dependencies": {},
   "directories": {
-    "src": "./src",
-    "bin": "./bin"
+    "src": "./src"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^3.0.1",
+    "@vue/cli-shared-utils": "^3.0.1"
   }
 }

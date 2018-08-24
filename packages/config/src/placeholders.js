@@ -8,6 +8,10 @@ module.exports = (rootDir, contextDir) => [
     replacement: nconf => nconf.get('currentWebsite')
   },
   {
+    pattern: '<foundationScriptsDir>',
+    replacement: nconf => nconf.get('foundationScriptsDir').replace(/^\.(\/|\\)/, '<rootDir>/')
+  },
+  {
     pattern: '<foundationDir>',
     replacement: nconf => nconf.get('foundationDir').replace(/^\.(\/|\\)/, '<rootDir>/')
   },
