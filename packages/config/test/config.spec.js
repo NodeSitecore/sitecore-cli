@@ -26,6 +26,13 @@ describe('Config', () => {
   });
 
   describe('resolve()', () => {
+    it('should resolve object', () => {
+      expect(config.resolve({ test: '<rootDir>', t: ['<rootDir>'] })).to.deep.equal({
+        test: path.normalize(process.cwd()),
+        t: [path.normalize(process.cwd())]
+      });
+    });
+
     it('should return the right path from <rootDir>', () => {
       expect(path.normalize(config.resolve('<rootDir>'))).to.equal(path.normalize(process.cwd()));
     });

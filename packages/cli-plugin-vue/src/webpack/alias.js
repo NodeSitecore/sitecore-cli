@@ -6,7 +6,7 @@ module.exports = function buildWebpackAlias(config, webpackConfig) {
   const { alias = {} } = config.vueCli;
 
   Object.keys(alias).forEach(key => {
-    const src = path.resolve(config.resolve(alias[key]));
+    const src = path.resolve(alias[key]);
 
     if (!isProd) {
       info(`Add alias ${chalk.magenta(key)}: '${chalk.cyan(src)}'`);

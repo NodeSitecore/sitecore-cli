@@ -1,21 +1,36 @@
 const buildWebpackConfig = require('./src/webpack/build');
 
 module.exports = config => {
-  config.defineGetter(
-    'vueCli',
-    () =>
-      config.get('vueCli') || {
-        scssMixinsPath: '',
-        baseUrl: '/',
-        entries: {
-          bundle: ['<projectDir>/<currentWebsite>/code/Scripts/polyfills.js', '<projectDir>/<currentWebsite>/code/Scripts/entry.js']
+  config.defineGetter('vueCli', () =>
+    config.resolve({
+      outputDir: '<themesDir>/<currentWebsite>',
+      scssMixinsPath: '',
+      baseUrl: '/',
+      entries: [
+        {
+          mode: 'production',
+          name: 'bundle',
+          paths: [
+            '<projectDir>/<currentWebsite>/code/Scripts/polyfills.js',
+            '<projectDir>/<currentWebsite>/code/Scripts/entry.production.js'
+          ]
         },
-        alias: {
-          '@Foundation': '<foundationScriptDir>',
-          '@Feature': '<featureDir>',
-          '@Project': '<projectDir>'
+        {
+          mode: 'development',
+          name: 'bundle',
+          paths: [
+            '<projectDir>/<currentWebsite>/code/Scripts/polyfills.js',
+            '<projectDir>/<currentWebsite>/code/Scripts/entry.development.js'
+          ]
         }
-      }
+      ],
+      alias: {
+        '@Foundation': '<foundationScriptDir>',
+        '@Feature': '<featureDir>',
+        '@Project': '<projectDir>'
+      },
+      ...(config.get('vueCli') || {})
+    })
   );
   /**
    * config.buildVueConfig
@@ -29,7 +44,7 @@ module.exports = config => {
 
     return Object.keys(alias).reduce(
       (acc, key) => {
-        const path = config.resolve(alias[key]);
+        const path = alias[key];
 
         acc[`^${key}(.*)$`] = `${path}$1`;
 

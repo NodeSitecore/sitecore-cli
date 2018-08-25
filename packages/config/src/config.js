@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const nconf = require('nconf');
 const defaultModel = require('./default-model');
-const formatPath = require('./utils/format-path');
 const resolverFiles = require('./utils/resolve-files');
 const { DEFAULT_CONF_PATH } = require('./constant');
 const placeholders = require('./placeholders');
@@ -118,8 +117,24 @@ class Config {
    * @param values
    * @returns {*}
    */
-  resolve(...values) {
-    let value = formatPath(path.join(...values));
+  resolve(obj, ...values) {
+    if (typeof obj === 'object') {
+      return Object.keys(obj).reduce((acc, key) => {
+        if ( obj instanceof Array && key === 'length') {
+          return acc;
+        }
+
+        acc[key] = this.resolve(obj[key]);
+
+        return acc;
+      }, obj instanceof Array ? [] : {});
+    }
+
+    if (typeof obj !== 'string') {
+      return obj;
+    }
+
+    let value = path.normalize(path.join(obj, ...values));
 
     this.placeholders.forEach(placeholder => {
       value = value.replace(placeholder.pattern, placeholder.replacement(this.nconf));
@@ -173,7 +188,7 @@ class Config {
       return this.resolve(key === 'outputDir' ? value.replace(/^\.(\/|\\)/, `${process.cwd()}/`) : value);
     }
 
-    return value;
+    return typeof value === "object" ? this.resolve(value) : value;
   }
 
   /**
@@ -464,6 +479,7 @@ class Config {
   get currentProjectDir() {
     return this.resolve('<currentProjectDir>');
   }
+
   /**
    * Path to the current project.
    * @returns {*}

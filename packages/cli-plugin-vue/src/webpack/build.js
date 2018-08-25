@@ -10,12 +10,11 @@ module.exports = (config, baseVueConfig) => {
   const { scssMixinsPath, baseUrl } = config.vueCli;
   const outputDir = `.tmp/${config.currentWebsite}`;
   let sass = {};
-  const scssMixinsPathResolved = config.resolve(scssMixinsPath);
 
-  if (fs.existsSync(scssMixinsPathResolved)) {
+  if (fs.existsSync(scssMixinsPath)) {
     sass = {
-      data: fs.readFileSync(scssMixinsPathResolved, 'utf-8'),
-      includePaths: [path.dirname(scssMixinsPathResolved)]
+      data: fs.readFileSync(scssMixinsPath, 'utf-8'),
+      includePaths: [path.dirname(scssMixinsPath)]
     };
   }
 

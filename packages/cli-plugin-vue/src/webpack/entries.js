@@ -22,9 +22,9 @@ module.exports = function buildWebpackEntries(config, webpackConfig, { outputDir
 
     paths.forEach(entryPath => {
       if (!isProd) {
-        info(`Add entry to ${chalk.magenta(name)}: '${chalk.cyan(config.resolve(entryPath))}'`);
+        info(`Add entry to ${chalk.magenta(name)}: '${chalk.cyan(entryPath)}'`);
       }
-      wEntry.add(config.resolve(entryPath));
+      wEntry.add(entryPath);
     });
 
     wEntry
@@ -47,13 +47,15 @@ module.exports = function buildWebpackEntries(config, webpackConfig, { outputDir
   webpackConfig.optimization.splitChunks({ cacheGroups });
 
   if (isProd) {
+    const outputDestDir = config.vueCli || config.currentWebsiteDir;
+
     webpackConfig.plugin('post-build').use(PostBuild, [
       () => {
-        clean(cleanGlob, { cwd: config.currentWebsiteDir })
+        clean(cleanGlob, { cwd: outputDestDir })
           .then(() => fs.remove(`${outputDir}/index.html`))
-          .then(() => fs.copy(outputDir, config.currentWebsiteDir))
+          .then(() => fs.copy(outputDir, outputDestDir))
           .then(() => {
-            done(`Build complete. The ${chalk.cyan(config.currentWebsiteDir)} directory is deployed.\n`);
+            done(`Build complete. The ${chalk.cyan(outputDestDir)} directory is deployed.\n`);
           });
       }
     ]);
