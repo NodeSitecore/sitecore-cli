@@ -120,7 +120,7 @@ class Config {
   resolve(obj, ...values) {
     if (typeof obj === 'object') {
       return Object.keys(obj).reduce((acc, key) => {
-        if ( obj instanceof Array && key === 'length') {
+        if (obj instanceof Array && key === 'length') {
           return acc;
         }
 
@@ -188,7 +188,7 @@ class Config {
       return this.resolve(key === 'outputDir' ? value.replace(/^\.(\/|\\)/, `${process.cwd()}/`) : value);
     }
 
-    return typeof value === "object" ? this.resolve(value) : value;
+    return typeof value === 'object' ? this.resolve(value) : value;
   }
 
   /**

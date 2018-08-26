@@ -1,19 +1,27 @@
 const gulp = require('gulp');
 const msbuild = require('gulp-msbuild');
+const chalk = require('chalk');
 const foreach = require('gulp-foreach');
 const debug = require('gulp-debug');
 const log = require('fancy-log');
 
 const publishStream = (stream, dest, options) =>
-  stream.pipe(debug({ title: 'Building project:' })).pipe(
-    msbuild({
-      ...options,
-      properties: {
-        ...options.properties,
-        publishUrl: dest
-      }
-    })
-  );
+  stream
+    .pipe(debug({ title: 'Building project:' }))
+    .pipe(
+      msbuild({
+        ...options,
+        logCommand: true,
+        properties: {
+          ...options.properties,
+          publishUrl: dest
+        }
+      })
+    )
+    .on('error', err => {
+      log.error(chalk.red(err));
+      process.exit(-1);
+    });
 
 module.exports = (src, dest, options) => {
   log(`Publish to ${dest} folder:`, [].concat(src).join(','));

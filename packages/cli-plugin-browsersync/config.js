@@ -3,22 +3,28 @@
  * @param {Config} config
  */
 module.exports = config => {
+  config.defineGetter('browserSync', () =>
+    config.resolve({
+      https: true,
+      port: 8001,
+      logLevel: 'debug',
+      urls: [],
+      ...(config.get('browserSync') || {})
+    })
+  );
+
   /**
    *
    * @param url
    */
-  config.defineMethod('pushProxyUrl', url => {
-    const { proxyUrls } = this;
+  config.defineMethod('setBSUrls', url => {
+    const { urls } = config.browserSync;
 
-    if (proxyUrls.indexOf(url) === -1) {
-      proxyUrls.push(url);
+    if (urls.indexOf(url) === -1) {
+      urls.push(url);
     }
 
-    this.set('proxyUrls', proxyUrls);
-    this.save();
+    config.set('browserSync', { ...config.browserSync, urls });
+    config.save();
   });
-  /**
-   *
-   */
-  config.defineGetter('proxyUrls', () => config.get('proxyUrls') || []);
 };

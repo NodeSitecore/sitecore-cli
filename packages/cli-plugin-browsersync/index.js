@@ -1,73 +1,58 @@
 const inquirer = require('inquirer');
 const log = require('fancy-log');
-const proxyServer = require('./src/browser-sync');
+const execa = require('execa');
+const browserSync = require('./src/browser-sync');
 
 module.exports = (api, config) => {
   api.registerCommand(
     'browsersync',
     {
-      description: '',
-      usage: '[Feature|Foundation|Project|solution] [options]',
+      description: 'Run browsersync server and proxy a given server',
+      usage: '[options]',
       options: {
-        '-p, --package <package>': {
-          description: 'Load a snippet for a given localization',
-          type: String
-        },
+        // '-p, --package <package>': {
+        //  type: String,
+        //  description: 'Load a snippet for a given localization',
+        // },
 
-        '-c, --concurrently <npm task>': {
-          description: 'Load a snippet for a given localization'
+        '-e, --execute <task>': {
+          description: 'Run command concurrently'
         }
       }
     },
     commander => {
-      runInteractive(commander);
+      const { urls } = config.browserSync;
 
-      function runInteractive(options) {
-        let questions;
+      return inquirer
+        .prompt([
+          {
+            type: 'list',
+            name: 'url',
+            message: 'Which url do you want to proxify ? ',
+            choices: urls.concat([new inquirer.Separator(), 'Enter new url']),
+            required: true
+          },
+          {
+            type: 'input',
+            name: 'url',
+            when: answers => answers.url === 'Enter new url',
+            message: 'Which url do you want to proxify ? ',
+            default: config.siteUrl,
+            required: true
+          }
+        ])
+        .then(answers => {
+          config.setBSUrls(answers.url);
 
-        if (config.proxyUrls.length) {
-          questions = [
-            {
-              type: 'list',
-              name: 'proxyUrl',
-              message: 'Which url do you want to proxify ? ',
-              choices: config.proxyUrls.concat([new inquirer.Separator(), 'Enter new url']),
-              required: true
-            },
-            {
-              type: 'input',
-              name: 'proxyUrl',
-              when: answers => answers.proxyUrl === 'Enter new url',
-              message: 'Which url do you want to proxify ? ',
-              default: config.siteUrl,
-              required: true
-            }
-          ];
-        } else {
-          questions = [
-            {
-              type: 'input',
-              name: 'proxyUrl',
-              message: 'Which url do you want to proxify ? ',
-              default: config.siteUrl,
-              required: true
-            }
-          ];
-        }
-
-        return inquirer
-          .prompt(questions)
-          .then(answers => {
-            config.pushProxyUrl(answers.proxyUrl);
-
-            proxyServer({
-              url: answers.proxyUrl,
-              package: options.package,
-              concurrently: options.concurrently
+          if (commander.execute) {
+            execa.shell(commander.execute, {
+              stdio: 'inherit'
             });
-          })
-          .catch(er => log.error(er));
-      }
+          }
+
+          browserSync(answers.url, config, {});
+        })
+        .catch(er => log.error(er));
     }
   );
 };

@@ -4,7 +4,7 @@ const foreach = require('gulp-foreach');
 const debug = require('gulp-debug');
 const log = require('fancy-log');
 
-const builStream = (stream, options) => stream.pipe(debug({ title: 'Building project:' })).pipe(msbuild(options));
+const builStream = (stream, options) => stream.pipe(debug({ title: 'Building project:' })).pipe(msbuild({ ...options, logCommand: true }));
 
 module.exports = (src, options) => {
   log.info('Build solution:', [].concat(src).join(','));

@@ -4,7 +4,7 @@ module.exports = (config, options) => {
   return [
     require('./google-translate')(config, options),
     buildMode ? (req, res, next) => next() : require('./proxy-webpack')(config, options),
-    require('./assets')(config, options),
+    require('./serve-static')(config, options),
     buildMode ? (req, res, next) => next() : require('./mock')(config, options)
   ];
 };
