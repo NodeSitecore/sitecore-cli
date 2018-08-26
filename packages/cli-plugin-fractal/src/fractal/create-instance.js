@@ -8,14 +8,14 @@ const Fractal = require('@frctl/fractal');
  * @returns {*}
  */
 module.exports = function createInstance(config, options) {
-  const { componentsDir, currentWebsite, staticsDir, outputDir, middlewaresDir, helpersDir } = config;
+  const { currentWebsite } = config;
+  const { componentsDir, staticsDir, outputDir, middlewaresDir, helpersDir, docsDir } = config.fractal;
   const { buildMode, port, host } = options;
 
   const fractalExternalBuildPrefix = `/${currentWebsite.toLowerCase()}/`;
-
   /*
-  * Require the Fractal module
-  */
+   * Require the Fractal module
+   */
   const fractal = Fractal.create();
 
   /*
@@ -29,13 +29,13 @@ module.exports = function createInstance(config, options) {
   /**
    * Bundles
    */
-  const { bundles, vendors, styles } = config.buildFractalBundles();
+  const { bundles, vendors, styles } = config.buildFractalBundles(buildMode ? 'production' : 'development');
 
   if (!buildMode) {
     const address = host ? `http://${host}:${port}` : '';
-    fractal.set('project.bundles', bundles.map(p => `${address}${p}.js`));
-    fractal.set('project.vendors', vendors.map(p => `${address}${p}.js`));
-    fractal.set('project.styles', []);
+    fractal.set('project.bundles', bundles.map(p => `${address}${p}`));
+    fractal.set('project.vendors', vendors.map(p => `${address}${p}`));
+    fractal.set('project.styles', styles.map(p => `${address}${p}`));
   } else {
     fractal.set('project.bundles', bundles);
     fractal.set('project.vendors', vendors);
@@ -54,7 +54,7 @@ module.exports = function createInstance(config, options) {
   /*
    * Tell Fractal where to look for documentation pages.
    */
-  // fractal.docs.set('path', docsDir);
+  fractal.docs.set('path', docsDir);
 
   /*
    * Tell the Fractal web preview plugin where to look for static assets.
@@ -67,7 +67,7 @@ module.exports = function createInstance(config, options) {
   /**
    * Browser-sync options
    */
-  let middlewares = require('../middlewares');
+  let middlewares = require('../middlewares')(config, options);
 
   if (middlewaresDir && fs.existsSync(middlewaresDir)) {
     const mdlwOpts = require(middlewaresDir)(config, options);

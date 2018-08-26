@@ -19,7 +19,7 @@ if (!semver.satisfies(process.version, requiredVersion)) {
 
 const service = require('../loader.js');
 
-const command = process.argv.slice(2)[0];
+const command = process.argv.slice(2).filter(c => !c.match(/^-/))[0];
 
 service.run(command).catch(err => {
   logger.error(chalk.red(err));

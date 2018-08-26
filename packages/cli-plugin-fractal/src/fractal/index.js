@@ -7,7 +7,7 @@ const clean = require('../utils/clean');
 
 module.exports = {
   async clean(config) {
-    return clean(config.buildFractalBundles().cleanGlob, { cwd: config.fractal.outputDir });
+    return clean(config.buildFractalBundles('production').cleanGlob, { cwd: config.fractal.outputDir });
   },
   /**
    *
@@ -32,16 +32,16 @@ module.exports = {
    *
    * @returns {*}
    */
-  async dev(config) {
+  async dev(config, webpackPort = null) {
     const that = module.exports;
     that.loaded = false;
     that.server = null;
-    that.port = null;
     that.logger = null;
+    that.port = webpackPort;
 
     const fractal = createInstance(config, {
       host: 'localhost',
-      port: that.port
+      port: webpackPort
     });
 
     that.server = fractal.web.server({
@@ -66,7 +66,8 @@ module.exports = {
   },
 
   async runBuildBefore(cmd) {
-    await execa.shell(cmd, {
+    cmd = cmd.split(' ');
+    await execa(cmd[0], cmd.splice(1), {
       shell: true,
       env: { FORCE_COLOR: true },
       stdio: 'inherit'
@@ -75,18 +76,18 @@ module.exports = {
 
   async runDevBefore(cmd) {
     return new Promise(resolve => {
-      const stream = execa.shell(cmd, { shell: true, env: { FORCE_COLOR: true } });
+      cmd = cmd.split(' ');
+      const stream = execa(cmd[0], cmd.splice(1), { shell: true, env: { FORCE_COLOR: true } });
       stream.stderr.pipe(process.stderr);
       // stream.stdout.pipe(process.stdout);
       let hasError = false;
       stream.stdout.on('data', data => {
         const content = data.toString();
-        const match = stripAnsi(content).match(/localhost:([0-9].*)\//);
+        const match = stripAnsi(content).match(/localhost:([0-9].*)/);
 
         if (match && !module.exports.loaded) {
           const [, port] = match;
-          module.exports.port = port;
-          resolve();
+          resolve(parseInt(port, 0));
         }
 
         if (match && module.exports.loaded) {

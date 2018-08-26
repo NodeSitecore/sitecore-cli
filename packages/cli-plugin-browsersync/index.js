@@ -15,7 +15,7 @@ module.exports = (api, config) => {
         //  description: 'Load a snippet for a given localization',
         // },
 
-        '-e, --execute <task>': {
+        '-e, --execute <cmd>': {
           description: 'Run command concurrently'
         }
       }

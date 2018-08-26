@@ -10,7 +10,7 @@ module.exports = (api, config) => {
       usage: '<serve|buid> [options]',
       description: 'Run or build a fractal server',
       options: {
-        '-e, --execute': {
+        '-e, --execute <cmd>': {
           type: String,
           description: 'Run command before loading Fractal server. Useful for webpack dev server.'
         }
@@ -20,16 +20,17 @@ module.exports = (api, config) => {
       const [mode = 'serve'] = args;
 
       log(`Starting '${chalk.cyan('clean workspace')}'...`);
-      await module.exports.clean(config);
+      await fractal.clean(config);
 
       log(`Finished '${chalk.cyan('clean workspace')}'...`);
 
       if (mode === 'serve') {
+        let port;
         if (commander.execute) {
-          await fractal.runDevBefore(commander.execute);
+          port = await fractal.runDevBefore(commander.execute);
         }
 
-        await fractal.dev(config);
+        await fractal.dev(config, port);
       } else {
         if (commander.execute) {
           log(`Starting '${chalk.cyan('cli:build')}'...`);

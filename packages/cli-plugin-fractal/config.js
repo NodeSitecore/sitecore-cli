@@ -7,8 +7,8 @@ module.exports = config => {
       mocksDir: '<rootDir>/fractal/components/mocks',
       mockResponseDelay: 0,
       mockRoutes: ['/api'],
-      docDir: '<rootDir>/fractal/docs',
-      assetsDir: '<rootDir>/fractal/assets',
+      docsDir: '<rootDir>/fractal/docs',
+      assetsDir: '<rootDir>/fractal/components/assets',
       helpersDir: '<rootDir>/fractal/helpers',
       middlewaresDir: '<rootDir>/fractal/middlewares',
       proxyPatterns: ['/Fonts/**', '/Images/**', '/Icons/**'],
@@ -16,27 +16,27 @@ module.exports = config => {
     })
   );
 
-  config.defineGetter('buildFractalBundles', () => {
+  config.defineMethod('buildFractalBundles', env => {
     const { entries } = config.vueCli;
     const bundles = [];
     const vendors = [];
     const styles = [];
-    const cleanGlob = [config.fractal.proxyPatterns, 'precache-manifest.**', 'service-worker.js', 'vendors.**'];
+    const cleanGlob = [...config.fractal.proxyPatterns, 'precache-manifest.**', 'service-worker.js', 'vendors.**'];
 
     Object.keys(entries).forEach(key => {
       const { name, mode } = entries[key];
 
-      if (mode && mode !== process.env.NODE_ENV) {
+      if (mode && mode !== env) {
         return;
       }
 
       vendors.push(`/vendors.${name}.js`);
       bundles.push(`/${name}.js`);
-      styles.push(`/${name}.scss`);
+      styles.push(`/${name}.css`);
 
       cleanGlob.push(`${name}.**`);
     });
 
-    return { vendors, bundles, cleanGlob };
+    return { vendors, bundles, styles, cleanGlob };
   });
 };

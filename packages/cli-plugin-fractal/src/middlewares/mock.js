@@ -4,7 +4,13 @@ const fs = require('fs');
 const chalk = require('chalk');
 const log = require('fancy-log');
 
-module.exports = config => {
+module.exports = (config, options) => {
+  const { buildMode } = options;
+
+  if (buildMode) {
+    return [];
+  }
+
   const { mocksDir, mockRoutes = ['/api'], mockResponseDelay = 0 } = config.fractal;
   const handle = (req, response) => {
     const fileName = req.url.substring(1, req.url.indexOf('?')); //`${}.json`; // '/search?query=123' => 'search'
