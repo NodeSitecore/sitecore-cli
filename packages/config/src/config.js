@@ -114,17 +114,16 @@ class Config {
 
   /**
    *
+   * @param obj
    * @param values
    * @returns {*}
    */
   resolve(obj, ...values) {
     if (typeof obj === 'object') {
       return Object.keys(obj).reduce((acc, key) => {
-        if (obj instanceof Array && key === 'length') {
-          return acc;
+        if (!(obj instanceof Array && key === 'length')) {
+          acc[key] = this.resolve(obj[key]);
         }
-
-        acc[key] = this.resolve(obj[key]);
 
         return acc;
       }, obj instanceof Array ? [] : {});

@@ -4,6 +4,7 @@
   ],
   "exclude": [
     "**/index.js",
+    "packages/config/src/utils/format-path.js",
     "packages/**/*.spec.js",
     "packages/**/bin",
     "packages/**/src/commands",
@@ -21,7 +22,7 @@
   ],
   "check-coverage": true,
   "lines": 99.3,
-  "functions": 96.4,
+  "functions": 94.87,
   "branches": 84.48,
   "statements": 98.03,
   "all": true

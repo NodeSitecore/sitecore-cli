@@ -58,6 +58,7 @@ class PluginAPI {
    *   (args: { [string]: string }, rawArgs: string[]) => ?Promise
    */
   registerCommand(name, opts, fn) {
+    /* istanbul ignore next */
     if (typeof opts === 'function') {
       fn = opts;
       opts = null;

@@ -13,7 +13,8 @@ const publish = require('proxyquire')('../src/msbuild/publish', {
 describe('publish()', () => {
   before(() => {
     this.gulpStub = {
-      pipe: Sinon.stub()
+      pipe: Sinon.stub(),
+      on: Sinon.stub()
     };
 
     this.gulpStub.pipe.returns(this.gulpStub);
@@ -33,6 +34,6 @@ describe('publish()', () => {
     this.srcStub.should.be.calledWithExactly(['src']);
   });
   it('should call foreach', () => {
-    msBuild.should.have.been.calledWithExactly({ options: 'options', properties: { publishUrl: 'dest' } });
+    msBuild.should.have.been.calledWithExactly({ logCommand: true, options: 'options', properties: { publishUrl: 'dest' } });
   });
 });

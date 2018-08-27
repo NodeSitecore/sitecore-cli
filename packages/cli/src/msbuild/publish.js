@@ -18,8 +18,11 @@ const publishStream = (stream, dest, options) =>
         }
       })
     )
+    /* istanbul ignore next */
     .on('error', err => {
+      /* istanbul ignore next */
       log.error(chalk.red(err));
+      /* istanbul ignore next */
       process.exit(-1);
     });
 

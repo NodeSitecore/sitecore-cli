@@ -1,15 +1,16 @@
 const config = require('@node-sitecore/config');
+const path = require('path');
 
 module.exports = (parameters = {}) => {
   const { process, type = 'solution', paths = [] } = parameters;
   if (paths && paths.length) {
-    return paths;
+    return paths.map(p => path.normalize(p));
   }
   switch (type) {
     case 'all':
     case 'solution':
     default:
-      return process === 'build' ? config.buildPaths : config.publishPaths;
+      return (process === 'build' ? config.buildPaths : config.publishPaths).map(p => path.normalize(p));
 
     case 'Foundation':
       paths.push(`${config.foundationRoot}/**/code/*.csproj`);
@@ -24,5 +25,5 @@ module.exports = (parameters = {}) => {
       break;
   }
 
-  return paths;
+  return paths.map(p => path.normalize(p));
 };
