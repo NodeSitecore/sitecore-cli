@@ -13,7 +13,8 @@ const build = require('proxyquire')('../src/msbuild/build', {
 describe('build()', () => {
   before(() => {
     this.gulpStub = {
-      pipe: Sinon.stub()
+      pipe: Sinon.stub(),
+      on: Sinon.stub()
     };
 
     this.gulpStub.pipe.returns(this.gulpStub);
@@ -34,6 +35,6 @@ describe('build()', () => {
   });
 
   it('should call foreach', () => {
-    msBuild.should.have.been.calledWithExactly({ options: 'options' });
+    msBuild.should.have.been.calledWithExactly({ options: 'options', logCommand: true });
   });
 });

@@ -26,6 +26,14 @@ describe('Config', () => {
   });
 
   describe('resolve()', () => {
+    it('should resolve object', () => {
+      expect(config.resolve({ test: '<rootDir>', t: ['<rootDir>'], t2: 1 })).to.deep.equal({
+        test: path.normalize(process.cwd()),
+        t: [path.normalize(process.cwd())],
+        t2: 1
+      });
+    });
+
     it('should return the right path from <rootDir>', () => {
       expect(path.normalize(config.resolve('<rootDir>'))).to.equal(path.normalize(process.cwd()));
     });
@@ -231,11 +239,11 @@ describe('Config', () => {
     });
 
     it('should return publishPaths', () => {
-      expect(config.publishPaths).to.deep.equal([config.solutionPath]);
+      expect(config.publishPaths).to.deep.equal([path.normalize(config.solutionPath)]);
     });
 
     it('should return buildPaths', () => {
-      expect(config.buildPaths).to.deep.equal([config.solutionPath]);
+      expect(config.buildPaths).to.deep.equal([path.normalize(config.solutionPath)]);
     });
 
     it('should return currentProjectRoot', () => {

@@ -1,216 +1,101 @@
-const path = require('path');
+/* eslint-disable global-require,import/no-dynamic-require */
 const execa = require('execa');
+const fs = require('fs-extra');
 const log = require('fancy-log');
-const chalk = require('chalk');
-const Fractal = require('@frctl/fractal');
 const stripAnsi = require('strip-ansi');
-const config = require('@node-sitecore/config');
-const clean = require('../utils/clean');
-
-const {
-  outputDir = path.join(config.buildRoot, 'Fractal'),
-  staticsDir = config.currentWebsiteRoot
-  // docDir = path.join(config.rootDir, 'fractal/docs')
-} = config.get('fractal');
-
-// const middleware = require('./middlewares');
-// const hbs = require('./handlebars');
-/**
- *
- */
-// const FRACTAL_DEST = outputDir;
-/**
- *
- * @type {string}
- */
-// const FRACTAL_STATICS = staticsDir;
-/**
- *
- * @type {string}
- */
-const THEME_PATH = config.currentWebsiteRoot;
-
-/**
- *
- * @param options
- * @returns {*}
- */
-function createInstance(options) {
-  const { currentWebsite, buildMode, port, bundles, host } = options;
-
-  const fractalExternalBuildPrefix = `/${currentWebsite.toLowerCase()}/`;
-
-  /*
-  * Require the Fractal module
-  */
-  const fractal = Fractal.create();
-
-  /*
-   * Give your project a title.
-   */
-  fractal.set('project.title', currentWebsite);
-  /**
-   *
-   */
-  fractal.set('project.buildMode', buildMode);
-  /**
-   * Bundles
-   */
-  const bundleName = bundles.styleguide ? bundles.styleguide : bundles.bundleName;
-
-  if (!buildMode) {
-    const address = host ? `http://${host}:${port}` : '';
-    fractal.set('project.bundle', `${address}/${bundleName}.js`);
-    fractal.set('project.vendors', `${address}/vendors.${bundleName}.js`);
-    fractal.set('project.style', false);
-  } else {
-    fractal.set('project.bundle', `/${bundleName}.js`);
-    fractal.set('project.vendors', `/vendors.${bundleName}.js`);
-    fractal.set('project.style', `/${bundleName}.css`);
-  }
-
-  /*
-   * Tell Fractal where to look for components.
-   */
-  fractal.components.set('path', path.join(__dirname, '../../fractal/components'));
-  fractal.components.set('default.preview', '@preview');
-  fractal.components.set('default.context', {
-    imgDir: `${buildMode ? fractalExternalBuildPrefix : '/'}Images`,
-    site: currentWebsite
-  });
-  /*
-   * Tell Fractal where to look for documentation pages.
-   */
-  // fractal.docs.set('path', docsDir);
-
-  /*
-   * Tell the Fractal web preview plugin where to look for static assets.
-   */
-  fractal.web.set('static.path', staticsDir);
-  /*
-   * Publish path
-   */
-  fractal.web.set('builder.dest', outputDir);
-  /**
-   * Browser-sync options
-   */
-  // if (config.)
-  // fractal.web.set('server.syncOptions', {
-  //  middleware: middleware(options)
-  // });
-
-  // if ()
-  // fractal.components.engine(hbs);
-
-  return fractal;
-}
+const createInstance = require('./create-instance');
 
 module.exports = {
   /**
    *
    * @returns {*}
    */
-  build() {
-    const { currentWebsite, bundles, devServer } = config;
+  async build(config) {
+    const { devServer = {} } = config;
+    const fractal = createInstance(config, {
+      buildMode: true,
+      port: devServer.port
+    });
 
-    log(`Starting '${chalk.cyan('clean workspace')}'...`);
+    const builder = fractal.web.builder();
 
-    return clean(
-      [
-        '/Fonts/**',
-        '/Images/**',
-        '/Icons/**',
-        `${bundles.bundleName}.**`,
-        'precache-manifest.**',
-        'service-worker.js',
-        `${bundles.styleguide}.**`,
-        'vendors.**'
-      ],
-      { cwd: THEME_PATH }
-    )
-      .then(() => {
-        log(`Finished '${chalk.cyan('clean workspace')}'...`);
-        log(`Starting '${chalk.cyan('cli:build')}'...`);
+    builder.on('error', err => log.error(err.message));
 
-        return execa('npm', ['run', 'cli:build'], {
-          shell: true,
-          env: { FORCE_COLOR: true },
-          stdio: 'ignore'
-        });
-      })
+    await builder.build();
 
-      .then(() => {
-        log(`Finished '${chalk.cyan('cli:build')}'`);
-
-        const fractal = createInstance({
-          currentWebsite,
-          buildMode: true,
-          bundles,
-          port: devServer.port
-        });
-        const builder = fractal.web.builder();
-
-        builder.on('error', err => log.error(err.message));
-
-        return builder.build().then(() => {
-          log(`Fractal static HTML build for project '${chalk.cyan(currentWebsite)}' complete!`);
-          return fractal;
-        });
-      });
+    return fractal;
   },
   /**
    *
    * @returns {*}
    */
-  dev() {
-    const { currentWebsite, bundles } = config;
-    let loaded = false;
-    let server;
-    let port;
-    let logger;
+  async dev(config, webpackPort = null) {
+    const that = module.exports;
+    that.loaded = false;
+    that.server = null;
+    that.logger = null;
+    that.port = webpackPort;
 
-    const printSuccess = () => {
-      console.error('\n');
-      logger.success(`Fractal server is now running at ${server.url} for project ${currentWebsite}`);
-      logger.success(`Webpack server is now running at http://localhost:${port} for project ${currentWebsite}`);
-      logger.success(`                  Assets list at http://localhost:${port}/webpack-dev-server`);
-    };
+    const fractal = createInstance(config, {
+      host: 'localhost',
+      port: webpackPort
+    });
 
-    const runFractal = () => {
-      const fractal = createInstance({
-        currentWebsite,
-        host: 'localhost',
-        port,
-        bundles
-      });
-      server = fractal.web.server({
-        sync: true
-      });
-      logger = fractal.cli.console;
-      server.on('error', err2 => logger.error(err2.message));
+    that.server = fractal.web.server({
+      sync: true
+    });
+    that.logger = fractal.cli.console;
+    that.server.on('error', err2 => that.logger.error(err2.message));
 
-      return server.start().then(() => {
-        loaded = true;
-        printSuccess();
-      });
-    };
+    await that.server.start();
 
-    const runWebpack = () => {
-      const stream = execa('npm', ['run', 'cli:serve'], { shell: true, env: { FORCE_COLOR: true } });
+    module.exports.loaded = true;
+    module.exports.printSuccess();
+  },
+
+  printSuccess() {
+    console.error('\n');
+    const { logger, server, port } = module.exports;
+
+    logger.success(`Fractal server is now running at ${server.url}`);
+    logger.success(`Webpack server is now running at http://localhost:${port}`);
+    logger.success(`                  Assets list at http://localhost:${port}/webpack-dev-server`);
+  },
+
+  async runBuildAfter(cmd, config) {
+    cmd = cmd.split(' ');
+    const task = cmd[0];
+    const args = cmd.splice(1);
+
+    await execa(task, args, {
+      shell: true,
+      env: {
+        FORCE_COLOR: true
+      },
+      stdio: 'inherit'
+    });
+
+    await fs.copy(config.vueCli.outputDir, config.fractal.outputDir);
+  },
+
+  async runDevBefore(cmd) {
+    return new Promise(resolve => {
+      cmd = cmd.split(' ');
+      const stream = execa(cmd[0], cmd.splice(1), { shell: true, env: { FORCE_COLOR: true } });
       stream.stderr.pipe(process.stderr);
       // stream.stdout.pipe(process.stdout);
       let hasError = false;
       stream.stdout.on('data', data => {
         const content = data.toString();
-        const match = stripAnsi(content).match(/localhost:([0-9].*)\//);
+        const match = stripAnsi(content).match(/localhost:([0-9].*)/);
 
-        if (match && !loaded) {
-          [, port] = match;
-          runFractal();
+        if (match && !module.exports.loaded) {
+          const [, port] = match;
+          resolve(parseInt(port, 0));
         }
 
-        if (match && loaded) {
-          return printSuccess();
+        if (match && module.exports.loaded) {
+          return module.exports.printSuccess();
         }
 
         if (content.match(/([0-9].2)%/) || content.match(/INFO/)) {
@@ -220,7 +105,7 @@ module.exports = {
         if (content.match(/warning /)) {
           return process.stderr.write(data);
         }
-        if (content.match(/ERROR /) || (hasError && !loaded)) {
+        if (content.match(/ERROR /) || (hasError && !module.exports.loaded)) {
           if (!hasError) {
             process.stderr.write('\n');
           }
@@ -232,20 +117,6 @@ module.exports = {
       });
 
       return stream;
-    };
-
-    return clean(
-      [
-        '/Fonts/**',
-        '/Images/**',
-        '/Icons/**',
-        `${bundles.bundleName}.**`,
-        'precache-manifest.**',
-        'service-worker.js',
-        `${bundles.styleguide}.**`,
-        'vendors.**'
-      ],
-      { cwd: THEME_PATH }
-    ).then(() => runWebpack());
+    });
   }
 };
