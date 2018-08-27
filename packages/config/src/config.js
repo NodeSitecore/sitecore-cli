@@ -21,7 +21,7 @@ class Config {
     //
     // LOAD env and args variables
     //
-    this.nconf.argv().env({ lowerCase: true, separator: '__' });
+    this.nconf.argv().env({ separator: '__' });
     this.nconf.file('default', { file: DEFAULT_CONF_PATH });
 
     /* istanbul ignore next */

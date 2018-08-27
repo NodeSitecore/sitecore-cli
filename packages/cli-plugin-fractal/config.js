@@ -2,13 +2,12 @@ module.exports = config => {
   config.defineGetter('fractal', () =>
     config.resolve({
       outputDir: '<outputDir>/Fractal',
-      staticsDir: '<themeDir>/<currentWebsite>',
+      staticsDir: '<rootDir>/fractal/public',
       componentsDir: '<rootDir>/fractal/components',
       mocksDir: '<rootDir>/fractal/components/mocks',
       mockResponseDelay: 0,
       mockRoutes: ['/api'],
       docsDir: '<rootDir>/fractal/docs',
-      assetsDir: '<rootDir>/fractal/components/assets',
       helpersDir: '<rootDir>/fractal/helpers',
       middlewaresDir: '<rootDir>/fractal/middlewares',
       proxyPatterns: ['/Fonts/**', '/Images/**', '/Icons/**'],

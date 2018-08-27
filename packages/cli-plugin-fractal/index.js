@@ -19,11 +19,6 @@ module.exports = (api, config) => {
     async (commander, args) => {
       const [mode = 'serve'] = args;
 
-      log(`Starting '${chalk.cyan('clean workspace')}'...`);
-      await fractal.clean(config);
-
-      log(`Finished '${chalk.cyan('clean workspace')}'...`);
-
       if (mode === 'serve') {
         let port;
         if (commander.execute) {
@@ -32,14 +27,16 @@ module.exports = (api, config) => {
 
         await fractal.dev(config, port);
       } else {
+        log(`Starting build fractal...`);
+        await fractal.build(config);
+
         if (commander.execute) {
-          log(`Starting '${chalk.cyan('cli:build')}'...`);
-          await fractal.runBuildBefore(commander.execute);
-          log(`Finished '${chalk.cyan('cli:build')}'`);
+          log(`Starting build app '${chalk.cyan(commander.execute)}'...`);
+          await fractal.runBuildAfter(commander.execute, config);
+          log(`Finished build'${chalk.cyan(commander.execute)}'`);
         }
 
-        await fractal.build(config);
-        log(`Fractal static HTML build complete!`);
+        log(`Fractal static HTML build complete in ${config.fractal.outputDir}`);
       }
     }
   );

@@ -7,7 +7,7 @@ const buildWebpackAlias = require('./alias');
 const buildWebpackAssets = require('./assets');
 
 module.exports = (config, baseVueConfig) => {
-  const { scssMixinsPath, baseUrl, outputDir = config.currentWebsiteDir} = config.vueCli;
+  const { scssMixinsPath, baseUrl, outputDir = config.currentWebsiteDir } = config.vueCli;
   let sass = {};
 
   if (fs.existsSync(scssMixinsPath)) {

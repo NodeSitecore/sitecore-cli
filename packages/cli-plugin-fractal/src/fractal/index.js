@@ -1,14 +1,11 @@
 /* eslint-disable global-require,import/no-dynamic-require */
 const execa = require('execa');
+const fs = require('fs-extra');
 const log = require('fancy-log');
 const stripAnsi = require('strip-ansi');
 const createInstance = require('./create-instance');
-const clean = require('../utils/clean');
 
 module.exports = {
-  async clean(config) {
-    return clean(config.buildFractalBundles('production').cleanGlob, { cwd: config.fractal.outputDir });
-  },
   /**
    *
    * @returns {*}
@@ -65,13 +62,20 @@ module.exports = {
     logger.success(`                  Assets list at http://localhost:${port}/webpack-dev-server`);
   },
 
-  async runBuildBefore(cmd) {
+  async runBuildAfter(cmd, config) {
     cmd = cmd.split(' ');
-    await execa(cmd[0], cmd.splice(1), {
+    const task = cmd[0];
+    const args = cmd.splice(1);
+
+    await execa(task, args, {
       shell: true,
-      env: { FORCE_COLOR: true },
+      env: {
+        FORCE_COLOR: true
+      },
       stdio: 'inherit'
     });
+
+    await fs.copy(config.vueCli.outputDir, config.fractal.outputDir);
   },
 
   async runDevBefore(cmd) {
