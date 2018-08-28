@@ -25,16 +25,11 @@ The cli will be installed on a pre-installed Sitecore Project. This tool doens't
 
 This repository is base on mono-repo. That mean, we have multiple packages hosted in this repository. Theses packages are the following:
 
-- [@node-sitecore/config](/packages/config/readme.md), a shared configuration between all other packages,
-- [@node-sitecore/config-browserify](/packages/config-browserify/readme.md), specific configuration for browserify stack,
-- [@node-sitecore/cli](/packages/cli/readme.md), the cli to run command across Sitecore.
-
-## Unstable packages
-
-- [@node-sitecore/vue-cli](/packages/cli-plugin-fractal/readme.md),
-- [@node-sitecore/vue-cli](/packages/cli-plugin-browsersync/readme.md),
-- [@node-sitecore/vue-cli](/packages/cli-plugin-vue/readme.md),
-
+- [@node-sitecore/config](https://node-sitecore.github.io/sitecore-cli/packages/config.md), a shared configuration between all other packages,
+- [@node-sitecore/config-browserify](https://node-sitecore.github.io/sitecore-cli/packages/browserify.md), specific configuration for browserify stack,
+- [@node-sitecore/cli](https://node-sitecore.github.io/sitecore-cli/packages/cli.md), the cli to run command across Sitecore.
+- [@node-sitecore/cli-plugin-fractal](https://node-sitecore.github.io/sitecore-cli/packages/fractal.md). Create a fractal server for developers.
+- [@node-sitecore/cli-plugin-vue](https://node-sitecore.github.io/sitecore-cli/packages/vue-cli.md). Add support for vue-cli stack.
 
 ## Contributing
 
