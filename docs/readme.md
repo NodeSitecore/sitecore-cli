@@ -50,12 +50,12 @@ This repository is base on mono-repo. That mean, we have multiple packages hoste
 - [@node-sitecore/config](/packages/config.md), a shared configuration between all other packages,
 - [@node-sitecore/config-browserify](/packages/browserify.md), specific configuration for browserify stack,
 - [@node-sitecore/cli](/packages/cli.md), the cli to run command across Sitecore.
+- [@node-sitecore/cli-plugin-fractal](/packages/fractal.md). Create a fractal server for developers.
+- [@node-sitecore/cli-plugin-vue](/packages/vue-cli.md). Add support for vue-cli stack.
 
 ## Unstable packages
 
-- [@node-sitecore/cli-plugin-fractal](/packages/fractal.md),
-- [@node-sitecore/cli-plugin-browsersync](/packages/browsersync.md),
-- [@node-sitecore/cli-plugin](/packages/vue-cli.md),
+- [@node-sitecore/cli-plugin-browsersync](/packages/browsersync.md).
 
 ## Contributing
 
