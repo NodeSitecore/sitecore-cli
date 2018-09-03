@@ -22,10 +22,13 @@ module.exports = ({ httpsOptions }) => {
 
   app.use(express.static(outputDir));
 
-  let middlewares;
+  const middlewares = require('./src/middlewares')(config, { buildMode: true });
 
   if (middlewaresDir && fs.existsSync(middlewaresDir)) {
-    middlewares = require(middlewaresDir)(config, { buildMode: true });
+    const mdlwOpts = require(middlewaresDir)(config, { buildMode: true });
+
+    (mdlwOpts.before || []).concat(middlewares).concat(mdlwOpts.after || []);
+
     middlewares.forEach(mdlw => {
       if (typeof mdlw === 'function') {
         app.use(mdlw);
