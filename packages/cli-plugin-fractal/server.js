@@ -39,6 +39,6 @@ module.exports = ({ httpsOptions } = {}) => {
   }
 
   server.listen(port, () => {
-    log(`Fractal running at '${chalk.cyan(`https://localhost:${server.address().port}`)}'`);
+    log(`Fractal running at '${chalk.cyan(`http${httpsOptions ? 's' : ''}://localhost:${server.address().port}`)}'`);
   });
 };
