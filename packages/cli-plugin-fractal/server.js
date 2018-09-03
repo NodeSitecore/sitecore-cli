@@ -12,10 +12,10 @@ const chalk = require('chalk');
 const express = require('express');
 const config = require('@node-sitecore/config');
 
-module.exports = ({ httpsOptions }) => {
+module.exports = ({ httpsOptions } = {}) => {
   const { outputDir, middlewaresDir } = config.fractal;
   const app = express();
-  const server = httpsOptions ? http.createServer(app) : https.createServer(httpsOptions, app);
+  const server = !httpsOptions ? http.createServer(app) : https.createServer(httpsOptions, app);
 
   const portIndex = process.argv.indexOf('--port');
   const port = (portIndex > -1 && process.argv[portIndex + 1]) || 3000;
