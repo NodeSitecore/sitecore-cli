@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable global-require,prefer-destructuring */
 const path = require('path');
 const fs = require('fs-extra');
 const resetWebpackConfig = require('./reset');
@@ -7,7 +7,7 @@ const buildWebpackAlias = require('./alias');
 const buildWebpackAssets = require('./assets');
 
 module.exports = (config, baseVueConfig) => {
-  const { scssMixinsPath, baseUrl, outputDir = config.currentWebsiteDir } = config.vueCli;
+  const { scssMixinsPath, outputDir = config.currentWebsiteDir } = config.vueCli;
   let sass = {};
 
   if (fs.existsSync(scssMixinsPath)) {
@@ -15,6 +15,14 @@ module.exports = (config, baseVueConfig) => {
       data: fs.readFileSync(scssMixinsPath, 'utf-8'),
       includePaths: [path.dirname(scssMixinsPath)]
     };
+  }
+
+  let baseUrl;
+
+  if (config.vueCli.baseUrl === 'string') {
+    baseUrl = config.vueCli.baseUrl;
+  } else {
+    baseUrl = process.env.NODE_ENV === 'production' ? baseUrl.production : baseUrl.development;
   }
 
   const vueConfig = {
