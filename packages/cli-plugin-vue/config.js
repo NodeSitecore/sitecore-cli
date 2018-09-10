@@ -5,7 +5,10 @@ module.exports = config => {
     config.resolve({
       outputDir: '<themesDir>/<currentWebsite>',
       scssMixinsPath: '',
-      baseUrl: '/',
+      baseUrl: {
+        production: '/themes/<currentWebsite>',
+        development: '/'
+      },
       entries: [
         {
           mode: 'production',
