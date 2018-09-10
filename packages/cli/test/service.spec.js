@@ -133,7 +133,7 @@ describe('Cli Service', () => {
   });
 
   describe('resolvePlugins()', () => {
-    before(done => {
+    before(() => {
       CliService.prototype.resolvePlugins.restore();
 
       this.service.pkg = {
@@ -145,8 +145,6 @@ describe('Cli Service', () => {
         }
       };
       this.result = this.service.resolvePlugins();
-
-      done();
     });
 
     it('should load plugins', () => {

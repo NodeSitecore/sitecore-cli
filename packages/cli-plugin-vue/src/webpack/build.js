@@ -22,7 +22,7 @@ module.exports = (config, baseVueConfig) => {
   if (config.vueCli.baseUrl === 'string') {
     baseUrl = config.vueCli.baseUrl;
   } else {
-    baseUrl = process.env.NODE_ENV === 'production' ? baseUrl.production : baseUrl.development;
+    baseUrl = process.env.NODE_ENV === 'production' ? config.vueCli.baseUrl.production : config.vueCli.baseUrl.development;
   }
 
   const vueConfig = {
