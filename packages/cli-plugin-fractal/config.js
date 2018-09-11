@@ -10,7 +10,7 @@ module.exports = config => {
       docsDir: '<rootDir>/fractal/docs',
       helpersDir: '<rootDir>/fractal/helpers',
       middlewaresDir: '<rootDir>/fractal/middlewares',
-      proxyPatterns: ['/Fonts/**', '/Images/**', '/Icons/**'],
+      proxyPatterns: ['/fonts/**', '/images/**', '/icons/**', '/medias/**', '/public/**'],
       ...(config.get('fractal') || {})
     })
   );
@@ -31,7 +31,7 @@ module.exports = config => {
 
       vendors.push(`/vendors.${name}.js`);
       bundles.push(`/${name}.js`);
-      styles.push(`/${name}.css`);
+      styles.push(`css/${name}.css`);
 
       cleanGlob.push(`${name}.**`);
     });

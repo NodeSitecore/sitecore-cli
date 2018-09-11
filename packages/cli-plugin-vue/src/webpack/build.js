@@ -45,16 +45,16 @@ module.exports = (config, baseVueConfig) => {
     },
 
     chainWebpack(webpackConfig) {
-      const isProd = process.env.NODE_ENV === 'production';
+      // const isProd = process.env.NODE_ENV === 'production';
       // Reset configuration
       resetWebpackConfig(webpackConfig);
 
-      if (isProd) {
-        webpackConfig
-          .devtool('source-map')
-          .output.filename('[name].js')
-          .chunkFilename('[id].js');
-      }
+      // if (isProd) {
+      //   webpackConfig
+      //     .devtool('source-map')
+      //     .output.filename('[name].js')
+      //     .chunkFilename('[id].js');
+      // }
 
       buildWebpackAlias(config, webpackConfig);
       buildWebpackEntries(config, webpackConfig, vueConfig);
