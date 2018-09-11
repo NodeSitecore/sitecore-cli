@@ -25,6 +25,8 @@ module.exports = (config, baseVueConfig) => {
     baseUrl = process.env.NODE_ENV === 'production' ? config.vueCli.baseUrl.production : config.vueCli.baseUrl.development;
   }
 
+  baseUrl = baseUrl.replace(/\\/gi, '/');
+
   const vueConfig = {
     ...baseVueConfig,
     baseUrl,
