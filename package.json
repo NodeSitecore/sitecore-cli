@@ -1,6 +1,6 @@
 {
   "name": "@node-sitecore/cli",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "A node Sitecore cli",
   "main": "src/index.js",
   "private": true,
