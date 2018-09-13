@@ -1,9 +1,13 @@
+/* eslint-disable no-case-declarations */
 const publish = require('../msbuild/publish');
+const publishViews = require('../sitecore/publish-views');
+const publishConfig = require('../sitecore/publish-config');
+const publishAssemblies = require('../sitecore/publish-assemblies');
 const msBuildPaths = require('../utils/ms-build-paths');
 
 const description = {
   description: 'Publish content (Foundation, Feature, Project)',
-  usage: '[Feature|Foundation|Project|solution] [options]',
+  usage: '[solution|views|config|Feature|Foundation|Project] [options]',
   options: {
     '--paths': {
       description: 'Specify solution or project you want to publish',
@@ -59,40 +63,54 @@ const description = {
 module.exports = (api, config) => {
   api.registerCommand('publish', description, (commander, args) => {
     const [publishType] = args;
-    args = args.slice(1, args.length);
 
-    const {
-      configuration,
-      targets = config.get('publishTargets'),
-      maxcpucount = config.get('buildMaxCpuCount'),
-      verbosity = config.get('buildVerbosity'),
-      logCommand = config.get('buildLogCommand'),
-      nodeReuse = config.get('buildNodeReuse'),
-      toolsVersion = config.get('buildToolsVersion'),
-      publishPlatform = config.get('publishPlatform'),
-      publishProperties = config.get('publishProperties'),
-      nologo,
-      dest = config.websiteRoot
-    } = commander;
+    switch (publishType) {
+      case 'views':
+        return publishViews();
 
-    const options = {
-      targets,
-      configuration,
-      logCommand,
-      verbosity,
-      stdout: true,
-      errorOnFail: true,
-      maxcpucount,
-      nodeReuse,
-      toolsVersion: +toolsVersion,
-      nologo,
-      properties: {
-        Platform: publishPlatform,
-        ...publishProperties
-      },
-      customArgs: commander.args.slice(0, commander.args.length - 1).filter(item => item !== publishType)
-    };
+      case 'config':
+        return publishConfig();
 
-    return publish(msBuildPaths({ process: 'publish', type: publishType, paths: commander.paths }), dest, options);
+      case 'assemblies':
+        return publishAssemblies();
+
+      default:
+      case 'solution':
+        args = args.slice(1, args.length);
+
+        const {
+          configuration,
+          targets = config.get('publishTargets'),
+          maxcpucount = config.get('buildMaxCpuCount'),
+          verbosity = config.get('buildVerbosity'),
+          logCommand = config.get('buildLogCommand'),
+          nodeReuse = config.get('buildNodeReuse'),
+          toolsVersion = config.get('buildToolsVersion'),
+          publishPlatform = config.get('publishPlatform'),
+          publishProperties = config.get('publishProperties'),
+          nologo,
+          dest = config.websiteRoot
+        } = commander;
+
+        const options = {
+          targets,
+          configuration,
+          logCommand,
+          verbosity,
+          stdout: true,
+          errorOnFail: true,
+          maxcpucount,
+          nodeReuse,
+          toolsVersion: +toolsVersion,
+          nologo,
+          properties: {
+            Platform: publishPlatform,
+            ...publishProperties
+          },
+          customArgs: commander.args.slice(0, commander.args.length - 1).filter(item => item !== publishType)
+        };
+
+        return publish(msBuildPaths({ process: 'publish', type: publishType, paths: commander.paths }), dest, options);
+    }
   });
 };

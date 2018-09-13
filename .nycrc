@@ -9,6 +9,7 @@
     "packages/**/bin",
     "packages/**/src/commands",
     "packages/cli/loader.js",
+    "packages/cli/src/sitecore",
     "packages/cli-plugin-fractal",
     "packages/cli-plugin-browsersync",
     "packages/cli-plugin-vue"

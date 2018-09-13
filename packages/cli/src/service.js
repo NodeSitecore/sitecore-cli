@@ -21,7 +21,8 @@ const BUILT_IN_PLUGINS = [
   './commands/ps',
   './commands/run',
   './commands/unicorn',
-  './commands/inspect'
+  './commands/inspect',
+  './commands/watch'
 ];
 
 const PARSERS = new Map();
