@@ -17,10 +17,13 @@ const CliService = proxyquire('../src/service', {
   './commands/ps': {},
   './commands/run': {},
   './commands/unicorn': {},
-  './commands/inspect': {}
+  './commands/inspect': {},
+  './commands/watch': {}
 });
 
-describe('Cli Service', () => {
+describe('Cli Service', function suite() {
+  this.timeout(5000);
+
   before(() => {
     Sinon.stub(CliService.prototype, 'resolvePlugins').returns(['plugins']);
     Sinon.stub(CliService.prototype, 'resolvePkg').returns({ version: '1.0.0' });
@@ -184,6 +187,10 @@ describe('Cli Service', () => {
         {
           apply: {},
           id: 'built-in:commands/inspect'
+        },
+        {
+          apply: {},
+          id: 'built-in:commands/watch'
         },
         {
           apply: {
