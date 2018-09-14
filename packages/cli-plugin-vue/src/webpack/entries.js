@@ -13,7 +13,7 @@ module.exports = function buildWebpackEntries(config, webpackConfig, vueConfig) 
   webpackConfig.entryPoints.clear();
 
   const cacheGroups = Object.keys(entries).reduce((acc, key) => {
-    const { name, paths, mode } = entries[key];
+    const { name, paths, mode, extractVendors } = entries[key];
 
     if (mode && mode !== process.env.NODE_ENV) {
       return acc;
@@ -37,11 +37,14 @@ module.exports = function buildWebpackEntries(config, webpackConfig, vueConfig) 
       .filename('[name].js')
       .publicPath(baseUrl);
 
-    acc[name] = {
-      test: /[\\/]node_modules[\\/]/,
-      name: `vendors.${name}`,
-      chunks: chunk => chunk.name === name
-    };
+    if (extractVendors !== false) {
+
+      acc[name] = {
+        test: /[\\/]node_modules[\\/]/,
+        name: `vendors.${name}`,
+        chunks: chunk => chunk.name === name
+      };
+    }
 
     return acc;
   }, {});
