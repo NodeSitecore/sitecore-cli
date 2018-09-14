@@ -115,7 +115,7 @@ It should look something like this:
 
 ### Add NPM tasks for Visual Studio<Bagde text="recommanded" />
 
-To simlify your workflow with Visual Studio, it's recommanded to create npm tasks in your `package.json` to clean, build or publish your solution.
+To simplify your workflow with Visual Studio, it's recommanded to create npm tasks in your `package.json` to clean, build or publish your solution.
 
 ```json
 {
@@ -127,7 +127,7 @@ To simlify your workflow with Visual Studio, it's recommanded to create npm task
     "sc:clean": "nsc build --targets Clean",
     "sc:publish": "nsc publish",
     "sc:sync": "nsc unicorn sync",
-    "sc:inspect": "nsc inspect",
+    "sc:inspect": "nsc inspect"
   }
 }
 ```
