@@ -38,7 +38,6 @@ module.exports = function buildWebpackEntries(config, webpackConfig, vueConfig) 
       .publicPath(baseUrl);
 
     if (extractVendors !== false) {
-
       acc[name] = {
         test: /[\\/]node_modules[\\/]/,
         name: `vendors.${name}`,
