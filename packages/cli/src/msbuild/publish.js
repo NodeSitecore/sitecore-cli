@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const msbuild = require('gulp-msbuild');
 const chalk = require('chalk');
-const foreach = require('gulp-foreach');
+const flatmap = require('gulp-flatmap');
 const debug = require('gulp-debug');
 const log = require('fancy-log');
 
@@ -28,5 +28,5 @@ const publishStream = (stream, dest, options) =>
 
 module.exports = (src, dest, options) => {
   log(`Publish to ${dest} folder:`, [].concat(src).join(','));
-  gulp.src([].concat(src)).pipe(foreach(stream => publishStream(stream, dest, options)));
+  gulp.src([].concat(src)).pipe(flatmap(stream => publishStream(stream, dest, options)));
 };

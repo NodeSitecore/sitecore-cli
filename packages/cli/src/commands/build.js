@@ -56,7 +56,6 @@ const description = {
 module.exports = (api, config) => {
   api.registerCommand('build', description, (commander, args) => {
     const [publishType] = args;
-    args = args.slice(1, args.length);
 
     const {
       configuration,
@@ -86,7 +85,7 @@ module.exports = (api, config) => {
         Platform: solutionPlatform,
         ...solutionProperties
       },
-      customArgs: args
+      customArgs: args.filter(item => item !== publishType)
     };
 
     return buildSolution(msBuildPaths({ procces: 'build', type: publishType, paths: commander.paths }), options);

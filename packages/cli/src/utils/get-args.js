@@ -5,15 +5,12 @@ module.exports = (scriptName, argv = process.argv) =>
     (obj, value) => {
       if (path.basename(value) === scriptName || value === scriptName) {
         obj.script = true;
+        obj.command = value;
         return obj;
       }
 
-      if (obj.script) {
-        if (obj.command) {
-          obj.args.push(value);
-        } else {
-          obj.command = value;
-        }
+      if (obj.command) {
+        obj.args.push(value);
       }
 
       return obj;
