@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const msbuild = require('gulp-msbuild');
 const chalk = require('chalk');
-const foreach = require('gulp-foreach');
+const flatmap = require('gulp-flatmap');
 const debug = require('gulp-debug');
 const log = require('fancy-log');
 
@@ -19,5 +19,5 @@ const builStream = (stream, options) =>
 module.exports = (src, options) => {
   log.info('Build solution:', [].concat(src).join(','));
 
-  return gulp.src([].concat(src)).pipe(foreach(stream => builStream(stream, options)));
+  return gulp.src([].concat(src)).pipe(flatmap(stream => builStream(stream, options)));
 };

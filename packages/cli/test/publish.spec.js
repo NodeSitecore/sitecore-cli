@@ -7,7 +7,7 @@ const foreach = Sinon.stub();
 
 const publish = require('proxyquire')('../src/msbuild/publish', {
   'gulp-msbuild': msBuild,
-  'gulp-foreach': foreach
+  'gulp-flatmap': foreach
 });
 
 describe('publish()', () => {

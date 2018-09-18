@@ -89,7 +89,7 @@ module.exports = (api, config) => {
           publishPlatform = config.get('publishPlatform'),
           publishProperties = config.get('publishProperties'),
           nologo,
-          dest = config.websiteRoot
+          dest = config.websiteDir
         } = commander;
 
         const options = {
@@ -107,7 +107,7 @@ module.exports = (api, config) => {
             Platform: publishPlatform,
             ...publishProperties
           },
-          customArgs: commander.args.slice(0, commander.args.length - 1).filter(item => item !== publishType)
+          customArgs: args.filter(item => item !== publishType)
         };
 
         return publish(msBuildPaths({ process: 'publish', type: publishType, paths: commander.paths }), dest, options);

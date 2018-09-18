@@ -165,7 +165,9 @@ class CliService {
       return;
     }
 
-    return fn(commander, commander.args.slice(1, commander.args.length), getArgs(name).args);
+    const commandArgs = commander.args.slice(1, commander.args.length).filter(item => item !== name);
+
+    return fn(commander, commandArgs, getArgs(name).args);
   }
 
   printMan() {
