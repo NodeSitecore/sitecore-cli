@@ -10,8 +10,8 @@ module.exports = api => {
     },
     (commander, args, rawArgs) => {
       const [command] = args;
-      // console.log('options', options);
-      return nuget.exec(command, ...rawArgs);
+
+      return nuget.exec(command, ...rawArgs.splice(1));
     }
   );
 };

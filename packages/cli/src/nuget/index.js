@@ -28,6 +28,8 @@ module.exports = {
 
     args = args.map(v => v.replace(/^--/, '-'));
 
+    log(`Run command ${chalk.cyan(`nuget ${[cmd].concat(args).join(' ')}`)}`);
+
     const child = execa(nugetPath, [cmd].concat(args), {
       maxBuffer: 1024 * 500
     });
