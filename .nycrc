@@ -10,6 +10,8 @@
     "packages/**/src/commands",
     "packages/cli/loader.js",
     "packages/cli/src/sitecore",
+    "packages/cli/src/msbuild/stream-replace.js",
+    "packages/cli/src/msbuild/runner.js",
     "packages/cli-plugin-fractal",
     "packages/cli-plugin-browsersync",
     "packages/cli-plugin-vue"
