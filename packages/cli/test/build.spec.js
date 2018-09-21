@@ -6,7 +6,7 @@ const msBuild = Sinon.stub();
 const foreach = Sinon.stub();
 
 const build = require('proxyquire')('../src/msbuild/build', {
-  'gulp-msbuild': msBuild,
+  './runner': msBuild,
   'gulp-flatmap': foreach
 });
 

@@ -1,9 +1,9 @@
 const gulp = require('gulp');
-const msbuild = require('gulp-msbuild');
 const chalk = require('chalk');
 const flatmap = require('gulp-flatmap');
 const debug = require('gulp-debug');
 const log = require('fancy-log');
+const msbuild = require('./runner');
 
 const publishStream = (stream, dest, options) =>
   stream
