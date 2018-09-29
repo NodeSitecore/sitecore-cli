@@ -1,6 +1,8 @@
 /* eslint-disable global-require,import/no-dynamic-require */
 const fs = require('fs');
 const Fractal = require('@frctl/fractal');
+const Server = require('@frctl/fractal/src/web/server');
+const mockMiddleware = require('../middlewares/mock')
 /**
  *
  * @param config
@@ -13,6 +15,12 @@ module.exports = function createInstance(config, options) {
   const { buildMode, port, host } = options;
 
   const fractalExternalBuildPrefix = `/${currentWebsite.toLowerCase()}/`;
+
+  Server.prototype.superInit = Server.prototype._init;
+  Server.prototype._init = function init() {
+    this.use(mockMiddleware(config));
+    return this.superInit();
+  };
   /*
    * Require the Fractal module
    */

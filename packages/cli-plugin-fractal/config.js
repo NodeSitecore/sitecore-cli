@@ -6,7 +6,6 @@ module.exports = config => {
       componentsDir: '<rootDir>/fractal/components',
       mocksDir: '<rootDir>/fractal/components/mocks',
       mockResponseDelay: 0,
-      mockRoutes: ['/api'],
       docsDir: '<rootDir>/fractal/docs',
       helpersDir: '<rootDir>/fractal/helpers',
       middlewaresDir: '<rootDir>/fractal/middlewares',

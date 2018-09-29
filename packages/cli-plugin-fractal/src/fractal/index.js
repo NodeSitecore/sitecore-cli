@@ -64,7 +64,7 @@ module.exports = {
 
   async runBuildAfter(cmd, config) {
     cmd = cmd.split(' ');
-    const task = cmd[0];
+    const task = cmd[ 0 ];
     const args = cmd.splice(1);
 
     await execa(task, args, {
@@ -81,7 +81,7 @@ module.exports = {
   async runDevBefore(cmd) {
     return new Promise(resolve => {
       cmd = cmd.split(' ');
-      const stream = execa(cmd[0], cmd.splice(1), { shell: true, env: { FORCE_COLOR: true } });
+      const stream = execa(cmd[ 0 ], cmd.splice(1), { shell: true, env: { FORCE_COLOR: true } });
       stream.stderr.pipe(process.stderr);
       // stream.stdout.pipe(process.stdout);
       let hasError = false;
@@ -90,7 +90,7 @@ module.exports = {
         const match = stripAnsi(content).match(/localhost:([0-9].*)/);
 
         if (match && !module.exports.loaded) {
-          const [, port] = match;
+          const [ , port ] = match;
           resolve(parseInt(port, 0));
         }
 
