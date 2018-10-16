@@ -6,8 +6,9 @@ const log = require('fancy-log');
 
 module.exports = config => (req, res, next) => {
   const { mocksDir, mockResponseDelay = 0 } = config.fractal;
+  const indexOf = req.url.indexOf('?');
 
-  const fileName = req.url.substring(1, req.url.indexOf('?')); //`${}.json`; // '/search?query=123' => 'search'
+  const fileName = req.url.substring(1, indexOf > -1 ? indexOf : undefined); //`${}.json`; // '/search?query=123' => 'search'
   const filePathJson = path.join(mocksDir, `${fileName}.json`);
   const filePathJs = path.join(mocksDir, `${fileName}.js`);
 
