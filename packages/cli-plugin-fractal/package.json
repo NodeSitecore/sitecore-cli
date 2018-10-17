@@ -23,5 +23,8 @@
   "directories": {
     "src": "./src",
     "bin": "./bin"
+  },
+  "devDependencies": {
+    "body-parser": "^1.18.3"
   }
 }

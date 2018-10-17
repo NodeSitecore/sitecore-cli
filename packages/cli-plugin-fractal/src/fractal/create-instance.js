@@ -1,5 +1,6 @@
 /* eslint-disable global-require,import/no-dynamic-require */
 const fs = require('fs');
+const bodyParser = require('body-parser');
 const Fractal = require('@frctl/fractal');
 const Server = require('@frctl/fractal/src/web/server');
 const mockMiddleware = require('../middlewares/mock');
@@ -18,6 +19,8 @@ module.exports = function createInstance(config, options) {
 
   Server.prototype.superInit = Server.prototype._init;
   Server.prototype._init = function init() {
+    this.use(bodyParser.urlencoded({ extended: false }));
+    this.use(bodyParser.json());
     this.use(mockMiddleware(config));
     return this.superInit();
   };
