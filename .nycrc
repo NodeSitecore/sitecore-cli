@@ -24,9 +24,9 @@
     ".js"
   ],
   "check-coverage": true,
-  "lines": 99.3,
-  "functions": 94.87,
-  "branches": 84.48,
-  "statements": 98.03,
+  "lines": 100,
+  "functions": 94.53,
+  "branches": 87.82,
+  "statements": 98.64,
   "all": true
 }

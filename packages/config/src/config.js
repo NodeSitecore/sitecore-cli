@@ -1,9 +1,7 @@
 const path = require('path');
-const fs = require('fs');
 const nconf = require('nconf');
 const defaultModel = require('./default-model');
-const resolverFiles = require('./utils/resolve-files');
-const { DEFAULT_CONF_PATH } = require('./constant');
+const { loadStores } = require('./stores');
 const placeholders = require('./placeholders');
 
 class Config {
@@ -18,36 +16,9 @@ class Config {
     this.nconf = nconf;
     this.context = context;
 
-    //
-    // LOAD env and args variables
-    //
-    this.nconf.argv().env({ separator: '__' });
-    this.nconf.file('default', { file: DEFAULT_CONF_PATH });
+    const { rootDir = context, configPath } = loadStores(nconf, defaultModel());
 
-    /* istanbul ignore next */
-    if (nconf.get('configPath') && !fs.existsSync(this.nconf.get('configPath'))) {
-      throw new Error(`Unable to read config file from ${this.nconf.get('configPath')}`);
-    }
-    //
-    // Found
-    //
-
-    /* istanbul ignore next */
-    const onLoadFiles = fileConf => {
-      if (fileConf.type === 'default') {
-        this.configPath = fileConf.src;
-      }
-
-      nconf.file(fileConf.type, { file: fileConf.src });
-    };
-
-    resolverFiles({
-      defaultFile: this.nconf.get('configPath') || process.env.NSC_CONF_PATH || DEFAULT_CONF_PATH
-    }).forEach(onLoadFiles);
-
-    const rootDir = this.nconf.get('rootDir') || context;
-
-    this.nconf.defaults(defaultModel());
+    this.configPath = configPath;
     this.placeholders = placeholders(rootDir, context);
   }
 
@@ -157,7 +128,7 @@ class Config {
    */
   keys() {
     return Object.keys(this.nconf.stores)
-      .filter(key => this.nconf.stores[key].type === 'file')
+      .filter(key => ['file', 'literal'].indexOf(this.nconf.stores[key].type) > -1)
       .reduce((acc, storeKey) => {
         const keys = Object.keys(this.nconf.stores[storeKey].store).filter(confKey => acc.indexOf(confKey) === -1 && confKey !== 'type');
 
