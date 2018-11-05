@@ -1,0 +1,13 @@
+{
+  "name": "@node-sitecore/keysitecore",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "This plugin reset the key attributes in dom element on mounted time, when you use Vue with Sitecore.",
+  "main": "index.js",
+  "private": false,
+  "peerDependencies": {},
+  "dependencies": {},
+  "directories": {
+    "src": "./src",
+    "bin": "./bin"
+  }
+}
