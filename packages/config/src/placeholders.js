@@ -56,6 +56,7 @@ module.exports = (rootDir, contextDir) => [
     replacement: () => contextDir
   },
   {
+    name: 'parent:value',
     pattern: /<([a-zA-Z\\-]*):(\w*)>/,
     replacement: nconf => (matched, storeName, value) => nconf.stores[storeName].get(value)
   }
