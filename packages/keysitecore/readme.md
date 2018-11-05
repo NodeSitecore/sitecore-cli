@@ -19,4 +19,5 @@ And import KeySitecore in your Vue project:
 ```javascript
 import * as KeySitecore from "@node-sitecore/keysitecore";
 
+Vue.use(KeySitecore);
 ```
