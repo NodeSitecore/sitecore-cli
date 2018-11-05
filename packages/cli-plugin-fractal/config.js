@@ -30,7 +30,7 @@ module.exports = config => {
 
       vendors.push(`/vendors.${name}.js`);
       bundles.push(`/${name}.js`);
-      styles.push(`css/${name}.css`);
+      styles.push(`/css/${name}.css`);
 
       cleanGlob.push(`${name}.**`);
     });
