@@ -4,7 +4,7 @@ module.exports = {
   versionPlaceholder: '0.0.0-PLACEHOLDER',
   packagesDir: './packages',
   outputDir: './dist',
-  ignorePublishPackages: ['@node-sitecore/cli-plugin-fractal', '@node-sitecore/cli-plugin-browsersync', '@node-sitecore/cli-plugin-vue'],
+  ignorePublishPackages: [],
 
   pkgTemplate: (pkgName, { repository, bugs, author, license, gitHead, contributors }) => ({
     main: 'src/index.js',
