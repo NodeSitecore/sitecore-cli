@@ -33,7 +33,6 @@ module.exports = (config, baseVueConfig) => {
   } else {
     Object.keys(alias).forEach(key => {
       const search = new RegExp(key.replace(/@/, '~'), 'gi');
-      info(search.toString());
       sass.data = sass.data.replace(search, alias[key]);
     });
   }
