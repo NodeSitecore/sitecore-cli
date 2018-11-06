@@ -1,20 +1,41 @@
 /* eslint-disable global-require,prefer-destructuring */
 const path = require('path');
 const fs = require('fs-extra');
+const { info, chalk } = require('@vue/cli-shared-utils');
 const resetWebpackConfig = require('./reset');
 const buildWebpackEntries = require('./entries');
 const buildWebpackAlias = require('./alias');
 const buildWebpackAssets = require('./assets');
 
 module.exports = (config, baseVueConfig) => {
-  const { scssMixinsPath, outputDir = config.currentWebsiteDir } = config.vueCli;
-  let sass = {};
+  const { scssMixinsPath, scssMixins = [], outputDir = config.currentWebsiteDir, alias } = config.vueCli;
+  const isProd = process.env.NODE_ENV === 'production';
 
-  if (fs.existsSync(scssMixinsPath)) {
-    sass = {
-      data: fs.readFileSync(scssMixinsPath, 'utf-8'),
-      includePaths: [path.dirname(scssMixinsPath)]
-    };
+  let sass = [scssMixinsPath]
+    .concat(scssMixins)
+    .filter(mixinsPath => !!mixinsPath && fs.existsSync(scssMixinsPath))
+    .reduce(
+      (acc, mixinsPath) => {
+        acc.data += `\n${fs.readFileSync(mixinsPath, 'utf-8')}`;
+        acc.includePaths.push(path.dirname(mixinsPath));
+
+        if (!isProd) {
+          info(`Add sass mixins: '${chalk.cyan(mixinsPath)}'`);
+        }
+
+        return acc;
+      },
+      { data: '', includePaths: [] }
+    );
+
+  if (sass.includePaths.length === 0) {
+    sass = {};
+  } else {
+    Object.keys(alias).forEach(key => {
+      const search = new RegExp(key.replace(/@/, '~'), 'gi');
+      info(search.toString());
+      sass.data = sass.data.replace(search, alias[key]);
+    });
   }
 
   let baseUrl;
