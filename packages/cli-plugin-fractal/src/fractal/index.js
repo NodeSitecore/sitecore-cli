@@ -21,15 +21,15 @@ module.exports = {
   async copy(config) {
     const { copy = [] } = config.get('fractal');
 
-    const promises = copy.map(task => {
-      return toPromise(
+    const promises = copy.map(task =>
+      toPromise(
         gulp
           .src(task.paths)
           .pipe(newer(task.outputDir))
           .pipe(debug({ title: 'Copying ' }))
           .pipe(gulp.dest(task.outputDir))
-      );
-    });
+      )
+    );
 
     return Promise.all(promises);
   },
