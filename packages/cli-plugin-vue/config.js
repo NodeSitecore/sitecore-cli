@@ -58,4 +58,40 @@ module.exports = config => {
       }
     );
   });
+
+  config.defineGetter('entries', () => {
+    const { entries } = config.vueCli;
+
+    return Object.keys(entries).reduce((acc, key) => {
+      const { name, mode, paths } = entries[key];
+
+      acc.push({
+        name,
+        mode,
+        type: 'vendors',
+        outFile: `/vendors.${name}.js`,
+        paths: [...paths]
+      });
+
+      acc.push({
+        name,
+        mode,
+        type: 'scripts',
+        outFile: `/${name}.js`,
+        paths: [...paths]
+      });
+
+      acc.push({
+        name,
+        mode,
+        type: 'styles',
+        outFile: `/css/${name}.css`,
+        paths: [...paths]
+      });
+
+      return acc;
+    }, []);
+  });
+
+  config.defineGetter('cleanEntriesPatterns', () => ['precache-manifest.**', 'service-worker.js', 'vendors.**']);
 };

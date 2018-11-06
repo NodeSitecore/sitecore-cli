@@ -16,4 +16,29 @@ module.exports = config => {
   );
 
   config.defineGetter('bundle', () => config.get('bundle'));
+
+  config.defineGetter('entries', () => {
+    const bundle = config.get('bundle');
+
+    return Object.keys(bundle).reduce((acc, key) => {
+      const file = bundle[key];
+
+      if (file.match(/\.css$/)) {
+        acc.push({
+          type: 'styles',
+          outFile: config.resolve(`<themesDir>/<currentWebsite>/${file}`)
+        });
+      }
+
+      if (!file.match(/\.map\.js$/) && file.match(/\.js$/)) {
+        acc.push({
+          type: 'scripts',
+          outFile: config.resolve(`<themesDir>/<currentWebsite>/${file}`)
+        });
+      }
+      return acc;
+    }, []);
+  });
+
+  config.defineGetter('cleanEntriesPatterns', () => []);
 };
