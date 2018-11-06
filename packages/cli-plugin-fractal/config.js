@@ -15,24 +15,36 @@ module.exports = config => {
   );
 
   config.defineMethod('buildFractalBundles', env => {
-    const { entries } = config.vueCli;
+    const { entries, cleanEntriesPatterns } = config;
     const bundles = [];
     const vendors = [];
     const styles = [];
-    const cleanGlob = [...config.fractal.proxyPatterns, 'precache-manifest.**', 'service-worker.js', 'vendors.**'];
+    const cleanGlob = [...config.fractal.proxyPatterns, ...cleanEntriesPatterns];
 
     Object.keys(entries).forEach(key => {
-      const { name, mode } = entries[key];
+      const { name, mode, type, outFile } = entries[key];
 
       if (mode && mode !== env) {
         return;
       }
 
-      vendors.push(`/vendors.${name}.js`);
-      bundles.push(`/${name}.js`);
-      styles.push(`/css/${name}.css`);
+      switch (type) {
+        default:
+          break;
+        case 'vendors':
+          vendors.push(outFile);
+          break;
+        case 'scripts':
+          bundles.push(outFile);
+          break;
+        case 'styles':
+          styles.push(outFile);
+          break;
+      }
 
-      cleanGlob.push(`${name}.**`);
+      if (name && cleanGlob.indexOf(`${name}.**`) === -1) {
+        cleanGlob.push(`${name}.**`);
+      }
     });
 
     return { vendors, bundles, styles, cleanGlob };
