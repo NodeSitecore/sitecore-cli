@@ -1,11 +1,38 @@
 /* eslint-disable global-require,import/no-dynamic-require */
 const execa = require('execa');
+const gulp = require('gulp');
+const path = require('path');
+const debug = require('gulp-debug');
+const newer = require('gulp-newer');
 const fs = require('fs-extra');
 const log = require('fancy-log');
 const stripAnsi = require('strip-ansi');
 const createInstance = require('./create-instance');
 
+const toPromise = stream =>
+  new Promise((resolve, reject) =>
+    stream
+      .on('end', resolve)
+      .on('finish', resolve)
+      .on('error', reject)
+  );
+
 module.exports = {
+  async copy(config) {
+    const { copy = [] } = config.get('fractal');
+
+    const promises = copy.map(task => {
+      return toPromise(
+        gulp
+          .src(task.paths)
+          .pipe(newer(task.outputDir))
+          .pipe(debug({ title: 'Copying ' }))
+          .pipe(gulp.dest(task.outputDir))
+      );
+    });
+
+    return Promise.all(promises);
+  },
   /**
    *
    * @returns {*}
@@ -76,6 +103,7 @@ module.exports = {
     });
 
     await fs.copy(config.vueCli.outputDir, config.fractal.outputDir);
+    await fs.copy(config.vueCli.outputDir, path.join(config.fractal.outputDir, config.get('vueCli').baseUrl.production));
   },
 
   async runDevBefore(cmd) {

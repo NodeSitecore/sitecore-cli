@@ -1,4 +1,4 @@
-/* eslint-disable global-require,import/no-dynamic-require */
+/* eslint-disable global-require,import/no-dynamic-require,no-case-declarations */
 const log = require('fancy-log');
 const chalk = require('chalk');
 const fractal = require('./src/fractal');
@@ -7,7 +7,7 @@ module.exports = (api, config) => {
   api.registerCommand(
     'fractal',
     {
-      usage: '<serve|buid> [options]',
+      usage: '<serve|buid|copy> [options]',
       description: 'Run or build a fractal server',
       options: {
         '-e, --execute <cmd>': {
@@ -19,24 +19,41 @@ module.exports = (api, config) => {
     async (commander, args) => {
       const [mode = 'serve'] = args;
 
-      if (mode === 'serve') {
-        let port;
-        if (commander.execute) {
-          port = await fractal.runDevBefore(commander.execute);
-        }
+      switch (mode) {
+        case 'serve':
+          let port;
+          if (commander.execute) {
+            port = await fractal.runDevBefore(commander.execute);
+          }
 
-        await fractal.dev(config, port);
-      } else {
-        log(`Starting build fractal...`);
-        await fractal.build(config);
+          await fractal.dev(config, port);
+          break;
 
-        if (commander.execute) {
-          log(`Starting build app '${chalk.cyan(commander.execute)}'...`);
-          await fractal.runBuildAfter(commander.execute, config);
-          log(`Finished build'${chalk.cyan(commander.execute)}'`);
-        }
+        case 'build':
+          log(`Starting build fractal...`);
+          await fractal.build(config);
 
-        log(`Fractal static HTML build complete in ${config.fractal.outputDir}`);
+          if (commander.execute) {
+            log(`Starting build app '${chalk.cyan(commander.execute)}'...`);
+            await fractal.runBuildAfter(commander.execute, config);
+            log(`Finished build'${chalk.cyan(commander.execute)}'`);
+          }
+
+          log(`Fractal static HTML build complete in ${config.fractal.outputDir}`);
+          break;
+
+        case 'copy':
+          if (config.get('fractal').copy) {
+            log(`Starting copy documentation...`);
+            await fractal.copy(config);
+          } else {
+            log(`No copy tasks has registered in fractal configuration`);
+          }
+
+          break;
+
+        default:
+          break;
       }
     }
   );

@@ -53,7 +53,8 @@ module.exports = {
               { link: '/packages/config.html', text: 'Config' },
               { link: '/packages/cli.html', text: 'CLI' },
               { link: '/packages/vue-cli.html', text: 'Vue CLI' },
-              { link: '/packages/browserify.html', text: 'Browserify' }
+              { link: '/packages/browserify.html', text: 'Browserify' },
+              { link: '/packages/fractal.html', text: 'Fractal' }
             ]
           },
           {
