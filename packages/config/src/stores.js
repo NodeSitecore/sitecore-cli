@@ -88,14 +88,14 @@ module.exports = {
 
     const stores = [
       {
-        file,
-        type: NCONF_TYPE.FILE,
-        scope
-      },
-      {
         file: `${ENV[env]}${DEFAULT_CONF_PATH}`,
         type: NCONF_TYPE.FILE,
         scope: env
+      },
+      {
+        file,
+        type: NCONF_TYPE.FILE,
+        scope
       }
     ];
 
