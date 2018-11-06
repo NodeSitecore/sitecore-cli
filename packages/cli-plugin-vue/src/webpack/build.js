@@ -1,7 +1,7 @@
 /* eslint-disable global-require,prefer-destructuring */
 const path = require('path');
 const fs = require('fs-extra');
-const { info, chalk } = require('@vue/cli-shared-utils');
+// const { info, chalk } = require('@vue/cli-shared-utils');
 const resetWebpackConfig = require('./reset');
 const buildWebpackEntries = require('./entries');
 const buildWebpackAlias = require('./alias');
@@ -9,7 +9,7 @@ const buildWebpackAssets = require('./assets');
 
 module.exports = (config, baseVueConfig) => {
   const { scssMixinsPath, scssMixins = [], outputDir = config.currentWebsiteDir, alias } = config.vueCli;
-  const isProd = process.env.NODE_ENV === 'production';
+  // const isProd = process.env.NODE_ENV === 'production';
 
   let sass = [scssMixinsPath]
     .concat(scssMixins)
@@ -19,9 +19,9 @@ module.exports = (config, baseVueConfig) => {
         acc.data += `\n${fs.readFileSync(mixinsPath, 'utf-8')}`;
         acc.includePaths.push(path.dirname(mixinsPath));
 
-        if (!isProd) {
-          info(`Add sass mixins: '${chalk.cyan(mixinsPath)}'`);
-        }
+        // if (!isProd) {
+        //  info(`Add sass mixins: '${chalk.cyan(mixinsPath)}'`);
+        // }
 
         return acc;
       },
