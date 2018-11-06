@@ -1,8 +1,7 @@
 /* eslint-disable global-require,import/no-dynamic-require */
 const execa = require('execa');
 const gulp = require('gulp');
-// const chalk = require('chalk');
-// const tap = require('gulp-tap');
+const path = require('path');
 const debug = require('gulp-debug');
 const newer = require('gulp-newer');
 const fs = require('fs-extra');
@@ -104,6 +103,7 @@ module.exports = {
     });
 
     await fs.copy(config.vueCli.outputDir, config.fractal.outputDir);
+    await fs.copy(config.vueCli.outputDir, path.join(config.fractal.outputDir, config.get('vueCli').baseUrl.production));
   },
 
   async runDevBefore(cmd) {
