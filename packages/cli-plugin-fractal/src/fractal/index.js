@@ -97,6 +97,7 @@ module.exports = {
     await execa(task, args, {
       shell: true,
       env: {
+        VUE_APP_CURRENT_WEBSITE: config.currentWebsite,
         FORCE_COLOR: true
       },
       stdio: 'inherit'
@@ -106,10 +107,16 @@ module.exports = {
     await fs.copy(config.vueCli.outputDir, path.join(config.fractal.outputDir, config.get('vueCli').baseUrl.production));
   },
 
-  async runDevBefore(cmd) {
+  async runDevBefore(cmd, config) {
     return new Promise(resolve => {
       cmd = cmd.split(' ');
-      const stream = execa(cmd[0], cmd.splice(1), { shell: true, env: { FORCE_COLOR: true } });
+      const stream = execa(cmd[0], cmd.splice(1), {
+        shell: true,
+        env: {
+          VUE_APP_CURRENT_WEBSITE: config.currentWebsite,
+          FORCE_COLOR: true
+        }
+      });
       stream.stderr.pipe(process.stderr);
       // stream.stdout.pipe(process.stdout);
       let hasError = false;

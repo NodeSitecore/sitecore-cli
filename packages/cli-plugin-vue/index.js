@@ -8,25 +8,34 @@ module.exports = (api, config) => {
   api.registerCommand(
     'vue',
     {
-      usage: '<build|check> <pattern> [options]',
+      usage: '<build|check> [options]',
       description: 'Build multiple vue app',
       options: {
-        '-e, --execute <cmd>': {
+        '-p, --pattern <cmd>': {
           type: String,
-          description: 'Run command to build a vue application'
+          description: 'Glob pattern to list project'
+        },
+        '-l, --list <cmd>': {
+          type: Array,
+          description: 'Website code list (EU,FR,etc)'
+        },
+        '-e, --exclude <cmd>': {
+          type: Array,
+          description: 'Exclude Website code list (Common,etc)'
         }
       }
     },
     async (commander, args) => {
-      const [mode = 'build', pattern = path.join(config.projectDir, '**')] = args;
+      const [mode = 'build'] = args;
 
       switch (mode) {
         case 'build':
           info(`Starting build vue app...`);
 
           await multipleBuild(config, {
-            cmd: commander.execute || 'vue-cli-service build --mode production',
-            pattern
+            pattern: commander.pattern,
+            exclude: commander.exclude || [],
+            list: commander.list || [config.currentWebsite]
           });
           break;
 
