@@ -1,7 +1,7 @@
 /* eslint-disable global-require,prefer-destructuring */
 const path = require('path');
 const fs = require('fs-extra');
-// const { info, chalk } = require('@vue/cli-shared-utils');
+const { warn, chalk } = require('@vue/cli-shared-utils');
 const resetWebpackConfig = require('./reset');
 const buildWebpackEntries = require('./entries');
 const buildWebpackAlias = require('./alias');
@@ -16,12 +16,12 @@ module.exports = (config, baseVueConfig) => {
     .filter(mixinsPath => !!mixinsPath && fs.existsSync(scssMixinsPath))
     .reduce(
       (acc, mixinsPath) => {
-        acc.data += `\n${fs.readFileSync(mixinsPath, 'utf-8')}`;
-        acc.includePaths.push(path.dirname(mixinsPath));
-
-        // if (!isProd) {
-        //  info(`Add sass mixins: '${chalk.cyan(mixinsPath)}'`);
-        // }
+        if (!fs.existsSync(scssMixinsPath)) {
+          warn(`Given sass mixins path is wrong: '${chalk.yellow(mixinsPath)}'`);
+        } else {
+          acc.data += `\n${fs.readFileSync(mixinsPath, 'utf-8')}`;
+          acc.includePaths.push(path.dirname(mixinsPath));
+        }
 
         return acc;
       },

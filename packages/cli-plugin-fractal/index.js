@@ -23,7 +23,7 @@ module.exports = (api, config) => {
         case 'serve':
           let port;
           if (commander.execute) {
-            port = await fractal.runDevBefore(commander.execute);
+            port = await fractal.runDevBefore(commander.execute, config);
           }
 
           await fractal.dev(config, port);
