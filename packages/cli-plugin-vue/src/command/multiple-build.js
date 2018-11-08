@@ -34,7 +34,7 @@ function run(config, currentWebsite, options) {
 }
 
 module.exports = (config, options) => {
-  if (options.list) {
+  if (!options.pattern) {
     options.list.forEach(c => run(config, c, options));
   } else {
     gulp.src(options.pattern).pipe(
