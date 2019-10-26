@@ -21,15 +21,15 @@ Here is an example of multiple project structure:
 ```
 
 ::: warning Important
-The important point there, is **Master** project is dependent on **Child** project. Each project has, package.json, .nscrc file and
-a build directory where is installed his Sitecore instance (`<outputDir>`).
+The important point here is **Master** project is dependent on **Child** project. Each project has a package.json, .nscrc file and
+a build directory where the project Sitecore instance will be installed (`<outputDir>`).
 :::
 
 We can use the new `extends` key configuration to share and inherit configuration between two projects.
 
 ## Configuration files
 
-We can considere the **Master** as the project reference. His `.nscrc` his look like that:
+We can considere the **Master** as the project reference. The Master `.nscrc` file looks like this:
 
 ```json
   "currentWebsite": "Master",
@@ -44,7 +44,7 @@ We can considere the **Master** as the project reference. His `.nscrc` his look 
 }
 ```
 
-Now, we can configure the **Child** project. Create a new `.nscrc` file on **Child** and add this configuration:
+Now, we can configure the **Child** project. Create a new `.nscrc` file in the **Child** project and add the following configuration:
 
 ```json
 {
@@ -55,15 +55,15 @@ Now, we can configure the **Child** project. Create a new `.nscrc` file on **Chi
 }
 ```
 
-The configuration of **Child** project will be resolved with inherited values from **Master**
-and overrided values from **Child**.
+The configuration of the **Child** project will be a combination of values from the **Master**
+and **Child** where values in the **Child** take precedence over the same values in the **Master** project.
 
 ::: tip
 When you run a nsc command on **Child**, the placeholder `<rootDir>` will be equals to the **Child** project path.
 :::
 
 ::: tip
-To see how the values in the `ns-child-project/.nscrc` file are resolved, run:
+To see the final compiled values in the `ns-child-project/.nscrc`, run:
 
 ```bash
 nsc inspect
@@ -115,8 +115,8 @@ you're able to run task from UI.
 
 ## Build & Publish Master from Child project
 
-With CLI it also possible to build the **Master** project from **Child** project.
-To do that, we have to create a second config file named `master.nscrc` on root on **Child** project.
+With CLI it is also possible to build the **Master** project from the **Child**.
+To do that, we have to create a second config file named `master.nscrc` on the root of the **Child** project.
 
 It could be something like that:
 
@@ -146,11 +146,11 @@ Then edit `master.nscrc` configuration and copy the following code:
 ```
 
 ::: tip
-We override orputDir value to tell the CLI to publish code on the **Child** level `ns-child-project/build`.
+We override outputDir value to tell the CLI to publish code on the **Child** level `ns-child-project/build`.
 :::
 
 ::: warning Important
-`rootDir` **MUST** be configured explicitly to allow the CLI to solve the configuration of the **Master** with the right paths.
+`rootDir` **MUST** be configured explicitly to allow the CLI to resolve the configuration of the **Master** with the right paths.
 :::
 
 Finally add theses new NPM tasks in the `package.json` of the **Child** project.
